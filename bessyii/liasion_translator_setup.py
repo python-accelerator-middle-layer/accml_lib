@@ -24,6 +24,7 @@ def load_managers() -> (YellowPagesBase, LiaisonManagerBase, TranslatorServiceBa
 
     Todo:
         appropriate to separate caching from loading?
+        move the data folder out of git
     """
     return build_managers("custom/accml_lib/config_data")
 
