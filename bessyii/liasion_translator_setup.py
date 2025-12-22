@@ -82,6 +82,10 @@ def build_managers(config_dir: Path) -> (YellowPagesBase, LiaisonManagerBase, Tr
         lep_main = LatticeElementPropertyID(element_name=m.dev_id, property="main_strength")
         inverse_lut_dd[dp_main].append(lep_main)
 
+        dp_main = DevicePropertyID(device_name=m.power_converter_id, property="delta_set_current")
+        lep_main = LatticeElementPropertyID(element_name=m.dev_id, property="delta_main_strength")
+        inverse_lut_dd[dp_main].append(lep_main)
+
     inverse_lut = dict(inverse_lut_dd)
 
     lm = LiaisonManager(forward_lut=forward_lut, inverse_lut=inverse_lut)
