@@ -4,10 +4,11 @@ from collections import defaultdict
 from pathlib import Path
 
 from accml.core.bl.yellow_pages import YellowPages
+from accml.custom.simulators.model.tune import Tune
 from .facility_specific_constants import ring_parameters
 from accml.core.bl.liaison_manager import LiaisonManager
 from accml.core.bl.translator_service import TranslatorService
-from accml.core.bl.unit_conversion import EnergyDependentLinearUnitConversion
+from accml.core.bl.unit_conversion import EnergyDependentLinearUnitConversion, LinearUnitConversion
 from accml.core.config.config_service import ConfigService
 from accml.core.config.utils import full_data_path
 from accml.core.interfaces.liaison_manager import LiaisonManagerBase
@@ -16,6 +17,18 @@ from accml.core.interfaces.yellow_pages import YellowPagesBase
 from accml.core.model.identifiers import LatticeElementPropertyID, DevicePropertyID, ConversionID
 
 logger = logging.getLogger("accml")
+
+
+class TuneConversion:
+    def __init__(self, to ):
+        self.to = to
+
+    def forward(self, inp: Tune) ->  Tune:
+        return Tune(x=self.to.forward(inp.x), y=self.to.forward(inp.y))
+
+    def inverse(self, inp: Tune) ->  Tune:
+        return Tune(x=self.to.forward(inp.x), y=self.to.forward(inp.y))
+
 
 
 @functools.lru_cache(maxsize=1)
@@ -68,6 +81,11 @@ def build_managers(config_dir: Path) -> (YellowPagesBase, LiaisonManagerBase, Tr
             device_name=magnet.power_converter_id, property="delta_set_current") for magnet in magnets if
         magnet.dev_id in yp.quadrupole_names()})
 
+    forward_lut.update(
+        {LatticeElementPropertyID(element_name="tune", property="transversal") :  DevicePropertyID(
+            device_name="tune", property="delta_set_current")}
+    )
+
     # inverse_lut = {
     #     DevicePropertyID(device_name=m.power_converter_id, property="set_current"): [
     #         LatticeElementPropertyID(element_name=m.dev_id, property="main_strength")] for m in magnets}
@@ -97,7 +115,7 @@ def build_managers(config_dir: Path) -> (YellowPagesBase, LiaisonManagerBase, Tr
                                                          property="set_current")): EnergyDependentLinearUnitConversion(
             # TODO: find out if it is the correct converion
             #  magnetic strength is most proably None
-            slope=m.conversion.slope, intercept=m.conversion.intercept, brho=ring_parameters.brho, ) for m in magnets}
+            slope=1./m.conversion.slope, intercept=m.conversion.intercept, brho=ring_parameters.brho, ) for m in magnets}
 
     # as its only a liner interpolation, its simple to do the delta interpolation
     # for complex curves this interpolation will fail ...
@@ -109,8 +127,15 @@ def build_managers(config_dir: Path) -> (YellowPagesBase, LiaisonManagerBase, Tr
                                             property="delta_set_current")): EnergyDependentLinearUnitConversion(
         # TODO: find out if it is the correct converion
         #  magnetic strength is most proably None
-        slope=m.conversion.slope, intercept=0.0, brho=ring_parameters.brho) for m in magnets})
+        slope=1.0/m.conversion.slope, intercept=0.0, brho=ring_parameters.brho) for m in magnets})
 
+    floquet_to_frequency = 500e3 / 400.0
+    translator_lut.update({
+        ConversionID(
+            lattice_property_id=LatticeElementPropertyID(element_name="tune", property="transversal"),
+            device_property_id=DevicePropertyID(device_name="tune", property="delta_set_current")
+        ) : TuneConversion(LinearUnitConversion(intercept=0e0, slope=floquet_to_frequency))
+    })
     tm = TranslatorService(translator_lut)
     return yp, lm, tm
 
