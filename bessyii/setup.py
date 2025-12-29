@@ -1,7 +1,7 @@
 import os
 
 from .liasion_translator_setup import load_managers
-from accml.core.interfaces.devices_facade import DevicesFacade
+from accml.core.interfaces.devices_facade import DevicesFacade as DevicesFacadeInterface
 from accml.core.utils.ophyd_async.multiplexer_for_settable_devices import (
     MultiplexerProxy,
 )
@@ -10,6 +10,14 @@ from accml.custom.epics.devices.power_converter import PowerConverter
 from accml.custom.epics.devices.tunes import Tunes
 
 from .facility_specific_constants import special_pvs
+
+
+class DevicesFacade(DevicesFacadeInterface):
+    def __init__(self, d):
+        self._devices = d
+
+    def get(self, name: str):
+        return self._devices.get(name)
 
 
 def setup() -> DevicesFacade:
@@ -28,8 +36,12 @@ def setup() -> DevicesFacade:
     )
 
     master_clock = MasterClock(f'{prefix}{special_pvs["master_clock"]}', name="mc")
-    tunes = Tunes(f"{prefix}TUNECC", name="tune")
-    return dict(quadrupole_pcs=quadrupoles, master_clock=master_clock, tunes=tunes)
+    tune = Tunes(f"{prefix}TUNECC", name="tune")
+    d = {
+        **dict(quadrupole_pcs=quadrupoles, master_clock=master_clock, tune=tune),
+        **quad_pcs,
+    }
+    return DevicesFacade(d)
 
 
 if __name__ == "__main__":
