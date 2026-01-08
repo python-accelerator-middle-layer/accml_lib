@@ -93,6 +93,7 @@ def build_managers(config_dir: Path) -> (YellowPagesBase, LiaisonManagerBase, Tr
     inverse_lut_dd = defaultdict(list)
 
     for m in magnets:
+        # currently only setting up the quadrupoles
         if m.dev_id not in yp.quadrupole_names():
             continue
 
@@ -105,7 +106,7 @@ def build_managers(config_dir: Path) -> (YellowPagesBase, LiaisonManagerBase, Tr
         inverse_lut_dd[dp_main].append(lep_main)
 
     inverse_lut = dict(inverse_lut_dd)
-
+    inverse_lut[DevicePropertyID(device_name="tune", property="transversal")] = [LatticeElementPropertyID(element_name="tune", property="transversal")]
     lm = LiaisonManager(forward_lut=forward_lut, inverse_lut=inverse_lut)
     del forward_lut, inverse_lut
 
@@ -130,10 +131,17 @@ def build_managers(config_dir: Path) -> (YellowPagesBase, LiaisonManagerBase, Tr
         slope=1.0/m.conversion.slope, intercept=0.0, brho=ring_parameters.brho) for m in magnets})
 
     floquet_to_frequency = 500e3 / 400.0
+    # Todo: analyse if this setup is appropriate
     translator_lut.update({
         ConversionID(
             lattice_property_id=LatticeElementPropertyID(element_name="tune", property="transversal"),
             device_property_id=DevicePropertyID(device_name="tune", property="delta_set_current")
+        ) : TuneConversion(LinearUnitConversion(intercept=0e0, slope=floquet_to_frequency))
+    })
+    translator_lut.update({
+        ConversionID(
+            lattice_property_id=LatticeElementPropertyID(element_name="tune", property="transversal"),
+            device_property_id=DevicePropertyID(device_name="tune", property="transversal")
         ) : TuneConversion(LinearUnitConversion(intercept=0e0, slope=floquet_to_frequency))
     })
     tm = TranslatorService(translator_lut)
