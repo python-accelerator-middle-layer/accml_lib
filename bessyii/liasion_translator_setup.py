@@ -4,7 +4,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from accml.core.bl.yellow_pages import YellowPages
-from accml.custom.simulators.model.tune import Tune
+from accml.app.tune.model import Tune
 from .facility_specific_constants import ring_parameters
 from accml.core.bl.liaison_manager import LiaisonManager
 from accml.core.bl.translator_service import TranslatorService
