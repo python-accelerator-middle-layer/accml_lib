@@ -20,7 +20,7 @@ logger = logging.getLogger("accml")
 
 
 class TuneConversion:
-    def __init__(self, to ):
+    def __init__(self, to):
         self.to = to
 
     def forward(self, inp: Tune) ->  Tune:
@@ -126,7 +126,7 @@ def build_managers(config_dir: Path) -> (YellowPagesBase, LiaisonManagerBase, Tr
         lattice_property_id=LatticeElementPropertyID(element_name=m.dev_id, property="delta_main_strength"),
         device_property_id=DevicePropertyID(device_name=m.power_converter_id,
                                             property="delta_set_current")): EnergyDependentLinearUnitConversion(
-        # TODO: find out if it is the correct converion
+        # TODO: find out if it is the correct conversion
         #  magnetic strength is most proably None
         slope=1.0/m.conversion.slope, intercept=0.0, brho=ring_parameters.brho) for m in magnets})
 
