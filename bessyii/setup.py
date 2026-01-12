@@ -21,7 +21,10 @@ class DevicesFacade(DevicesFacadeInterface):
 
 
 def setup() -> DevicesFacade:
+    # Todo: make it accml_user
+    #
     prefix = os.environ.get("USER", "Anonym") + ":"
+    prefix = ""
     yp, _, __ = load_managers()
 
     quad_pcs = {
@@ -36,7 +39,7 @@ def setup() -> DevicesFacade:
     )
 
     master_clock = MasterClock(f'{prefix}{special_pvs["master_clock"]}', name="mc")
-    tune = Tunes(f"{prefix}TUNECC", name="tune")
+    tune = Tunes(f"{prefix}TUNEZR", name="tune")
     d = {
         **dict(quadrupole_pcs=quadrupoles, master_clock=master_clock, tune=tune),
         **quad_pcs,
