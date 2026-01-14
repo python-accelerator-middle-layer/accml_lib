@@ -30,7 +30,6 @@ numpy = "*"
 # actually only for least square fitting
 scipy = "*"
 
-
 # lat2db ... for readling lattice
 lat2db = ">=0.1"
 
@@ -60,6 +59,6 @@ transitions =  {version ="*", optional = true}
 
 
 [tool.poetry.extras]
-bluesky-epics = ["ophyd-async", "aioca", "p4p", "epics", "bluesky"]
-bluesky-tango = ["ophyd-async", "pytango", "bluesky"]
+bluesky-epics = ["ophyd-async", "aioca", "p4p", "epics", "bluesky", "databroker"]
+bluesky-tango = ["ophyd-async", "pytango", "bluesky", "databroker"]
 pyat-simulator = ["accelerator-toolbox", "transitions"]
