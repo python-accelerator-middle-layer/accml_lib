@@ -3,11 +3,12 @@ import threading
 
 from transitions import Machine
 
-from accml.core.interfaces.backend.backend import BackendRW
-from ..interface.accelerator_simulator import AcceleratorSimulatorInterface
-from ..interface.result_element import ResultElement
-from ..model.calculation_states import CalculationStates as States
-from accml.app.tune.model import Tune
+from accml_lib.core.interfaces.backend.backend import BackendRW
+from accml_lib.core.interfaces.simulator.accelerator_simulator import AcceleratorSimulatorInterface
+from accml_lib.core.interfaces.simulator.result_element import ResultElement
+from accml_lib.core.model.tune import Tune
+
+from .model.calculation_states import CalculationStates as States
 
 logger = logging.getLogger()
 

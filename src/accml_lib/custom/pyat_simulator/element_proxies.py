@@ -4,7 +4,7 @@ from typing import Tuple
 import numpy as np
 from at import shift_elem
 
-from ..interface.element import ElementInterface
+from accml_lib.core.interfaces.simulator.element import ElementInterface
 
 logger = logging.getLogger("accml")
 

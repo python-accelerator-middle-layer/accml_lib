@@ -3,7 +3,8 @@ from dataclasses import dataclass
 from functools import cached_property
 from typing import Sequence
 
-from accml.core.model.command import ReadCommand, Command
+from .command import ReadCommand
+
 
 @dataclass
 class SingleFloat:

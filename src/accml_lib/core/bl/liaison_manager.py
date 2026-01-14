@@ -1,8 +1,8 @@
 import logging
 from typing import Mapping
 
-from accml.core.interfaces.liaison_manager import LiaisonManagerBase
-from accml.core.model.identifiers import LatticeElementPropertyID, DevicePropertyID
+from accml_lib.core.interfaces.liaison_manager import LiaisonManagerBase
+from accml_lib.core.model.identifiers import LatticeElementPropertyID, DevicePropertyID
 
 logger = logging.getLogger("accml")
 

@@ -1,9 +1,9 @@
-from accml.core.bl.delta_backend import DeltaBackendRWProxy, StateCache
-from accml.core.interfaces.backend.backend import BackendRW
-from accml.custom.simulators.pyat.accelerator_simulator import PyATAcceleratorSimulator
-from accml.custom.simulators.pyat.simulator_backend import SimulatorBackend
 
 from .bessyii_pyat_lattice import bessyii_pyat_lattice
+from ..pyat_simulator.accelerator_simulator import PyATAcceleratorSimulator
+from ..pyat_simulator.simulator_backend import SimulatorBackend
+from ...core.bl.delta_backend import DeltaBackendRWProxy, StateCache
+from ...core.interfaces.backend.backend import BackendRW
 
 
 def simulator_backend() -> BackendRW:
