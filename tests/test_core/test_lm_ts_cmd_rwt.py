@@ -4,7 +4,7 @@ from accml_lib.core.bl.command_rewritter import CommandRewriter
 from accml_lib.core.bl.liaison_manager import LiaisonManager
 from accml_lib.core.bl.translator_service import TranslatorService
 from accml_lib.core.bl.unit_conversion import LinearUnitConversion
-from accml_lib.core.model.utils.command import Command, BehaviourOnError
+from accml_lib.core.model.utils.command import Command, BehaviourOnError, ReadCommand
 from accml_lib.core.model.utils.identifiers import DevicePropertyID, LatticeElementPropertyID, ConversionID
 
 
@@ -109,7 +109,6 @@ def test_command_rewriter_fwd(command_rewriter):
             Command(id="quad2", property="main_strength", value=2, behaviour_on_error=BehaviourOnError.roll_back)
         )
 
-
 def test_command_rewriter_inv(command_rewriter):
     c = command_rewriter
     cmd = Command(id="quad_pc", property="set_current", value=-3, behaviour_on_error=BehaviourOnError.roll_back)
@@ -118,3 +117,19 @@ def test_command_rewriter_inv(command_rewriter):
     assert ncmd.id == "quad1"
     assert ncmd.property == "main_strength"
     assert ncmd.value == pytest.approx(3/5 + (-3 * (-1/5)), rel=1e-12)
+
+
+def test_command_rewriter_fwd_rcmd(command_rewriter):
+    c = command_rewriter
+    rcmd = ReadCommand(id="quad1", property="main_strength")
+    chk = c.forward_read_command(rcmd)
+    assert chk.id == "quad_pc"
+    assert chk.property == "set_current"
+
+
+def test_command_rewriter_inv_rcmd(command_rewriter):
+    c = command_rewriter
+    rcmd = ReadCommand(id="quad_pc", property="set_current")
+    chk, = c.inverse_read_command(rcmd)
+    assert chk.id == "quad1"
+    assert chk.property == "main_strength"
