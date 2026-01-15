@@ -15,10 +15,7 @@ jobs:
         python-version: "3.x"
     - name: Install pypa/build
       run: >-
-        python3 -m
-        pip install
-        build
-        --user
+        python3 -m pip install build --user
     - name: Build a binary wheel and a source tarball
       run: python3 -m build
     - name: Store the distribution packages
@@ -65,21 +62,19 @@ jobs:
       # `dist/` contains the built packages, and the
       # sigstore-produced signatures and certificates.
       run: >-
-        gh release upload
-        '${{ github.ref_name }}' dist/**
-        --repo '${{ github.repository }}'
+        gh release upload '${{ github.ref_name }}' dist/** --repo '${{ github.repository }}'
 
   publish-to-pypi:
     name: Publish accml_lib distribution to PyPI
-    if: startsWith(github.ref, 'refs/tags/')  # only publish to PyPI on tag pushes
+    if: startsWith(github.ref, 'refs/tags/')
     needs:
     - build
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/accml_lib  # Replace <package-name> with your PyPI project name
+      url: https://pypi.org/p/accml_lib
     permissions:
-      id-token: write  # IMPORTANT: mandatory for trusted publishing
+      id-token: write
 
     steps:
     - name: Download all the dists
@@ -89,6 +84,9 @@ jobs:
         path: dist/
     - name: Publish distribution to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}
 
   publish-to-testpypi:
     name: Publish accml_lib to TestPyPI
@@ -99,7 +97,7 @@ jobs:
       name: testpypi
       url: https://test.pypi.org/p/accml_lib
     permissions:
-      id-token: write  # IMPORTANT: mandatory for trusted publishing
+      id-token: write
 
     steps:
     - name: Download all the dists
@@ -111,7 +109,7 @@ jobs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
+        password: ${{ secrets.TEST_PYPI_API_TOKEN }}
         repository-url: https://test.pypi.org/legacy/
         skip-existing: true
         verbose: true
