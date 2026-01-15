@@ -61,7 +61,6 @@ class LinearUnitConversion(StateConversion):
         logger.info(
             "%s.inverse: brho %s, intercept %s slope %s, state %s",
             self.__class__.__name__,
-            self.brho,
             self.intercept,
             self.slope,
             state,

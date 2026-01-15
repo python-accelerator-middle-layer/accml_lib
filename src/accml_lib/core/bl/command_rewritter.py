@@ -111,7 +111,7 @@ class CommandRewriter(CommandRewriterBase):
         dev_prop_id = self.liaison_manager.forward(lat_prop_id)
         return ReadCommand(id=dev_prop_id.device_name, property=dev_prop_id.property)
 
-    def inverse_read_command(self, command: ReadCommand) -> ReadCommand:
+    def inverse_read_command(self, command: ReadCommand) -> Sequence[ReadCommand]:
         dev_prop_id = DevicePropertyID(
             device_name=command.id, property=command.property
         )
