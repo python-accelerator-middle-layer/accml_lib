@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from functools import cached_property
 from typing import Sequence
 
-from .command import ReadCommand
+from ..utils.command import ReadCommand
 
 
 @dataclass

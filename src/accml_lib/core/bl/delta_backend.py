@@ -1,7 +1,7 @@
 import logging
 
 from ..interfaces.backend.backend import BackendRW, BackendR
-from ..model.command import ReadCommand
+from ..model.utils.command import ReadCommand
 
 logger = logging.getLogger("accml")
 
@@ -36,8 +36,9 @@ class StateCache:
 
 
 def delta_property(prop_id: str) -> (bool, str):
-    if prop_id[:6] == "delta_":
-        return True, prop_id[6:]
+    token = "delta_"
+    if prop_id.startswith(token):
+        return True, prop_id[len(token):]
     return False, prop_id
 
 

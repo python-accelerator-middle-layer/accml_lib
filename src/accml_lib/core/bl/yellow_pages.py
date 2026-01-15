@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Sequence, Union
 
-from ...core.interfaces.yellow_pages import YellowPagesBase
+from accml_lib.core.interfaces.utils.yellow_pages import YellowPagesBase
 
 
 class FamilyName(Enum):

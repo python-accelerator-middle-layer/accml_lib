@@ -9,11 +9,11 @@ from accml_lib.core.bl.unit_conversion import LinearUnitConversion, EnergyDepend
 from accml_lib.core.bl.yellow_pages import YellowPages
 from accml_lib.core.config.config_service import ConfigService
 from accml_lib.core.config.utils import full_data_path
-from accml_lib.core.interfaces.liaison_manager import LiaisonManagerBase
-from accml_lib.core.interfaces.translator_service import TranslatorServiceBase
-from accml_lib.core.interfaces.yellow_pages import YellowPagesBase
-from accml_lib.core.model.identifiers import LatticeElementPropertyID, DevicePropertyID, ConversionID
-from accml_lib.core.model.tune import Tune
+from accml_lib.core.interfaces.utils.liaison_manager import LiaisonManagerBase
+from accml_lib.core.interfaces.utils.translator_service import TranslatorServiceBase
+from accml_lib.core.interfaces.utils.yellow_pages import YellowPagesBase
+from accml_lib.core.model.utils.identifiers import LatticeElementPropertyID, DevicePropertyID, ConversionID
+from accml_lib.core.model.output.tune import Tune
 from .facility_specific_constants import ring_parameters
 
 logger = logging.getLogger("accml")

@@ -1,8 +1,8 @@
 from abc import ABCMeta, abstractmethod
 from typing import Sequence
 
-from ..model.command import TransactionCommand, ReadCommand, Command
-from ..model.result import SingleReading, ReadTogether
+from ...model.utils.command import TransactionCommand, ReadCommand, Command
+from ...model.output.result import SingleReading, ReadTogether
 
 
 class MeasurementExecutionEngine(metaclass=ABCMeta):

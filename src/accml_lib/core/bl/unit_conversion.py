@@ -1,6 +1,6 @@
 import logging
 
-from ..interfaces.state_conversion import StateConversion
+from ..interfaces.utils.state_conversion import StateConversion
 
 logger = logging.getLogger("accml")
 

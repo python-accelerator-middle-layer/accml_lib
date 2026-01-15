@@ -1,9 +1,9 @@
 import logging
 from typing import Mapping
 
-from ...core.interfaces.state_conversion import StateConversion
-from ...core.interfaces.translator_service import TranslatorServiceBase
-from ...core.model.identifiers import ConversionID
+from ...core.interfaces.utils.state_conversion import StateConversion
+from ...core.interfaces.utils.translator_service import TranslatorServiceBase
+from ...core.model.utils.identifiers import ConversionID
 
 logger = logging.getLogger("accml")
 

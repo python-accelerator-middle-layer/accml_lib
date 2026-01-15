@@ -1,5 +1,5 @@
-from .model.magnet import MagneticObject
-from .model.power_converter import PowerConverter
+from ..model.config.magnet import MagneticObject
+from ..model.config.power_converter import PowerConverter
 from .repository.file_repository import FileRepository
 
 

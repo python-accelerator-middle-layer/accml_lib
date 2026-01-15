@@ -9,12 +9,12 @@ Todo:
 
 from typing import Sequence
 
-from ..model.command import ReadCommand
-from ...core.interfaces.command_rewritter import CommandRewriterBase
-from ...core.interfaces.liaison_manager import LiaisonManagerBase
-from ...core.interfaces.translator_service import TranslatorServiceBase
-from ...core.model.command import Command
-from ...core.model.identifiers import DevicePropertyID, LatticeElementPropertyID, ConversionID
+from ..model.utils.command import ReadCommand
+from ...core.interfaces.utils.command_rewritter import CommandRewriterBase
+from ...core.interfaces.utils.liaison_manager import LiaisonManagerBase
+from ...core.interfaces.utils.translator_service import TranslatorServiceBase
+from ...core.model.utils.command import Command
+from ...core.model.utils.identifiers import DevicePropertyID, LatticeElementPropertyID, ConversionID
 
 
 class CommandRewriter(CommandRewriterBase):

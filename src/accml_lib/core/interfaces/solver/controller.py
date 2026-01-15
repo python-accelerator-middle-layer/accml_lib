@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from typing import Sequence, Union
 
-from ...model.command import Command, ReadCommand
+from ...model.utils.command import Command, ReadCommand
 
 
 class ControllerInterface(metaclass=ABCMeta):

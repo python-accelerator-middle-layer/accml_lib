@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
-from ...core.model.identifiers import DevicePropertyID, LatticeElementPropertyID
+from ....core.model.utils.identifiers import DevicePropertyID, LatticeElementPropertyID
 
 
 class LiaisonManagerBase(metaclass=ABCMeta):

@@ -3,7 +3,7 @@
 from abc import ABCMeta, abstractmethod
 from typing import Sequence
 
-from ...core.model.command import Command, ReadCommand
+from ....core.model.utils.command import Command, ReadCommand
 
 
 class CommandRewriterBase(metaclass=ABCMeta):

@@ -2,7 +2,7 @@ import enum
 
 from .element_proxies import ElementProxy, KickAngleCorrectorProxy
 from ...core.interfaces.simulator.accelerator_simulator import AcceleratorSimulatorInterface
-from ...core.model.tune import Tune
+from ...core.model.output.tune import Tune
 
 
 class PyATAcceleratorSimulator(AcceleratorSimulatorInterface):
