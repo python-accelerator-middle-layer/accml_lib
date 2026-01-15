@@ -1,5 +1,5 @@
 import logging
-from typing import Mapping
+from typing import Mapping, Sequence
 
 from accml_lib.core.interfaces.utils.liaison_manager import LiaisonManagerBase
 from accml_lib.core.model.utils.identifiers import LatticeElementPropertyID, DevicePropertyID
@@ -22,7 +22,7 @@ class LiaisonManager(LiaisonManagerBase):
     def __init__(
         self,
         forward_lut: Mapping[LatticeElementPropertyID, DevicePropertyID],
-        inverse_lut: Mapping[DevicePropertyID, LatticeElementPropertyID],
+        inverse_lut: Mapping[DevicePropertyID, Sequence[LatticeElementPropertyID]],
     ):
         self.forward_lut = forward_lut
         self.inverse_lut = inverse_lut
