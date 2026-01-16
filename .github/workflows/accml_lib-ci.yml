@@ -70,6 +70,8 @@ jobs:
         env:
           BESSYII_TEST_LATTICE_PATH: bessy2_storage_ring_latdata_for_testing.json
         run: |
+          pwd
+          find . -type d
           python -m pytest -s accml_lib/tests
 
 #      - name: Download data asset from draft release
