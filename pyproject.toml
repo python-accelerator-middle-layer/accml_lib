@@ -42,8 +42,10 @@ bact_math_utils = ">=0.1.1"
 bluesky = {version = "*", optional = true}
 # typically using mongodb as a database / storage
 databroker = {version = "<2.0", optional = true}
+
 # ophyd async does not specify which transport is to be used
-ophyd-async = {version = "*", optional = true}
+# version requirement: standard readable also useable for tango (not tango readable)
+ophyd-async = {version = "*>0.14", optional = true}
 # epics transport protocols
 aioca = {version = "*", optional = true}
 p4p = {version = "*", optional = true}
