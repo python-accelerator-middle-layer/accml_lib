@@ -1,6 +1,9 @@
 # emacs autosave files
 *~
 
+# files for running fixtures
+fixtures/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
