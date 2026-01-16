@@ -57,8 +57,11 @@ accelerator_toolbox = {version = "*", optional = true}
 # are required
 transitions =  {version ="*", optional = true}
 
+# for testing
+pytest-asyncio = {version = "*", optional = true}
 
 [tool.poetry.extras]
 bluesky-epics = ["ophyd-async", "aioca", "p4p", "epics", "bluesky", "databroker"]
 bluesky-tango = ["ophyd-async", "pytango", "bluesky", "databroker"]
 pyat-simulator = ["accelerator-toolbox", "transitions"]
+testing = ["pytest-asyncio", "accelerator-toolbox", "transitions"]
