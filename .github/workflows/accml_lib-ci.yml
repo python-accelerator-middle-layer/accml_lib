@@ -1,0 +1,113 @@
+name: accml_lib build
+
+on:
+  push:
+    branches: [ "dev/main", ]
+  pull_request:
+    # todo: remove dev branch later ... but now to have it
+    #       running
+    branches: [ "dev/main", "dev/feature/splitup-main-lib"]
+
+jobs:
+  wrap_and_build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.9" , "3.10", "3.11" , "3.12" ]
+        numpy-version : [ "numpy<2.0" , "numpy>=2.0" ]
+    steps:
+      - name: install required packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq gzip
+
+      # Checkout the repository contents
+      - name: Checkout accml_lib code
+        uses: actions/checkout@v5
+      - name: Set up Python ${{ matrix.python-version }} ${{ matrix.numpy-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          numpy-version: ${{ matrix.numpy-version }}
+          cache: 'pip'
+          cache-dependency-path: |
+           **/pyproject.toml
+           **/requirements*.txt
+
+      # Install Python dependencies
+      - name: Python dependencies
+        run: |
+          python -m pip install --upgrade pip wheel
+          python -m pip install pytest pytest-asyncio pycodestyle flake8 "${{ matrix.numpy-version }}"
+
+          # So that one can seee in the output which numpy version was run
+          echo "showing numpy"
+          python3 -c 'import numpy; print("numpy version", numpy.__version__)'
+          echo "done"
+
+      - name: wheel
+        run: |
+          python -m pip wheel -w wheel/ ./
+
+      - name: install
+        run: |
+          # listing a non existing directory fails ..
+          ls -l dist/ || echo 'no dist directory'
+          ls -l wheel/
+          python -m pip install wheel/accml_lib-*.whl
+
+      - name: Lint with flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+          flake8 src --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: test (without artifact data)
+        env:
+          BESSYII_TEST_LATTICE_PATH: bessy2_storage_ring_latdata_for_testing.json
+        run: |
+          python -m pytest -s tests/
+
+#      - name: Download data asset from draft release
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          REPO: ${{ github.repository }}
+#          TAG: data-for_testing
+#          ASSET_NAME: bessy2_storage_ring_latdata_for_testing.json.gz
+#        run: |
+#         set -euo pipefail
+#
+#         echo "Fetching release by tag: $TAG"
+#         release_json=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+#                      "https://api.github.com/repos/$REPO/releases/tags/$TAG")
+#
+#         # Extract asset id (works for draft releases too if token has repo access)
+#         asset_id=$(echo "$release_json" | jq -r ".assets[] | select(.name==\"$ASSET_NAME\") .id")
+#         if [ -z "$asset_id" ] || [ "$asset_id" = "null" ]; then
+#           echo "Asset $ASSET_NAME not found in release $TAG"
+#           echo "release_json: $release_json"
+#           exit 1
+#         fi
+#
+#         echo "Downloading asset id: $asset_id (name: $ASSET_NAME)"
+#         curl -L -H "Authorization:token $GITHUB_TOKEN" \
+#              -H "Accept: application/octet-stream" \
+#                 "https://api.github.com/repos/$REPO/releases/assets/$asset_id" \
+#              -o "$ASSET_NAME"
+#
+#         echo "Downloaded $ASSET_NAME"
+#
+#      - name: Decompress data (gzip -> data.json)
+#        run: |
+#          gzip -d -c $(ASSET_NAME) > ${ASSET_NAME%%.gz}
+#          echo "Decompressed: $(wc -c < data.json) bytes"
+#
+#      - name: test (with artefact data)
+#        env:
+#          BESSYII_TEST_LATTICE_PATH: bessy2_storage_ring_latdata_for_testing.json
+#        run: |
+#          python -m pytest -s accml_lib/tests

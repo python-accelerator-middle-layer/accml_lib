@@ -3,18 +3,18 @@ import logging
 from collections import defaultdict
 from pathlib import Path
 
-from accml.core.bl.yellow_pages import YellowPages
-from accml.app.tune.model import Tune
+from accml_lib.core.bl.liaison_manager import LiaisonManager
+from accml_lib.core.bl.translator_service import TranslatorService
+from accml_lib.core.bl.unit_conversion import LinearUnitConversion, EnergyDependentLinearUnitConversion
+from accml_lib.core.bl.yellow_pages import YellowPages
+from accml_lib.core.config.config_service import ConfigService
+from accml_lib.core.config.utils import full_data_path
+from accml_lib.core.interfaces.utils.liaison_manager import LiaisonManagerBase
+from accml_lib.core.interfaces.utils.translator_service import TranslatorServiceBase
+from accml_lib.core.interfaces.utils.yellow_pages import YellowPagesBase
+from accml_lib.core.model.utils.identifiers import LatticeElementPropertyID, DevicePropertyID, ConversionID
+from accml_lib.core.model.output.tune import Tune
 from .facility_specific_constants import ring_parameters
-from accml.core.bl.liaison_manager import LiaisonManager
-from accml.core.bl.translator_service import TranslatorService
-from accml.core.bl.unit_conversion import EnergyDependentLinearUnitConversion, LinearUnitConversion
-from accml.core.config.config_service import ConfigService
-from accml.core.config.utils import full_data_path
-from accml.core.interfaces.liaison_manager import LiaisonManagerBase
-from accml.core.interfaces.translator_service import TranslatorServiceBase
-from accml.core.interfaces.yellow_pages import YellowPagesBase
-from accml.core.model.identifiers import LatticeElementPropertyID, DevicePropertyID, ConversionID
 
 logger = logging.getLogger("accml")
 
@@ -38,11 +38,11 @@ def load_managers() -> (YellowPagesBase, LiaisonManagerBase, TranslatorServiceBa
     Todo:
         appropriate to separate caching from loading?
     """
-    return build_managers("custom/accml_lib/config_data")
+    return build_managers("custom/config_data/bessyii")
 
 
 def build_managers(config_dir: Path) -> (YellowPagesBase, LiaisonManagerBase, TranslatorServiceBase):
-    """A first poor mans implementation of liasion manager and Translation service for accml_lib
+    """A first poor mans implementation of liaison manager and Translation service for accml_lib
 
     Todo:
         Which info is already in database and better obtained from database?

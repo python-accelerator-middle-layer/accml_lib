@@ -1,7 +1,7 @@
 import os
 
+from accml_lib.core.interfaces.devices_facade import DevicesFacade
 from ..bessyii.liasion_translator_setup import load_managers
-from accml.core.interfaces.devices_facade import DevicesFacade
 from accml.core.utils.ophyd_async.multiplexer_for_settable_devices import (
     MultiplexerProxy,
 )

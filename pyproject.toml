@@ -1,0 +1,67 @@
+[build-system]
+requires = [ "poetry-core>=1.0.0",]
+build-backend = "poetry.core.masonry.api"
+
+[project]
+name = "accml_lib"
+version = "0.3.0a1"
+description = "python accelerator middle layer: library path"
+authors = [
+     {name = "Waheedullah Sulaiman Khail", email = "<waheedullah.sulaiman_khail@helmholtz-berlin.de"},
+     {name = "Pierre Schnizer", email = "<pierre.schnizer@helmholtz-berlin.de"},
+]
+license = "GPL-3.0"
+# until we have the repoitory
+homepage = "https://github.com/python-accelerator-middle-layer/accml_lib"
+documentation = "https://github.com/python-accelerator-middle-layer/accml_lib"
+repository = "https://github.com/python-accelerator-middle-layer/accml_lib.git"
+keywords = []
+
+[tool.poetry]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.7"
+pydantic = "*"
+jsons = "*"
+pyyaml = "*"
+numpy = "*"
+
+# actually only for least square fitting
+scipy = "*"
+
+# lat2db ... for readling lattice
+lat2db = ">=0.1"
+
+# move support routines for fit error calculation from this package here
+# then this package can be taken out
+bact_math_utils = ">=0.1.1"
+
+# Packages below should be optional ones, only to be installed
+# depending on what is used.
+bluesky = {version = "*", optional = true}
+# typically using mongodb as a database / storage
+databroker = {version = "<2.0", optional = true}
+# ophyd async does not specify which transport is to be used
+ophyd-async = {version = "*", optional = true}
+# epics transport protocols
+aioca = {version = "*", optional = true}
+p4p = {version = "*", optional = true}
+# trango interface
+pytango = {version = "*", optional = true}
+
+# for simulation engine backend ... currently only using pyat
+accelerator_toolbox = {version = "*", optional = true}
+# any state machine implementation would do
+# currently it is only used to track if new calculations
+# are required
+transitions =  {version ="*", optional = true}
+
+# for testing
+pytest-asyncio = {version = "*", optional = true}
+
+[tool.poetry.extras]
+bluesky-epics = ["ophyd-async", "aioca", "p4p", "epics", "bluesky", "databroker"]
+bluesky-tango = ["ophyd-async", "pytango", "bluesky", "databroker"]
+pyat-simulator = ["accelerator-toolbox", "transitions"]
+testing = ["pytest-asyncio", "accelerator-toolbox", "transitions"]
