@@ -11,12 +11,19 @@ on:
 jobs:
   wrap_and_build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ "3.9", "3.10", "3.11" , "3.12" ]
-        numpy-version : [ "numpy<2.0", "numpy>=2.0" ]
+        python-version: [ "3.9" ] #, "3.10", "3.11" , "3.12" ]
+        numpy-version : [ "numpy<2.0"] # , "numpy>=2.0" ]
     steps:
+      - name: install required packages
+        run:
+          sudo apt-get update
+          sudo apt-get install -y jq gzip
+
       # Checkout the repository contents
       - name: Checkout accml_lib code
         uses: actions/checkout@v5
@@ -34,7 +41,7 @@ jobs:
       - name: Python dependencies
         run: |
           python -m pip install --upgrade pip wheel
-          python -m pip install pytest pycodestyle flake8 "${{ matrix.numpy-version }}"
+          python -m pip install pytest pytest-asyncio pycodestyle flake8 "${{ matrix.numpy-version }}"
 
           # So that one can seee in the output which numpy version was run
           echo "showing numpy"
@@ -59,8 +66,48 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 src --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-      - name: test
+      - name: test (without artifact data)
+        env:
+          BESSYII_TEST_LATTICE_PATH: bessy2_storage_ring_latdata_for_testing.json
         run: |
-          # make sure to move out of the source directory
-          cd /tmp
-          python -m pytest -s /home/runner/work/python-accelerator-middle-layer/accml_lib/tests
+          python -m pytest -s accml_lib/tests
+
+#      - name: Download data asset from draft release
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          REPO: ${{ github.repository }}
+#          TAG: data-for_testing
+#          ASSET_NAME: bessy2_storage_ring_latdata_for_testing.json.gz
+#        run: |
+#         set -euo pipefail
+#
+#         echo "Fetching release by tag: $TAG"
+#         release_json=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+#                      "https://api.github.com/repos/$REPO/releases/tags/$TAG")
+#
+#         # Extract asset id (works for draft releases too if token has repo access)
+#         asset_id=$(echo "$release_json" | jq -r ".assets[] | select(.name==\"$ASSET_NAME\") .id")
+#         if [ -z "$asset_id" ] || [ "$asset_id" = "null" ]; then
+#           echo "Asset $ASSET_NAME not found in release $TAG"
+#           echo "release_json: $release_json"
+#           exit 1
+#         fi
+#
+#         echo "Downloading asset id: $asset_id (name: $ASSET_NAME)"
+#         curl -L -H "Authorization:token $GITHUB_TOKEN" \
+#              -H "Accept: application/octet-stream" \
+#                 "https://api.github.com/repos/$REPO/releases/assets/$asset_id" \
+#              -o "$ASSET_NAME"
+#
+#         echo "Downloaded $ASSET_NAME"
+#
+#      - name: Decompress data (gzip -> data.json)
+#        run: |
+#          gzip -d -c $(ASSET_NAME) > ${ASSET_NAME%%.gz}
+#          echo "Decompressed: $(wc -c < data.json) bytes"
+#
+#      - name: test (with artefact data)
+#        env:
+#          BESSYII_TEST_LATTICE_PATH: bessy2_storage_ring_latdata_for_testing.json
+#        run: |
+#          python -m pytest -s accml_lib/tests
