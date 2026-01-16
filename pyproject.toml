@@ -45,7 +45,7 @@ databroker = {version = "<2.0", optional = true}
 
 # ophyd async does not specify which transport is to be used
 # version requirement: standard readable also useable for tango (not tango readable)
-ophyd-async = {version = "*>0.14", optional = true}
+ophyd-async = {version = ">=0.13", optional = true}
 # epics transport protocols
 aioca = {version = "*", optional = true}
 p4p = {version = "*", optional = true}
