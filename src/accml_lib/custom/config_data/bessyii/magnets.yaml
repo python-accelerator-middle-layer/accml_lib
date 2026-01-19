@@ -1442,7 +1442,7 @@
   dev_id: QIT6R
   type: quadrupole
   family_member: [ tune_correction ]
-  power_converter_id: PQIPT6R
+  power_converter_id: PQIT6R
   conversion:
     intercept: 0.0
     slope: -0.0928

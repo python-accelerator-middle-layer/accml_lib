@@ -336,8 +336,8 @@
     timeout: 2.0
 - id: PQIPT6R
   interface:
-    setpoint: PQIPT6R:set
-    readback: PQIPT6R:rdbk
+    setpoint: PQIT6R:set
+    readback: PQIT6R:rdbk
   response:
     settle_time: 0.5
     timeout: 2.0
