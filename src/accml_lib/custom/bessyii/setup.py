@@ -1,3 +1,4 @@
+import logging
 import os
 
 from .liasion_translator_setup import load_managers
@@ -11,6 +12,8 @@ from accml.custom.epics.devices.tunes import Tunes
 
 from .facility_specific_constants import special_pvs
 
+logger = logging.getLogger("accml_lib")
+
 
 class DevicesFacade(DevicesFacadeInterface):
     def __init__(self, d):
@@ -20,10 +23,18 @@ class DevicesFacade(DevicesFacadeInterface):
         return self._devices.get(name)
 
 
-def setup() -> DevicesFacade:
+def setup(prefix: str=None) -> DevicesFacade:
+    """
+
+    **NB** prefix as empty string is a valid str
+    """
     # Todo: make it accml_user
     #
-    prefix = os.environ.get("USER", "Anonym") + ":"
+    if prefix is None:
+        prefix = os.environ.get("USER", "Anonym") + ":"
+
+    logger.info("using prefix=%s", prefix)
+
     yp, _, __ = load_managers()
 
     quad_pcs = {
