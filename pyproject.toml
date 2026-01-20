@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [project]
 name = "accml_lib"
-version = "0.3.0a1"
+version = "0.3.0b1"
 description = "python accelerator middle layer: library path"
 authors = [
      {name = "Waheedullah Sulaiman Khail", email = "<waheedullah.sulaiman_khail@helmholtz-berlin.de"},
