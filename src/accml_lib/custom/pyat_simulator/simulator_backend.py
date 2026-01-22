@@ -41,9 +41,7 @@ class SimulationStateModel:
 
 
 class SimulatorBackend(BackendRW):
-    """
-    Todo:
-        where to break async / sync or threaded approach?
+    """Simulation backend based on pyAT
 
     I assume today that the calculation engine works the following way:
 
@@ -57,6 +55,10 @@ class SimulatorBackend(BackendRW):
     calculation results are protected by a lock, so no more sets
     are made while calculation is running nor calculation results
     are delivered ahead of time.
+
+    Todo:
+        where to break async / sync or threaded approach?
+
     """
 
     def __init__(self, *, acc: AcceleratorSimulatorInterface, name: str, logger=logger):

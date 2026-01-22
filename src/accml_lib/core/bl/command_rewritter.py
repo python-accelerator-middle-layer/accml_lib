@@ -2,9 +2,6 @@
 
 Please note:
     here we have to map (lattice_name, property) -> (device_name, property)
-
-Todo:
-   Split up content in different modules
 """
 
 from typing import Sequence
