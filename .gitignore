@@ -1,6 +1,11 @@
 # emacs autosave files
 *~
 
+# doc build files
+doc/_build/
+# put api auto generated doc here
+doc/src/
+
 # files for running fixtures
 fixtures/
 
