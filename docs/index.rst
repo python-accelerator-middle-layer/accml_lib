@@ -14,17 +14,3 @@ API
    :maxdepth: 4
 
    src/accml_lib
-
-
-Further readings:
------------------
-
-* For client code / applications  look to
-
-    design
-
-Modules of accml\_lib
----------------------
-
-   src/modules
-
