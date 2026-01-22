@@ -29,8 +29,8 @@ jobs:
       - name: Build docs
         working-directory: docs
         run: |
-          python3 -m sphinx.ext.apidoc ./ -o docs/src/ || echo  "failed to create auto/API docs!"
-          (cd docs/ && make html)
+          python3 -m sphinx.ext.apidoc -o docs/src/ ./  || echo  "failed to create auto/API docs!"
+          python3 -m sphinx.cmd.build --conf-dir docs/  docs/  docs/_build/
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
