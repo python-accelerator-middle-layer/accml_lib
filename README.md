@@ -1,4 +1,4 @@
-# accml: Accelerator middle layer
+# accml_lib: Particle accelerator middle layer: library part
 
 `accml` is a software stack designed to facilitate implementing tools 
  characterising (high) energy charged accelerator.
@@ -9,6 +9,9 @@ These tools typically address:
 * forecasting the performance of an accelerator, which is currently under design.
 
 For details of its concept see [design.md](https://github.com/python-accelerator-middle-layer/accml/design.md).
+
+[![Docs](https://github.com/python-accelerator-middle-layer/accml_lib/workflows/Build%20and%20Deploy%20Docs/badge.svg)](https://<org>.github.io/<repo>/)
+
 
 ## 🚀 Installation and Running Instructions
 
@@ -25,9 +28,31 @@ git checkout dev/main
 git submodule update --init --recursive
 ```
 ### 3. Install the Package
+
+Please note: typically, especially as a user, you would install 
+accml, which in turn will install accml_lib. So typically
+you want to look to https://github.com/python-accelerator-middle-layer/accml
+and install everything there
+
+#### 3.1 Installing only accml_lib for an EPICS facility
+
+For an EPICS facility install 
+
 ```bash
-python3 -m pip install -e .
+python3 -m pip install -e \
+      ./[bluesky-epics,pyat-simulator]
 ```
+
+#### 3.1 Installing only accml_lib for a TANGO facility
+
+**NB** this installation is not yet tested. In case of 
+experiencing trouble please drop us a line or share your
+experience in case of success.
+```bash
+python3 -m pip install -e \
+      ./[bluesky-tango,pyat-simulator]
+```
+
 ### 4. Run the Virtual Accelerator (Test bench) --EPICS VERSION
 ```bash 
 apptainer run oras://registry.hzdr.de/digital-twins-for-accelerators/containers/pyat-softioc-digital-twin:v0-1-2-bessy.2475331
