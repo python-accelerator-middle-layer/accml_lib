@@ -10,7 +10,7 @@ These tools typically address:
 
 For details of its concept see [design.md](https://github.com/python-accelerator-middle-layer/accml/design.md).
 
-[![Docs](https://github.com/python-accelerator-middle-layer/accml_lib/workflows/Build%20and%20Deploy%20Docs/badge.svg)](https://<org>.github.io/<repo>/)
+Additional [![Documentation](https://github.com/python-accelerator-middle-layer/accml_lib/actions/workflows/docs.yml/badge.svg)](https://python-accelerator-middle-layer.github.io/accml_lib/)
 
 
 ## 🚀 Installation and Running Instructions
