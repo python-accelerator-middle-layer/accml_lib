@@ -81,7 +81,11 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">...core.interfaces.utils.liaison_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">LiaisonManagerBase</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...core.interfaces.utils.translator_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">TranslatorServiceBase</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...core.model.utils.command</span><span class="w"> </span><span class="kn">import</span> <span class="n">Command</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">...core.model.utils.identifiers</span><span class="w"> </span><span class="kn">import</span> <span class="n">DevicePropertyID</span><span class="p">,</span> <span class="n">LatticeElementPropertyID</span><span class="p">,</span> <span class="n">ConversionID</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...core.model.utils.identifiers</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DevicePropertyID</span><span class="p">,</span>
+    <span class="n">LatticeElementPropertyID</span><span class="p">,</span>
+    <span class="n">ConversionID</span><span class="p">,</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="CommandRewriter">
@@ -97,7 +101,11 @@
 <span class="sd">    to convert the command values between representations.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">liaison_manager</span><span class="p">:</span> <span class="n">LiaisonManagerBase</span><span class="p">,</span> <span class="n">translation_service</span><span class="p">:</span> <span class="n">TranslatorServiceBase</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">liaison_manager</span><span class="p">:</span> <span class="n">LiaisonManagerBase</span><span class="p">,</span>
+        <span class="n">translation_service</span><span class="p">:</span> <span class="n">TranslatorServiceBase</span><span class="p">,</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize the CommandRewriter with the required services.</span>
 
@@ -120,20 +128,27 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            A sequence of commands corresponding to the inverse translations.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dev_prop_id</span> <span class="o">=</span> <span class="n">DevicePropertyID</span><span class="p">(</span>
-            <span class="n">device_name</span><span class="o">=</span><span class="n">cmd</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">cmd</span><span class="o">.</span><span class="n">property</span>
-        <span class="p">)</span>
+        <span class="n">dev_prop_id</span> <span class="o">=</span> <span class="n">DevicePropertyID</span><span class="p">(</span><span class="n">device_name</span><span class="o">=</span><span class="n">cmd</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">cmd</span><span class="o">.</span><span class="n">property</span><span class="p">)</span>
         <span class="n">rcmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverse_read_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
-        <span class="n">lat_prop_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">LatticeElementPropertyID</span><span class="p">(</span><span class="n">element_name</span><span class="o">=</span><span class="n">r</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">r</span><span class="o">.</span><span class="n">property</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rcmd</span><span class="p">]</span>
+        <span class="n">lat_prop_ids</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">LatticeElementPropertyID</span><span class="p">(</span><span class="n">element_name</span><span class="o">=</span><span class="n">r</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">r</span><span class="o">.</span><span class="n">property</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rcmd</span>
+        <span class="p">]</span>
 
-        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">inverse_translate_one</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">dev_prop_id</span><span class="p">,</span> <span class="n">lat_prop_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">lat_prop_id</span> <span class="ow">in</span> <span class="n">lat_prop_ids</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inverse_translate_one</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">dev_prop_id</span><span class="p">,</span> <span class="n">lat_prop_id</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">lat_prop_id</span> <span class="ow">in</span> <span class="n">lat_prop_ids</span>
+        <span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="CommandRewriter.inverse_translate_one">
 <a class="viewcode-back" href="../../../../src/accml_lib.core.bl.html#accml_lib.core.bl.command_rewritter.CommandRewriter.inverse_translate_one">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">inverse_translate_one</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">:</span> <span class="n">Command</span><span class="p">,</span> <span class="n">dev_prop_id</span><span class="p">:</span> <span class="n">DevicePropertyID</span><span class="p">,</span>
-                              <span class="n">lat_prop_id</span><span class="p">:</span> <span class="n">LatticeElementPropertyID</span>
-                              <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Command</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inverse_translate_one</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">cmd</span><span class="p">:</span> <span class="n">Command</span><span class="p">,</span>
+        <span class="n">dev_prop_id</span><span class="p">:</span> <span class="n">DevicePropertyID</span><span class="p">,</span>
+        <span class="n">lat_prop_id</span><span class="p">:</span> <span class="n">LatticeElementPropertyID</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Command</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform a single inverse translation.</span>
 
@@ -146,11 +161,15 @@
 <span class="sd">            A new Command with the value converted to the lattice state.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">translation_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">translator_service</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="n">ConversionID</span><span class="p">(</span><span class="n">lattice_property_id</span><span class="o">=</span><span class="n">lat_prop_id</span><span class="p">,</span> <span class="n">device_property_id</span><span class="o">=</span><span class="n">dev_prop_id</span><span class="p">)</span>
+            <span class="n">ConversionID</span><span class="p">(</span>
+                <span class="n">lattice_property_id</span><span class="o">=</span><span class="n">lat_prop_id</span><span class="p">,</span> <span class="n">device_property_id</span><span class="o">=</span><span class="n">dev_prop_id</span>
+            <span class="p">)</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">dev_prop_id</span><span class="o">.</span><span class="n">device_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Device name cannot be None in device property identifier.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Device name cannot be None in device property identifier.&quot;</span>
+            <span class="p">)</span>
 
         <span class="n">ncmd</span> <span class="o">=</span> <span class="n">Command</span><span class="p">(</span>
             <span class="nb">id</span><span class="o">=</span><span class="n">lat_prop_id</span><span class="o">.</span><span class="n">element_name</span><span class="p">,</span>
@@ -171,7 +190,9 @@
         <span class="n">dev_prop_id</span> <span class="o">=</span> <span class="n">DevicePropertyID</span><span class="p">(</span><span class="n">device_name</span><span class="o">=</span><span class="n">rcmd</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">rcmd</span><span class="o">.</span><span class="n">property</span><span class="p">)</span>
 
         <span class="n">translation_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">translator_service</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-            <span class="n">ConversionID</span><span class="p">(</span><span class="n">lattice_property_id</span><span class="o">=</span><span class="n">lat_prop_id</span><span class="p">,</span> <span class="n">device_property_id</span><span class="o">=</span><span class="n">dev_prop_id</span><span class="p">)</span>
+            <span class="n">ConversionID</span><span class="p">(</span>
+                <span class="n">lattice_property_id</span><span class="o">=</span><span class="n">lat_prop_id</span><span class="p">,</span> <span class="n">device_property_id</span><span class="o">=</span><span class="n">dev_prop_id</span>
+            <span class="p">)</span>
         <span class="p">)</span>
         <span class="n">ncmd</span> <span class="o">=</span> <span class="n">Command</span><span class="p">(</span>
             <span class="nb">id</span><span class="o">=</span><span class="n">dev_prop_id</span><span class="o">.</span><span class="n">device_name</span><span class="p">,</span>
@@ -199,9 +220,14 @@
             <span class="n">device_name</span><span class="o">=</span><span class="n">command</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">command</span><span class="o">.</span><span class="n">property</span>
         <span class="p">)</span>
         <span class="n">lat_prop_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">liaison_manager</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">dev_prop_id</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">ReadCommand</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">lp</span><span class="o">.</span><span class="n">element_name</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">lp</span><span class="o">.</span><span class="n">property</span><span class="p">)</span> <span class="k">for</span> <span class="n">lp</span> <span class="ow">in</span> <span class="n">lat_prop_ids</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">ReadCommand</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">lp</span><span class="o">.</span><span class="n">element_name</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">lp</span><span class="o">.</span><span class="n">property</span><span class="p">)</span> <span class="k">for</span> <span class="n">lp</span> <span class="ow">in</span> <span class="n">lat_prop_ids</span>
+        <span class="p">]</span></div>
 </div>
 
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;CommandRewriter&quot;</span><span class="p">]</span>
 </pre></div>
 
            </div>
