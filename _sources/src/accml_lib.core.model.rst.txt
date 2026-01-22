@@ -1,0 +1,20 @@
+accml\_lib.core.model package
+=============================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   accml_lib.core.model.config
+   accml_lib.core.model.output
+   accml_lib.core.model.utils
+
+Module contents
+---------------
+
+.. automodule:: accml_lib.core.model
+   :members:
+   :show-inheritance:
+   :undoc-members:

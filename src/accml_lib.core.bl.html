@@ -1,0 +1,640 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>accml_lib.core.bl package &mdash; accml_lib  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="accml_lib.core.config package" href="accml_lib.core.config.html" />
+    <link rel="prev" title="accml_lib.core package" href="accml_lib.core.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            accml_lib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="accml_lib.html">accml_lib package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="accml_lib.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="accml_lib.core.html">accml_lib.core package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="accml_lib.core.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="accml_lib.core.html#module-accml_lib.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="accml_lib.custom.html">accml_lib.custom package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="accml_lib.html#module-accml_lib">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">accml_lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="accml_lib.html">accml_lib package</a></li>
+          <li class="breadcrumb-item"><a href="accml_lib.core.html">accml_lib.core package</a></li>
+      <li class="breadcrumb-item active">accml_lib.core.bl package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/src/accml_lib.core.bl.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="accml-lib-core-bl-package">
+<h1>accml_lib.core.bl package<a class="headerlink" href="#accml-lib-core-bl-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-accml_lib.core.bl.command_rewritter">
+<span id="accml-lib-core-bl-command-rewritter-module"></span><h2>accml_lib.core.bl.command_rewritter module<a class="headerlink" href="#module-accml_lib.core.bl.command_rewritter" title="Link to this heading"></a></h2>
+<p>convert from lattice element change to device property</p>
+<dl class="simple">
+<dt>Please note:</dt><dd><p>here we have to map (lattice_name, property) -&gt; (device_name, property)</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.bl.command_rewritter.CommandRewriter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.command_rewritter.</span></span><span class="sig-name descname"><span class="pre">CommandRewriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">liaison_manager</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">translation_service</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/command_rewritter.html#CommandRewriter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.command_rewritter.CommandRewriter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="accml_lib.core.interfaces.utils.html#accml_lib.core.interfaces.utils.command_rewritter.CommandRewriterBase" title="accml_lib.core.interfaces.utils.command_rewritter.CommandRewriterBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">CommandRewriterBase</span></code></a></p>
+<p>Command rewriter.</p>
+<p>This module translates commands between two state spaces:
+from a lattice element specification to a device property specification (forward)
+and vice versa (inverse).</p>
+<p>It uses a liaison manager to map identifiers and a translator service
+to convert the command values between representations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>liaison_manager</strong> (<a class="reference internal" href="accml_lib.core.interfaces.utils.html#accml_lib.core.interfaces.utils.liaison_manager.LiaisonManagerBase" title="accml_lib.core.interfaces.utils.liaison_manager.LiaisonManagerBase"><em>LiaisonManagerBase</em></a>)</p></li>
+<li><p><strong>translation_service</strong> (<a class="reference internal" href="accml_lib.core.interfaces.utils.html#accml_lib.core.interfaces.utils.translator_service.TranslatorServiceBase" title="accml_lib.core.interfaces.utils.translator_service.TranslatorServiceBase"><em>TranslatorServiceBase</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.command_rewritter.CommandRewriter.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/command_rewritter.html#CommandRewriter.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.command_rewritter.CommandRewriter.forward" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command" title="accml_lib.core.model.utils.command.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>cmd</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command" title="accml_lib.core.model.utils.command.Command"><em>Command</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.command_rewritter.CommandRewriter.forward_read_command">
+<span class="sig-name descname"><span class="pre">forward_read_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/command_rewritter.html#CommandRewriter.forward_read_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.command_rewritter.CommandRewriter.forward_read_command" title="Link to this definition"></a></dt>
+<dd><p>Typically an answer of liaison manager</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.ReadCommand" title="accml_lib.core.model.utils.command.ReadCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadCommand</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>command</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.ReadCommand" title="accml_lib.core.model.utils.command.ReadCommand"><em>ReadCommand</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.command_rewritter.CommandRewriter.inverse">
+<span class="sig-name descname"><span class="pre">inverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/command_rewritter.html#CommandRewriter.inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.command_rewritter.CommandRewriter.inverse" title="Link to this definition"></a></dt>
+<dd><p>Convert a command from a device property space back to the lattice space.</p>
+<p>:param : param cmd: The command to be transformed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command" title="accml_lib.core.model.utils.command.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of commands corresponding to the inverse translations.</p>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cmd</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command" title="accml_lib.core.model.utils.command.Command"><em>Command</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.command_rewritter.CommandRewriter.inverse_read_command">
+<span class="sig-name descname"><span class="pre">inverse_read_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/command_rewritter.html#CommandRewriter.inverse_read_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.command_rewritter.CommandRewriter.inverse_read_command" title="Link to this definition"></a></dt>
+<dd><p>Typically an answer of liaison manager</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.ReadCommand" title="accml_lib.core.model.utils.command.ReadCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadCommand</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>command</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.ReadCommand" title="accml_lib.core.model.utils.command.ReadCommand"><em>ReadCommand</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.command_rewritter.CommandRewriter.inverse_translate_one">
+<span class="sig-name descname"><span class="pre">inverse_translate_one</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dev_prop_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat_prop_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/command_rewritter.html#CommandRewriter.inverse_translate_one"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.command_rewritter.CommandRewriter.inverse_translate_one" title="Link to this definition"></a></dt>
+<dd><p>Perform a single inverse translation.</p>
+<p>:param : param dev_prop_id: The source device property identifier
+:param : param cmd: The original command
+:param : param lat_prop_id: The target lattice property identifier</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command" title="accml_lib.core.model.utils.command.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new Command with the value converted to the lattice state.</p>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command" title="accml_lib.core.model.utils.command.Command"><em>Command</em></a>)</p></li>
+<li><p><strong>dev_prop_id</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.DevicePropertyID" title="accml_lib.core.model.utils.identifiers.DevicePropertyID"><em>DevicePropertyID</em></a>)</p></li>
+<li><p><strong>lat_prop_id</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.LatticeElementPropertyID" title="accml_lib.core.model.utils.identifiers.LatticeElementPropertyID"><em>LatticeElementPropertyID</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.bl.delta_backend">
+<span id="accml-lib-core-bl-delta-backend-module"></span><h2>accml_lib.core.bl.delta_backend module<a class="headerlink" href="#module-accml_lib.core.bl.delta_backend" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.DeltaBackendRProxy">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.delta_backend.</span></span><span class="sig-name descname"><span class="pre">DeltaBackendRProxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#DeltaBackendRProxy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.DeltaBackendRProxy" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="accml_lib.core.interfaces.backend.html#accml_lib.core.interfaces.backend.backend.BackendR" title="accml_lib.core.interfaces.backend.backend.BackendR"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackendR</span></code></a></p>
+<p>handle delta properties</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backend</strong> (<a class="reference internal" href="accml_lib.core.interfaces.backend.html#accml_lib.core.interfaces.backend.backend.BackendR" title="accml_lib.core.interfaces.backend.backend.BackendR"><em>BackendR</em></a>)</p></li>
+<li><p><strong>cache</strong> (<a class="reference internal" href="#accml_lib.core.bl.delta_backend.StateCache" title="accml_lib.core.bl.delta_backend.StateCache"><em>StateCache</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.DeltaBackendRProxy.get_natural_view_name">
+<span class="sig-name descname"><span class="pre">get_natural_view_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#DeltaBackendRProxy.get_natural_view_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.DeltaBackendRProxy.get_natural_view_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.DeltaBackendRProxy.read">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dev_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prop_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#DeltaBackendRProxy.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.DeltaBackendRProxy.read" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>dev_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>prop_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.DeltaBackendRProxy.trigger">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">trigger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dev_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prop_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#DeltaBackendRProxy.trigger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.DeltaBackendRProxy.trigger" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dev_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>prop_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.DeltaBackendRWProxy">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.delta_backend.</span></span><span class="sig-name descname"><span class="pre">DeltaBackendRWProxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#DeltaBackendRWProxy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.DeltaBackendRWProxy" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#accml_lib.core.bl.delta_backend.DeltaBackendRProxy" title="accml_lib.core.bl.delta_backend.DeltaBackendRProxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">DeltaBackendRProxy</span></code></a>, <a class="reference internal" href="accml_lib.core.interfaces.backend.html#accml_lib.core.interfaces.backend.backend.BackendRW" title="accml_lib.core.interfaces.backend.backend.BackendRW"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackendRW</span></code></a></p>
+<p>handle delta properties</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backend</strong> (<a class="reference internal" href="accml_lib.core.interfaces.backend.html#accml_lib.core.interfaces.backend.backend.BackendRW" title="accml_lib.core.interfaces.backend.backend.BackendRW"><em>BackendRW</em></a>)</p></li>
+<li><p><strong>cache</strong> (<a class="reference internal" href="#accml_lib.core.bl.delta_backend.StateCache" title="accml_lib.core.bl.delta_backend.StateCache"><em>StateCache</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.DeltaBackendRWProxy.set">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dev_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prop_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#DeltaBackendRWProxy.set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.DeltaBackendRWProxy.set" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dev_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>prop_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><em>object</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.StateCache">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.delta_backend.</span></span><span class="sig-name descname"><span class="pre">StateCache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#StateCache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.StateCache" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>abstract interface</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.StateCache.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#StateCache.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.StateCache.clear" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.StateCache.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#StateCache.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.StateCache.get" title="Link to this definition"></a></dt>
+<dd><div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>add return type: shall support __sub__</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.StateCache.set">
+<span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#StateCache.set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.StateCache.set" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.delta_property">
+<span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.delta_backend.</span></span><span class="sig-name descname"><span class="pre">delta_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prop_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#delta_property"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.delta_property" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type">(<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>prop_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.bl.liaison_manager">
+<span id="accml-lib-core-bl-liaison-manager-module"></span><h2>accml_lib.core.bl.liaison_manager module<a class="headerlink" href="#module-accml_lib.core.bl.liaison_manager" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.bl.liaison_manager.LiaisonManager">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.liaison_manager.</span></span><span class="sig-name descname"><span class="pre">LiaisonManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forward_lut</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inverse_lut</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/liaison_manager.html#LiaisonManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.liaison_manager.LiaisonManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="accml_lib.core.interfaces.utils.html#accml_lib.core.interfaces.utils.liaison_manager.LiaisonManagerBase" title="accml_lib.core.interfaces.utils.liaison_manager.LiaisonManagerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">LiaisonManagerBase</span></code></a></p>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>consider internally to represent classes of devices with a certain functionallity</p>
+<dl class="simple">
+<dt>So internally have</dt><dd><ul class="simple">
+<li><p>classes of devices providing similar properties</p></li>
+<li><p>this can be used when searching for suggesting alternatives to the
+user when searching for it</p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>forward_lut</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Mapping" title="(in Python v3.14)"><em>Mapping</em></a><em>[</em><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.LatticeElementPropertyID" title="accml_lib.core.model.utils.identifiers.LatticeElementPropertyID"><em>LatticeElementPropertyID</em></a><em>, </em><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.DevicePropertyID" title="accml_lib.core.model.utils.identifiers.DevicePropertyID"><em>DevicePropertyID</em></a><em>]</em>)</p></li>
+<li><p><strong>inverse_lut</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Mapping" title="(in Python v3.14)"><em>Mapping</em></a><em>[</em><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.DevicePropertyID" title="accml_lib.core.model.utils.identifiers.DevicePropertyID"><em>DevicePropertyID</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><em>Sequence</em></a><em>[</em><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.LatticeElementPropertyID" title="accml_lib.core.model.utils.identifiers.LatticeElementPropertyID"><em>LatticeElementPropertyID</em></a><em>]</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.liaison_manager.LiaisonManager.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/liaison_manager.html#LiaisonManager.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.liaison_manager.LiaisonManager.forward" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.DevicePropertyID" title="accml_lib.core.model.utils.identifiers.DevicePropertyID"><code class="xref py py-class docutils literal notranslate"><span class="pre">DevicePropertyID</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>id_</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.LatticeElementPropertyID" title="accml_lib.core.model.utils.identifiers.LatticeElementPropertyID"><em>LatticeElementPropertyID</em></a>)</p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<p>for symmetry: should return a sequence too!</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.liaison_manager.LiaisonManager.inverse">
+<span class="sig-name descname"><span class="pre">inverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/liaison_manager.html#LiaisonManager.inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.liaison_manager.LiaisonManager.inverse" title="Link to this definition"></a></dt>
+<dd><p>needs to return a sequence: e.g. power converters often power more than one magnet</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.LatticeElementPropertyID" title="accml_lib.core.model.utils.identifiers.LatticeElementPropertyID"><code class="xref py py-class docutils literal notranslate"><span class="pre">LatticeElementPropertyID</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>id_</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.DevicePropertyID" title="accml_lib.core.model.utils.identifiers.DevicePropertyID"><em>DevicePropertyID</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.bl.translator_service">
+<span id="accml-lib-core-bl-translator-service-module"></span><h2>accml_lib.core.bl.translator_service module<a class="headerlink" href="#module-accml_lib.core.bl.translator_service" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.bl.translator_service.TranslatorService">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.translator_service.</span></span><span class="sig-name descname"><span class="pre">TranslatorService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lut</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/translator_service.html#TranslatorService"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.translator_service.TranslatorService" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="accml_lib.core.interfaces.utils.html#accml_lib.core.interfaces.utils.translator_service.TranslatorServiceBase" title="accml_lib.core.interfaces.utils.translator_service.TranslatorServiceBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TranslatorServiceBase</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>lut</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Mapping" title="(in Python v3.14)"><em>Mapping</em></a><em>[</em><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.ConversionID" title="accml_lib.core.model.utils.identifiers.ConversionID"><em>ConversionID</em></a><em>, </em><a class="reference internal" href="accml_lib.core.interfaces.utils.html#accml_lib.core.interfaces.utils.state_conversion.StateConversion" title="accml_lib.core.interfaces.utils.state_conversion.StateConversion"><em>StateConversion</em></a><em>]</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.translator_service.TranslatorService.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/translator_service.html#TranslatorService.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.translator_service.TranslatorService.get" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="accml_lib.core.interfaces.utils.html#accml_lib.core.interfaces.utils.state_conversion.StateConversion" title="accml_lib.core.interfaces.utils.state_conversion.StateConversion"><code class="xref py py-class docutils literal notranslate"><span class="pre">StateConversion</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>id_</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.ConversionID" title="accml_lib.core.model.utils.identifiers.ConversionID"><em>ConversionID</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.translator_service.TranslatorService.objects_for_device">
+<span class="sig-name descname"><span class="pre">objects_for_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/translator_service.html#TranslatorService.objects_for_device"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.translator_service.TranslatorService.objects_for_device" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id_</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.ConversionID" title="accml_lib.core.model.utils.identifiers.ConversionID"><em>ConversionID</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.translator_service.TranslatorService.objects_for_lat_elem">
+<span class="sig-name descname"><span class="pre">objects_for_lat_elem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/translator_service.html#TranslatorService.objects_for_lat_elem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.translator_service.TranslatorService.objects_for_lat_elem" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id_</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.ConversionID" title="accml_lib.core.model.utils.identifiers.ConversionID"><em>ConversionID</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.bl.unit_conversion">
+<span id="accml-lib-core-bl-unit-conversion-module"></span><h2>accml_lib.core.bl.unit_conversion module<a class="headerlink" href="#module-accml_lib.core.bl.unit_conversion" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.bl.unit_conversion.EnergyDependentLinearUnitConversion">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.unit_conversion.</span></span><span class="sig-name descname"><span class="pre">EnergyDependentLinearUnitConversion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">intercept</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">brho</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/unit_conversion.html#EnergyDependentLinearUnitConversion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.unit_conversion.EnergyDependentLinearUnitConversion" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="accml_lib.core.interfaces.utils.html#accml_lib.core.interfaces.utils.state_conversion.StateConversion" title="accml_lib.core.interfaces.utils.state_conversion.StateConversion"><code class="xref py py-class docutils literal notranslate"><span class="pre">StateConversion</span></code></a></p>
+<p>Typical example: magnet parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>intercept</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>slope</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>brho</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.unit_conversion.EnergyDependentLinearUnitConversion.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/unit_conversion.html#EnergyDependentLinearUnitConversion.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.unit_conversion.EnergyDependentLinearUnitConversion.forward" title="Link to this definition"></a></dt>
+<dd><p>from “physics” to machine</p>
+<p>Follows bluesky convention</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.unit_conversion.EnergyDependentLinearUnitConversion.inverse">
+<span class="sig-name descname"><span class="pre">inverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/unit_conversion.html#EnergyDependentLinearUnitConversion.inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.unit_conversion.EnergyDependentLinearUnitConversion.inverse" title="Link to this definition"></a></dt>
+<dd><p>from machine to “physics”</p>
+<p>Follows bluesky convention</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.bl.unit_conversion.LinearUnitConversion">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.unit_conversion.</span></span><span class="sig-name descname"><span class="pre">LinearUnitConversion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">intercept</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/unit_conversion.html#LinearUnitConversion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.unit_conversion.LinearUnitConversion" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="accml_lib.core.interfaces.utils.html#accml_lib.core.interfaces.utils.state_conversion.StateConversion" title="accml_lib.core.interfaces.utils.state_conversion.StateConversion"><code class="xref py py-class docutils literal notranslate"><span class="pre">StateConversion</span></code></a></p>
+<p>Typical example: tune</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>intercept</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>slope</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.unit_conversion.LinearUnitConversion.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/unit_conversion.html#LinearUnitConversion.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.unit_conversion.LinearUnitConversion.forward" title="Link to this definition"></a></dt>
+<dd><p>from “physics” to machine</p>
+<p>Follows bluesky convention</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.unit_conversion.LinearUnitConversion.inverse">
+<span class="sig-name descname"><span class="pre">inverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/unit_conversion.html#LinearUnitConversion.inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.unit_conversion.LinearUnitConversion.inverse" title="Link to this definition"></a></dt>
+<dd><p>from machine to “physics”</p>
+<p>Follows bluesky convention</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.bl.yellow_pages">
+<span id="accml-lib-core-bl-yellow-pages-module"></span><h2>accml_lib.core.bl.yellow_pages module<a class="headerlink" href="#module-accml_lib.core.bl.yellow_pages" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.bl.yellow_pages.FamilyName">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.yellow_pages.</span></span><span class="sig-name descname"><span class="pre">FamilyName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/yellow_pages.html#FamilyName"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.yellow_pages.FamilyName" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.bl.yellow_pages.FamilyName.master_clock">
+<span class="sig-name descname"><span class="pre">master_clock</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'master_clock'</span></span><a class="headerlink" href="#accml_lib.core.bl.yellow_pages.FamilyName.master_clock" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.bl.yellow_pages.FamilyName.quadrupoles">
+<span class="sig-name descname"><span class="pre">quadrupoles</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'quadrupoles'</span></span><a class="headerlink" href="#accml_lib.core.bl.yellow_pages.FamilyName.quadrupoles" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.bl.yellow_pages.FamilyName.tune_correction_quadrupoles">
+<span class="sig-name descname"><span class="pre">tune_correction_quadrupoles</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'tune_correction_quadrupoles'</span></span><a class="headerlink" href="#accml_lib.core.bl.yellow_pages.FamilyName.tune_correction_quadrupoles" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.bl.yellow_pages.YellowPages">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.yellow_pages.</span></span><span class="sig-name descname"><span class="pre">YellowPages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/yellow_pages.html#YellowPages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.yellow_pages.YellowPages" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="accml_lib.core.interfaces.utils.html#accml_lib.core.interfaces.utils.yellow_pages.YellowPagesBase" title="accml_lib.core.interfaces.utils.yellow_pages.YellowPagesBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">YellowPagesBase</span></code></a></p>
+<p>or use:
+get(family_name: str)
+separate yellow pages for lattice elements and devices</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>d</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.yellow_pages.YellowPages.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">family_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/yellow_pages.html#YellowPages.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.yellow_pages.YellowPages.get" title="Link to this definition"></a></dt>
+<dd><p>Return a sequence with all identifiers belonging to base class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>family_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><a class="reference internal" href="#accml_lib.core.bl.yellow_pages.FamilyName" title="accml_lib.core.bl.yellow_pages.FamilyName"><em>FamilyName</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.yellow_pages.YellowPages.quadrupole_names">
+<span class="sig-name descname"><span class="pre">quadrupole_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/yellow_pages.html#YellowPages.quadrupole_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.yellow_pages.YellowPages.quadrupole_names" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.yellow_pages.YellowPages.tune_correction_quadrupole_names">
+<span class="sig-name descname"><span class="pre">tune_correction_quadrupole_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/yellow_pages.html#YellowPages.tune_correction_quadrupole_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.yellow_pages.YellowPages.tune_correction_quadrupole_names" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.bl">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-accml_lib.core.bl" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="accml_lib.core.html" class="btn btn-neutral float-left" title="accml_lib.core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="accml_lib.core.config.html" class="btn btn-neutral float-right" title="accml_lib.core.config package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Helmholtz Zentrum Berlin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

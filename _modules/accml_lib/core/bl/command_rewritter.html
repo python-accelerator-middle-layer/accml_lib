@@ -1,0 +1,234 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>accml_lib.core.bl.command_rewritter &mdash; accml_lib  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            accml_lib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../src/accml_lib.html">accml_lib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">accml_lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">accml_lib.core.bl.command_rewritter</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for accml_lib.core.bl.command_rewritter</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;convert from lattice element change to device property</span>
+
+<span class="sd">Please note:</span>
+<span class="sd">    here we have to map (lattice_name, property) -&gt; (device_name, property)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..model.utils.command</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReadCommand</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...core.interfaces.utils.command_rewritter</span><span class="w"> </span><span class="kn">import</span> <span class="n">CommandRewriterBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...core.interfaces.utils.liaison_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">LiaisonManagerBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...core.interfaces.utils.translator_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">TranslatorServiceBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...core.model.utils.command</span><span class="w"> </span><span class="kn">import</span> <span class="n">Command</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...core.model.utils.identifiers</span><span class="w"> </span><span class="kn">import</span> <span class="n">DevicePropertyID</span><span class="p">,</span> <span class="n">LatticeElementPropertyID</span><span class="p">,</span> <span class="n">ConversionID</span>
+
+
+<div class="viewcode-block" id="CommandRewriter">
+<a class="viewcode-back" href="../../../../src/accml_lib.core.bl.html#accml_lib.core.bl.command_rewritter.CommandRewriter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CommandRewriter</span><span class="p">(</span><span class="n">CommandRewriterBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Command rewriter.</span>
+
+<span class="sd">    This module translates commands between two state spaces:</span>
+<span class="sd">    from a lattice element specification to a device property specification (forward)</span>
+<span class="sd">    and vice versa (inverse).</span>
+
+<span class="sd">    It uses a liaison manager to map identifiers and a translator service</span>
+<span class="sd">    to convert the command values between representations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">liaison_manager</span><span class="p">:</span> <span class="n">LiaisonManagerBase</span><span class="p">,</span> <span class="n">translation_service</span><span class="p">:</span> <span class="n">TranslatorServiceBase</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the CommandRewriter with the required services.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            liaison_manager: The manager responsible for mapping identifiers.</span>
+<span class="sd">            translator_service: The service providing value conversions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">translator_service</span> <span class="o">=</span> <span class="n">translation_service</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">liaison_manager</span> <span class="o">=</span> <span class="n">liaison_manager</span>
+
+<div class="viewcode-block" id="CommandRewriter.inverse">
+<a class="viewcode-back" href="../../../../src/accml_lib.core.bl.html#accml_lib.core.bl.command_rewritter.CommandRewriter.inverse">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">:</span> <span class="n">Command</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Command</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a command from a device property space back to the lattice space.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            :param cmd: The command to be transformed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of commands corresponding to the inverse translations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dev_prop_id</span> <span class="o">=</span> <span class="n">DevicePropertyID</span><span class="p">(</span>
+            <span class="n">device_name</span><span class="o">=</span><span class="n">cmd</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">cmd</span><span class="o">.</span><span class="n">property</span>
+        <span class="p">)</span>
+        <span class="n">rcmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverse_read_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">lat_prop_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">LatticeElementPropertyID</span><span class="p">(</span><span class="n">element_name</span><span class="o">=</span><span class="n">r</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">r</span><span class="o">.</span><span class="n">property</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rcmd</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">inverse_translate_one</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">dev_prop_id</span><span class="p">,</span> <span class="n">lat_prop_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">lat_prop_id</span> <span class="ow">in</span> <span class="n">lat_prop_ids</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="CommandRewriter.inverse_translate_one">
+<a class="viewcode-back" href="../../../../src/accml_lib.core.bl.html#accml_lib.core.bl.command_rewritter.CommandRewriter.inverse_translate_one">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inverse_translate_one</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">:</span> <span class="n">Command</span><span class="p">,</span> <span class="n">dev_prop_id</span><span class="p">:</span> <span class="n">DevicePropertyID</span><span class="p">,</span>
+                              <span class="n">lat_prop_id</span><span class="p">:</span> <span class="n">LatticeElementPropertyID</span>
+                              <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Command</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform a single inverse translation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            :param dev_prop_id: The source device property identifier</span>
+<span class="sd">            :param cmd: The original command</span>
+<span class="sd">            :param lat_prop_id: The target lattice property identifier</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A new Command with the value converted to the lattice state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">translation_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">translator_service</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">ConversionID</span><span class="p">(</span><span class="n">lattice_property_id</span><span class="o">=</span><span class="n">lat_prop_id</span><span class="p">,</span> <span class="n">device_property_id</span><span class="o">=</span><span class="n">dev_prop_id</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dev_prop_id</span><span class="o">.</span><span class="n">device_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Device name cannot be None in device property identifier.&quot;</span><span class="p">)</span>
+
+        <span class="n">ncmd</span> <span class="o">=</span> <span class="n">Command</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="n">lat_prop_id</span><span class="o">.</span><span class="n">element_name</span><span class="p">,</span>
+            <span class="nb">property</span><span class="o">=</span><span class="n">lat_prop_id</span><span class="o">.</span><span class="n">property</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">translation_object</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
+            <span class="n">behaviour_on_error</span><span class="o">=</span><span class="n">cmd</span><span class="o">.</span><span class="n">behaviour_on_error</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">ncmd</span></div>
+
+
+<div class="viewcode-block" id="CommandRewriter.forward">
+<a class="viewcode-back" href="../../../../src/accml_lib.core.bl.html#accml_lib.core.bl.command_rewritter.CommandRewriter.forward">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">:</span> <span class="n">Command</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Command</span><span class="p">:</span>
+        <span class="n">rcmd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward_read_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">lat_prop_id</span> <span class="o">=</span> <span class="n">LatticeElementPropertyID</span><span class="p">(</span>
+            <span class="n">element_name</span><span class="o">=</span><span class="n">cmd</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">cmd</span><span class="o">.</span><span class="n">property</span>
+        <span class="p">)</span>
+        <span class="n">dev_prop_id</span> <span class="o">=</span> <span class="n">DevicePropertyID</span><span class="p">(</span><span class="n">device_name</span><span class="o">=</span><span class="n">rcmd</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">rcmd</span><span class="o">.</span><span class="n">property</span><span class="p">)</span>
+
+        <span class="n">translation_object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">translator_service</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">ConversionID</span><span class="p">(</span><span class="n">lattice_property_id</span><span class="o">=</span><span class="n">lat_prop_id</span><span class="p">,</span> <span class="n">device_property_id</span><span class="o">=</span><span class="n">dev_prop_id</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">ncmd</span> <span class="o">=</span> <span class="n">Command</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="n">dev_prop_id</span><span class="o">.</span><span class="n">device_name</span><span class="p">,</span>
+            <span class="nb">property</span><span class="o">=</span><span class="n">dev_prop_id</span><span class="o">.</span><span class="n">property</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">translation_object</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">cmd</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
+            <span class="n">behaviour_on_error</span><span class="o">=</span><span class="n">cmd</span><span class="o">.</span><span class="n">behaviour_on_error</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">ncmd</span></div>
+
+
+<div class="viewcode-block" id="CommandRewriter.forward_read_command">
+<a class="viewcode-back" href="../../../../src/accml_lib.core.bl.html#accml_lib.core.bl.command_rewritter.CommandRewriter.forward_read_command">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward_read_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="n">ReadCommand</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReadCommand</span><span class="p">:</span>
+        <span class="n">lat_prop_id</span> <span class="o">=</span> <span class="n">LatticeElementPropertyID</span><span class="p">(</span>
+            <span class="n">element_name</span><span class="o">=</span><span class="n">command</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">command</span><span class="o">.</span><span class="n">property</span>
+        <span class="p">)</span>
+        <span class="n">dev_prop_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">liaison_manager</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">lat_prop_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ReadCommand</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">dev_prop_id</span><span class="o">.</span><span class="n">device_name</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">dev_prop_id</span><span class="o">.</span><span class="n">property</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CommandRewriter.inverse_read_command">
+<a class="viewcode-back" href="../../../../src/accml_lib.core.bl.html#accml_lib.core.bl.command_rewritter.CommandRewriter.inverse_read_command">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inverse_read_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="n">ReadCommand</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ReadCommand</span><span class="p">]:</span>
+        <span class="n">dev_prop_id</span> <span class="o">=</span> <span class="n">DevicePropertyID</span><span class="p">(</span>
+            <span class="n">device_name</span><span class="o">=</span><span class="n">command</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">command</span><span class="o">.</span><span class="n">property</span>
+        <span class="p">)</span>
+        <span class="n">lat_prop_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">liaison_manager</span><span class="o">.</span><span class="n">inverse</span><span class="p">(</span><span class="n">dev_prop_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">ReadCommand</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">lp</span><span class="o">.</span><span class="n">element_name</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">lp</span><span class="o">.</span><span class="n">property</span><span class="p">)</span> <span class="k">for</span> <span class="n">lp</span> <span class="ow">in</span> <span class="n">lat_prop_ids</span><span class="p">]</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Helmholtz Zentrum Berlin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

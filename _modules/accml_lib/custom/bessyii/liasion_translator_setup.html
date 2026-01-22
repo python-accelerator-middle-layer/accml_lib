@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>accml_lib.custom.bessyii.liasion_translator_setup &mdash; accml_lib  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            accml_lib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../src/accml_lib.html">accml_lib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">accml_lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">accml_lib.custom.bessyii.liasion_translator_setup</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for accml_lib.custom.bessyii.liasion_translator_setup</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.bl.liaison_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">LiaisonManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.bl.translator_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">TranslatorService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.bl.unit_conversion</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearUnitConversion</span><span class="p">,</span> <span class="n">EnergyDependentLinearUnitConversion</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.bl.yellow_pages</span><span class="w"> </span><span class="kn">import</span> <span class="n">YellowPages</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.config.config_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigService</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.config.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">full_data_path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.interfaces.utils.liaison_manager</span><span class="w"> </span><span class="kn">import</span> <span class="n">LiaisonManagerBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.interfaces.utils.translator_service</span><span class="w"> </span><span class="kn">import</span> <span class="n">TranslatorServiceBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.interfaces.utils.yellow_pages</span><span class="w"> </span><span class="kn">import</span> <span class="n">YellowPagesBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.model.utils.identifiers</span><span class="w"> </span><span class="kn">import</span> <span class="n">LatticeElementPropertyID</span><span class="p">,</span> <span class="n">DevicePropertyID</span><span class="p">,</span> <span class="n">ConversionID</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.model.output.tune</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tune</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.facility_specific_constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">ring_parameters</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;accml&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TuneConversion">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.bessyii.html#accml_lib.custom.bessyii.liasion_translator_setup.TuneConversion">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TuneConversion</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to</span> <span class="o">=</span> <span class="n">to</span>
+
+<div class="viewcode-block" id="TuneConversion.forward">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.bessyii.html#accml_lib.custom.bessyii.liasion_translator_setup.TuneConversion.forward">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">:</span> <span class="n">Tune</span><span class="p">)</span> <span class="o">-&gt;</span>  <span class="n">Tune</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Tune</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">y</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TuneConversion.inverse">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.bessyii.html#accml_lib.custom.bessyii.liasion_translator_setup.TuneConversion.inverse">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">:</span> <span class="n">Tune</span><span class="p">)</span> <span class="o">-&gt;</span>  <span class="n">Tune</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Tune</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">to</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">inp</span><span class="o">.</span><span class="n">y</span><span class="p">))</span></div>
+</div>
+
+
+
+
+<div class="viewcode-block" id="load_managers">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.bessyii.html#accml_lib.custom.bessyii.liasion_translator_setup.load_managers">[docs]</a>
+<span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_managers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">YellowPagesBase</span><span class="p">,</span> <span class="n">LiaisonManagerBase</span><span class="p">,</span> <span class="n">TranslatorServiceBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Todo:</span>
+<span class="sd">        appropriate to separate caching from loading?</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">build_managers</span><span class="p">(</span><span class="s2">&quot;custom/config_data/bessyii&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="build_managers">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.bessyii.html#accml_lib.custom.bessyii.liasion_translator_setup.build_managers">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_managers</span><span class="p">(</span><span class="n">config_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">YellowPagesBase</span><span class="p">,</span> <span class="n">LiaisonManagerBase</span><span class="p">,</span> <span class="n">TranslatorServiceBase</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A first poor mans implementation of liaison manager and Translation service for accml_lib</span>
+
+<span class="sd">    Todo:</span>
+<span class="sd">        Which info is already in database and better obtained from database?</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Load data from YAML config files</span>
+    <span class="n">config_service</span> <span class="o">=</span> <span class="n">ConfigService</span><span class="p">(</span><span class="n">magnet_path</span><span class="o">=</span><span class="n">full_data_path</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">config_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;magnets.yaml&quot;</span><span class="p">),</span>
+                                   <span class="n">pc_path</span><span class="o">=</span><span class="n">full_data_path</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">config_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;power_converters.yaml&quot;</span><span class="p">))</span>
+    <span class="n">config_service</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="c1"># magnets = magnet_infos_from_db()</span>
+    <span class="n">magnets</span> <span class="o">=</span> <span class="n">config_service</span><span class="o">.</span><span class="n">get_magnets</span><span class="p">()</span>
+    <span class="c1"># Make sure that names are unique ... everything down the list depends on it</span>
+    <span class="n">magnet_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">magnet</span><span class="o">.</span><span class="n">dev_id</span> <span class="k">for</span> <span class="n">magnet</span> <span class="ow">in</span> <span class="n">magnets</span><span class="p">])</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">magnet_names</span><span class="p">))</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">magnets</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Magnet names seem not to be unique, but is assumption of all further processing&quot;</span><span class="p">)</span>
+
+    <span class="c1"># TODO: identify a generic way based on data from different labs to build YP</span>
+    <span class="c1"># at the moment just a hardcoded list of families</span>
+    <span class="n">yp</span> <span class="o">=</span> <span class="n">YellowPages</span><span class="p">(</span>
+        <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">quadrupoles</span><span class="o">=</span><span class="p">[</span><span class="n">elem</span><span class="o">.</span><span class="n">dev_id</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">magnets</span> <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;quadrupole&quot;</span><span class="p">],</span>
+            <span class="n">tune_correction_quadrupoles</span><span class="o">=</span><span class="p">[</span><span class="n">elem</span><span class="o">.</span><span class="n">dev_id</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">magnets</span> <span class="k">if</span>
+                                         <span class="n">elem</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;quadrupole&quot;</span> <span class="ow">and</span> <span class="s2">&quot;tune_correction&quot;</span> <span class="ow">in</span> <span class="n">elem</span><span class="o">.</span><span class="n">family_member</span><span class="p">],</span>
+            <span class="n">master_clock</span><span class="o">=</span><span class="s2">&quot;master_clock&quot;</span><span class="p">,</span>  <span class="c1"># TODO: should power converter sources be a separate part here</span>
+            <span class="n">quadrupole_pcs</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">elem</span><span class="o">.</span><span class="n">power_converter_id</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">magnets</span> <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;quadrupole&quot;</span><span class="p">]))</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="c1"># TODO: check if property must be different for the different magnets ...</span>
+
+    <span class="n">forward_lut</span> <span class="o">=</span> <span class="p">{</span><span class="n">LatticeElementPropertyID</span><span class="p">(</span><span class="n">element_name</span><span class="o">=</span><span class="n">magnet</span><span class="o">.</span><span class="n">dev_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;main_strength&quot;</span><span class="p">):</span> <span class="n">DevicePropertyID</span><span class="p">(</span>
+        <span class="n">device_name</span><span class="o">=</span><span class="n">magnet</span><span class="o">.</span><span class="n">power_converter_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;set_current&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">magnet</span> <span class="ow">in</span> <span class="n">magnets</span> <span class="k">if</span>
+        <span class="n">magnet</span><span class="o">.</span><span class="n">dev_id</span> <span class="ow">in</span> <span class="n">yp</span><span class="o">.</span><span class="n">quadrupole_names</span><span class="p">()}</span>
+    <span class="n">forward_lut</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+        <span class="n">LatticeElementPropertyID</span><span class="p">(</span><span class="n">element_name</span><span class="o">=</span><span class="n">magnet</span><span class="o">.</span><span class="n">dev_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;delta_main_strength&quot;</span><span class="p">):</span> <span class="n">DevicePropertyID</span><span class="p">(</span>
+            <span class="n">device_name</span><span class="o">=</span><span class="n">magnet</span><span class="o">.</span><span class="n">power_converter_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;delta_set_current&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">magnet</span> <span class="ow">in</span> <span class="n">magnets</span> <span class="k">if</span>
+        <span class="n">magnet</span><span class="o">.</span><span class="n">dev_id</span> <span class="ow">in</span> <span class="n">yp</span><span class="o">.</span><span class="n">quadrupole_names</span><span class="p">()})</span>
+
+    <span class="n">forward_lut</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+        <span class="p">{</span><span class="n">LatticeElementPropertyID</span><span class="p">(</span><span class="n">element_name</span><span class="o">=</span><span class="s2">&quot;tune&quot;</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;transversal&quot;</span><span class="p">)</span> <span class="p">:</span>  <span class="n">DevicePropertyID</span><span class="p">(</span>
+            <span class="n">device_name</span><span class="o">=</span><span class="s2">&quot;tune&quot;</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;delta_set_current&quot;</span><span class="p">)}</span>
+    <span class="p">)</span>
+
+    <span class="c1"># inverse_lut = {</span>
+    <span class="c1">#     DevicePropertyID(device_name=m.power_converter_id, property=&quot;set_current&quot;): [</span>
+    <span class="c1">#         LatticeElementPropertyID(element_name=m.dev_id, property=&quot;main_strength&quot;)] for m in magnets}</span>
+
+    <span class="n">inverse_lut_dd</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">magnets</span><span class="p">:</span>
+        <span class="c1"># currently only setting up the quadrupoles</span>
+        <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">dev_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">yp</span><span class="o">.</span><span class="n">quadrupole_names</span><span class="p">():</span>
+            <span class="k">continue</span>
+
+        <span class="n">dp_main</span> <span class="o">=</span> <span class="n">DevicePropertyID</span><span class="p">(</span><span class="n">device_name</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">power_converter_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;set_current&quot;</span><span class="p">)</span>
+        <span class="n">lep_main</span> <span class="o">=</span> <span class="n">LatticeElementPropertyID</span><span class="p">(</span><span class="n">element_name</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">dev_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;main_strength&quot;</span><span class="p">)</span>
+        <span class="n">inverse_lut_dd</span><span class="p">[</span><span class="n">dp_main</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lep_main</span><span class="p">)</span>
+
+        <span class="n">dp_main</span> <span class="o">=</span> <span class="n">DevicePropertyID</span><span class="p">(</span><span class="n">device_name</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">power_converter_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;delta_set_current&quot;</span><span class="p">)</span>
+        <span class="n">lep_main</span> <span class="o">=</span> <span class="n">LatticeElementPropertyID</span><span class="p">(</span><span class="n">element_name</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">dev_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;delta_main_strength&quot;</span><span class="p">)</span>
+        <span class="n">inverse_lut_dd</span><span class="p">[</span><span class="n">dp_main</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lep_main</span><span class="p">)</span>
+
+    <span class="n">inverse_lut</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">inverse_lut_dd</span><span class="p">)</span>
+    <span class="n">inverse_lut</span><span class="p">[</span><span class="n">DevicePropertyID</span><span class="p">(</span><span class="n">device_name</span><span class="o">=</span><span class="s2">&quot;tune&quot;</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;transversal&quot;</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[</span><span class="n">LatticeElementPropertyID</span><span class="p">(</span><span class="n">element_name</span><span class="o">=</span><span class="s2">&quot;tune&quot;</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;transversal&quot;</span><span class="p">)]</span>
+    <span class="n">lm</span> <span class="o">=</span> <span class="n">LiaisonManager</span><span class="p">(</span><span class="n">forward_lut</span><span class="o">=</span><span class="n">forward_lut</span><span class="p">,</span> <span class="n">inverse_lut</span><span class="o">=</span><span class="n">inverse_lut</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">forward_lut</span><span class="p">,</span> <span class="n">inverse_lut</span>
+
+    <span class="n">translator_lut</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">ConversionID</span><span class="p">(</span><span class="n">lattice_property_id</span><span class="o">=</span><span class="n">LatticeElementPropertyID</span><span class="p">(</span><span class="n">element_name</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">dev_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;main_strength&quot;</span><span class="p">),</span>
+                     <span class="n">device_property_id</span><span class="o">=</span><span class="n">DevicePropertyID</span><span class="p">(</span><span class="n">device_name</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">power_converter_id</span><span class="p">,</span>
+                                                         <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;set_current&quot;</span><span class="p">)):</span> <span class="n">EnergyDependentLinearUnitConversion</span><span class="p">(</span>
+            <span class="c1"># TODO: find out if it is the correct converion</span>
+            <span class="c1">#  magnetic strength is most proably None</span>
+            <span class="n">slope</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="n">m</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">intercept</span><span class="p">,</span> <span class="n">brho</span><span class="o">=</span><span class="n">ring_parameters</span><span class="o">.</span><span class="n">brho</span><span class="p">,</span> <span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">magnets</span><span class="p">}</span>
+
+    <span class="c1"># as its only a liner interpolation, its simple to do the delta interpolation</span>
+    <span class="c1"># for complex curves this interpolation will fail ...</span>
+    <span class="c1"># there the measurement execution engine has to peek into the machine state</span>
+    <span class="c1"># and apply it</span>
+    <span class="n">translator_lut</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">ConversionID</span><span class="p">(</span>
+        <span class="n">lattice_property_id</span><span class="o">=</span><span class="n">LatticeElementPropertyID</span><span class="p">(</span><span class="n">element_name</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">dev_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;delta_main_strength&quot;</span><span class="p">),</span>
+        <span class="n">device_property_id</span><span class="o">=</span><span class="n">DevicePropertyID</span><span class="p">(</span><span class="n">device_name</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">power_converter_id</span><span class="p">,</span>
+                                            <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;delta_set_current&quot;</span><span class="p">)):</span> <span class="n">EnergyDependentLinearUnitConversion</span><span class="p">(</span>
+        <span class="c1"># TODO: find out if it is the correct conversion</span>
+        <span class="c1">#  magnetic strength is most proably None</span>
+        <span class="n">slope</span><span class="o">=</span><span class="mf">1.0</span><span class="o">/</span><span class="n">m</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">brho</span><span class="o">=</span><span class="n">ring_parameters</span><span class="o">.</span><span class="n">brho</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">magnets</span><span class="p">})</span>
+
+    <span class="n">floquet_to_frequency</span> <span class="o">=</span> <span class="mf">500e3</span> <span class="o">/</span> <span class="mf">400.0</span>
+    <span class="c1"># Todo: analyse if this setup is appropriate</span>
+    <span class="n">translator_lut</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+        <span class="n">ConversionID</span><span class="p">(</span>
+            <span class="n">lattice_property_id</span><span class="o">=</span><span class="n">LatticeElementPropertyID</span><span class="p">(</span><span class="n">element_name</span><span class="o">=</span><span class="s2">&quot;tune&quot;</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;transversal&quot;</span><span class="p">),</span>
+            <span class="n">device_property_id</span><span class="o">=</span><span class="n">DevicePropertyID</span><span class="p">(</span><span class="n">device_name</span><span class="o">=</span><span class="s2">&quot;tune&quot;</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;delta_set_current&quot;</span><span class="p">)</span>
+        <span class="p">)</span> <span class="p">:</span> <span class="n">TuneConversion</span><span class="p">(</span><span class="n">LinearUnitConversion</span><span class="p">(</span><span class="n">intercept</span><span class="o">=</span><span class="mf">0e0</span><span class="p">,</span> <span class="n">slope</span><span class="o">=</span><span class="n">floquet_to_frequency</span><span class="p">))</span>
+    <span class="p">})</span>
+    <span class="n">translator_lut</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+        <span class="n">ConversionID</span><span class="p">(</span>
+            <span class="n">lattice_property_id</span><span class="o">=</span><span class="n">LatticeElementPropertyID</span><span class="p">(</span><span class="n">element_name</span><span class="o">=</span><span class="s2">&quot;tune&quot;</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;transversal&quot;</span><span class="p">),</span>
+            <span class="n">device_property_id</span><span class="o">=</span><span class="n">DevicePropertyID</span><span class="p">(</span><span class="n">device_name</span><span class="o">=</span><span class="s2">&quot;tune&quot;</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="s2">&quot;transversal&quot;</span><span class="p">)</span>
+        <span class="p">)</span> <span class="p">:</span> <span class="n">TuneConversion</span><span class="p">(</span><span class="n">LinearUnitConversion</span><span class="p">(</span><span class="n">intercept</span><span class="o">=</span><span class="mf">0e0</span><span class="p">,</span> <span class="n">slope</span><span class="o">=</span><span class="n">floquet_to_frequency</span><span class="p">))</span>
+    <span class="p">})</span>
+    <span class="n">tm</span> <span class="o">=</span> <span class="n">TranslatorService</span><span class="p">(</span><span class="n">translator_lut</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">yp</span><span class="p">,</span> <span class="n">lm</span><span class="p">,</span> <span class="n">tm</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">yp</span><span class="p">,</span> <span class="n">lm</span><span class="p">,</span> <span class="n">tm</span> <span class="o">=</span> <span class="n">build_managers</span><span class="p">(</span><span class="s2">&quot;custom/accml_lib/config_data&quot;</span><span class="p">)</span>
+    <span class="c1"># lat_prop_id = LatticeElementPropertyID(element_name=&quot;QF1C01A&quot;, property=&quot;set_current&quot;)</span>
+    <span class="c1"># r, = lm.forward(lat_prop_id)</span>
+    <span class="c1"># dev_prop_id = DevicePropertyID(device_name=&quot;PC_QF1C01A&quot;, property=&quot;set_current&quot;)</span>
+    <span class="c1"># r, = lm.inverse(dev_prop_id)</span>
+    <span class="c1"># to = tm.get(ConversionID(lattice_property_id=r, device_property_id=dev_prop_id))  # pprint.pprint(to)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Helmholtz Zentrum Berlin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,461 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>accml_lib.core.interfaces.utils package &mdash; accml_lib  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="accml_lib.core.model package" href="accml_lib.core.model.html" />
+    <link rel="prev" title="accml_lib.core.interfaces.solver package" href="accml_lib.core.interfaces.solver.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            accml_lib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="accml_lib.html">accml_lib package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="accml_lib.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="accml_lib.core.html">accml_lib.core package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="accml_lib.core.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="accml_lib.core.html#module-accml_lib.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="accml_lib.custom.html">accml_lib.custom package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="accml_lib.html#module-accml_lib">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">accml_lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="accml_lib.html">accml_lib package</a></li>
+          <li class="breadcrumb-item"><a href="accml_lib.core.html">accml_lib.core package</a></li>
+          <li class="breadcrumb-item"><a href="accml_lib.core.interfaces.html">accml_lib.core.interfaces package</a></li>
+      <li class="breadcrumb-item active">accml_lib.core.interfaces.utils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/src/accml_lib.core.interfaces.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="accml-lib-core-interfaces-utils-package">
+<h1>accml_lib.core.interfaces.utils package<a class="headerlink" href="#accml-lib-core-interfaces-utils-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-accml_lib.core.interfaces.utils.command_rewritter">
+<span id="accml-lib-core-interfaces-utils-command-rewritter-module"></span><h2>accml_lib.core.interfaces.utils.command_rewritter module<a class="headerlink" href="#module-accml_lib.core.interfaces.utils.command_rewritter" title="Link to this heading"></a></h2>
+<p>convert the values from one state space</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.command_rewritter.CommandRewriterBase">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.interfaces.utils.command_rewritter.</span></span><span class="sig-name descname"><span class="pre">CommandRewriterBase</span></span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/command_rewritter.html#CommandRewriterBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.command_rewritter.CommandRewriterBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>alternative:
+TranslationService</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.command_rewritter.CommandRewriterBase.forward">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/command_rewritter.html#CommandRewriterBase.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.command_rewritter.CommandRewriterBase.forward" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command" title="accml_lib.core.model.utils.command.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>command</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command" title="accml_lib.core.model.utils.command.Command"><em>Command</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.command_rewritter.CommandRewriterBase.forward_read_command">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">forward_read_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/command_rewritter.html#CommandRewriterBase.forward_read_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.command_rewritter.CommandRewriterBase.forward_read_command" title="Link to this definition"></a></dt>
+<dd><p>Typically an answer of liaison manager</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.ReadCommand" title="accml_lib.core.model.utils.command.ReadCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadCommand</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>command</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.ReadCommand" title="accml_lib.core.model.utils.command.ReadCommand"><em>ReadCommand</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.command_rewritter.CommandRewriterBase.inverse">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">inverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/command_rewritter.html#CommandRewriterBase.inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.command_rewritter.CommandRewriterBase.inverse" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command" title="accml_lib.core.model.utils.command.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>command</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command" title="accml_lib.core.model.utils.command.Command"><em>Command</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.command_rewritter.CommandRewriterBase.inverse_read_command">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">inverse_read_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/command_rewritter.html#CommandRewriterBase.inverse_read_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.command_rewritter.CommandRewriterBase.inverse_read_command" title="Link to this definition"></a></dt>
+<dd><p>Typically an answer of liaison manager</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.ReadCommand" title="accml_lib.core.model.utils.command.ReadCommand"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadCommand</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>command</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.ReadCommand" title="accml_lib.core.model.utils.command.ReadCommand"><em>ReadCommand</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.interfaces.utils.devices_facade">
+<span id="accml-lib-core-interfaces-utils-devices-facade-module"></span><h2>accml_lib.core.interfaces.utils.devices_facade module<a class="headerlink" href="#module-accml_lib.core.interfaces.utils.devices_facade" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.devices_facade.DevicesFacade">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.interfaces.utils.devices_facade.</span></span><span class="sig-name descname"><span class="pre">DevicesFacade</span></span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/devices_facade.html#DevicesFacade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.devices_facade.DevicesFacade" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.devices_facade.DevicesFacade.get">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/devices_facade.html#DevicesFacade.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.devices_facade.DevicesFacade.get" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>*</em>) – the name of the device</p>
+</dd>
+</dl>
+<p>returns the device needed</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.interfaces.utils.liaison_manager">
+<span id="accml-lib-core-interfaces-utils-liaison-manager-module"></span><h2>accml_lib.core.interfaces.utils.liaison_manager module<a class="headerlink" href="#module-accml_lib.core.interfaces.utils.liaison_manager" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.liaison_manager.LiaisonManagerBase">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.interfaces.utils.liaison_manager.</span></span><span class="sig-name descname"><span class="pre">LiaisonManagerBase</span></span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/liaison_manager.html#LiaisonManagerBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.liaison_manager.LiaisonManagerBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>transforms pairs of (id, property)</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>it returns a sequence of device / properties
+More than one device can be necessary to be updated</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.liaison_manager.LiaisonManagerBase.forward">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/liaison_manager.html#LiaisonManagerBase.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.liaison_manager.LiaisonManagerBase.forward" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.DevicePropertyID" title="accml_lib.core.model.utils.identifiers.DevicePropertyID"><code class="xref py py-class docutils literal notranslate"><span class="pre">DevicePropertyID</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>id_</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.LatticeElementPropertyID" title="accml_lib.core.model.utils.identifiers.LatticeElementPropertyID"><em>LatticeElementPropertyID</em></a>)</p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>for symmetry: should return a sequence too!</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.liaison_manager.LiaisonManagerBase.inverse">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">inverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/liaison_manager.html#LiaisonManagerBase.inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.liaison_manager.LiaisonManagerBase.inverse" title="Link to this definition"></a></dt>
+<dd><p>needs to return a sequence: e.g. power converters often power more than one magnet</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.LatticeElementPropertyID" title="accml_lib.core.model.utils.identifiers.LatticeElementPropertyID"><code class="xref py py-class docutils literal notranslate"><span class="pre">LatticeElementPropertyID</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>id_</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.DevicePropertyID" title="accml_lib.core.model.utils.identifiers.DevicePropertyID"><em>DevicePropertyID</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.interfaces.utils.measurement_execution_engine">
+<span id="accml-lib-core-interfaces-utils-measurement-execution-engine-module"></span><h2>accml_lib.core.interfaces.utils.measurement_execution_engine module<a class="headerlink" href="#module-accml_lib.core.interfaces.utils.measurement_execution_engine" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.measurement_execution_engine.MeasurementExecutionEngine">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.interfaces.utils.measurement_execution_engine.</span></span><span class="sig-name descname"><span class="pre">MeasurementExecutionEngine</span></span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/measurement_execution_engine.html#MeasurementExecutionEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.measurement_execution_engine.MeasurementExecutionEngine" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.measurement_execution_engine.MeasurementExecutionEngine.execute">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commands_collection</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/measurement_execution_engine.html#MeasurementExecutionEngine.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.measurement_execution_engine.MeasurementExecutionEngine.execute" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>identifier to the data</p>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>commands_collection</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><em>Sequence</em></a><em>[</em><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.TransactionCommand" title="accml_lib.core.model.utils.command.TransactionCommand"><em>TransactionCommand</em></a><em>]</em>)</p>
+</dd>
+</dl>
+<p>Measurement engine is responsible to store data
+as appropriate</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.measurement_execution_engine.MeasurementExecutionEngine.set">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/measurement_execution_engine.html#MeasurementExecutionEngine.set"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.measurement_execution_engine.MeasurementExecutionEngine.set" title="Link to this definition"></a></dt>
+<dd><p>execute these commands together</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cmds</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><em>Sequence</em></a><em>[</em><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command" title="accml_lib.core.model.utils.command.Command"><em>Command</em></a><em>]</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.measurement_execution_engine.MeasurementExecutionEngine.trigger_read">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">trigger_read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/measurement_execution_engine.html#MeasurementExecutionEngine.trigger_read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.measurement_execution_engine.MeasurementExecutionEngine.trigger_read" title="Link to this definition"></a></dt>
+<dd><p>Following ophyd-async / ophyd design</p>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Is this a good idea?</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="accml_lib.core.model.output.html#accml_lib.core.model.output.result.ReadTogether" title="accml_lib.core.model.output.result.ReadTogether"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReadTogether</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>cmds</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><em>Sequence</em></a><em>[</em><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.ReadCommand" title="accml_lib.core.model.utils.command.ReadCommand"><em>ReadCommand</em></a><em>]</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.interfaces.utils.state_conversion">
+<span id="accml-lib-core-interfaces-utils-state-conversion-module"></span><h2>accml_lib.core.interfaces.utils.state_conversion module<a class="headerlink" href="#module-accml_lib.core.interfaces.utils.state_conversion" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.state_conversion.StateConversion">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.interfaces.utils.state_conversion.</span></span><span class="sig-name descname"><span class="pre">StateConversion</span></span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/state_conversion.html#StateConversion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.state_conversion.StateConversion" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>convert one state to an other</p>
+<p>Other wide spread names:
+* unit conversion
+* coordinate system transformation</p>
+<p>Please note initialisation is not handled here</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.state_conversion.StateConversion.forward">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/state_conversion.html#StateConversion.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.state_conversion.StateConversion.forward" title="Link to this definition"></a></dt>
+<dd><p>from “physics” to machine</p>
+<p>Follows bluesky convention</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><em>object</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.state_conversion.StateConversion.inverse">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">inverse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/state_conversion.html#StateConversion.inverse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.state_conversion.StateConversion.inverse" title="Link to this definition"></a></dt>
+<dd><p>from machine to “physics”</p>
+<p>Follows bluesky convention</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>state</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><em>object</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.interfaces.utils.storage">
+<span id="accml-lib-core-interfaces-utils-storage-module"></span><h2>accml_lib.core.interfaces.utils.storage module<a class="headerlink" href="#module-accml_lib.core.interfaces.utils.storage" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.storage.StorageInterface">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.interfaces.utils.storage.</span></span><span class="sig-name descname"><span class="pre">StorageInterface</span></span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/storage.html#StorageInterface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.storage.StorageInterface" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.storage.StorageInterface.add">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/storage.html#StorageInterface.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.storage.StorageInterface.add" title="Link to this definition"></a></dt>
+<dd><p>return identifier for the object stored</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.storage.StorageInterface.get">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/storage.html#StorageInterface.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.storage.StorageInterface.get" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.interfaces.utils.translator_service">
+<span id="accml-lib-core-interfaces-utils-translator-service-module"></span><h2>accml_lib.core.interfaces.utils.translator_service module<a class="headerlink" href="#module-accml_lib.core.interfaces.utils.translator_service" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.translator_service.TranslatorServiceBase">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.interfaces.utils.translator_service.</span></span><span class="sig-name descname"><span class="pre">TranslatorServiceBase</span></span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/translator_service.html#TranslatorServiceBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.translator_service.TranslatorServiceBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Actor says:
+* I know:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>I want to change property “A” of lattice element “B”</p></li>
+<li><p>I know that device “C” needs to change property “D”</p></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><p>please give me the translation object that converts between these</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.translator_service.TranslatorServiceBase.get">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/translator_service.html#TranslatorServiceBase.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.translator_service.TranslatorServiceBase.get" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#accml_lib.core.interfaces.utils.state_conversion.StateConversion" title="accml_lib.core.interfaces.utils.state_conversion.StateConversion"><code class="xref py py-class docutils literal notranslate"><span class="pre">StateConversion</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>id_</strong> (<a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.identifiers.ConversionID" title="accml_lib.core.model.utils.identifiers.ConversionID"><em>ConversionID</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.interfaces.utils.yellow_pages">
+<span id="accml-lib-core-interfaces-utils-yellow-pages-module"></span><h2>accml_lib.core.interfaces.utils.yellow_pages module<a class="headerlink" href="#module-accml_lib.core.interfaces.utils.yellow_pages" title="Link to this heading"></a></h2>
+<p>Info on which device belongs to which other</p>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>provide enum of standard family names?</p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.yellow_pages.YellowPagesBase">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.interfaces.utils.yellow_pages.</span></span><span class="sig-name descname"><span class="pre">YellowPagesBase</span></span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/yellow_pages.html#YellowPagesBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.yellow_pages.YellowPagesBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Handling lattice element and their family belonging</p>
+<p>Two ways to see it:
+* family as seen by a lattice:</p>
+<blockquote>
+<div><p>typically some magnets that are split all over the place</p>
+</div></blockquote>
+<p>Imagine for some lattice e.g. some quadrupoles could be
+identically as they are produced. But they could still
+belong to different families</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.interfaces.utils.yellow_pages.YellowPagesBase.get">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">family_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/interfaces/utils/yellow_pages.html#YellowPagesBase.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.interfaces.utils.yellow_pages.YellowPagesBase.get" title="Link to this definition"></a></dt>
+<dd><p>Return a sequence with all identifiers belonging to base class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>family_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-accml_lib.core.interfaces.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-accml_lib.core.interfaces.utils" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="accml_lib.core.interfaces.solver.html" class="btn btn-neutral float-left" title="accml_lib.core.interfaces.solver package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="accml_lib.core.model.html" class="btn btn-neutral float-right" title="accml_lib.core.model package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Helmholtz Zentrum Berlin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

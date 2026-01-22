@@ -1,0 +1,45 @@
+accml\_lib.custom.pyat\_simulator package
+=========================================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   accml_lib.custom.pyat_simulator.model
+
+Submodules
+----------
+
+accml\_lib.custom.pyat\_simulator.accelerator\_simulator module
+---------------------------------------------------------------
+
+.. automodule:: accml_lib.custom.pyat_simulator.accelerator_simulator
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+accml\_lib.custom.pyat\_simulator.element\_proxies module
+---------------------------------------------------------
+
+.. automodule:: accml_lib.custom.pyat_simulator.element_proxies
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+accml\_lib.custom.pyat\_simulator.simulator\_backend module
+-----------------------------------------------------------
+
+.. automodule:: accml_lib.custom.pyat_simulator.simulator_backend
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: accml_lib.custom.pyat_simulator
+   :members:
+   :show-inheritance:
+   :undoc-members:

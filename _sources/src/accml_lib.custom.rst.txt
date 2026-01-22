@@ -1,0 +1,20 @@
+accml\_lib.custom package
+=========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   accml_lib.custom.bessyii
+   accml_lib.custom.bessyii_on_tango
+   accml_lib.custom.pyat_simulator
+
+Module contents
+---------------
+
+.. automodule:: accml_lib.custom
+   :members:
+   :show-inheritance:
+   :undoc-members:

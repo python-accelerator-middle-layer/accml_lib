@@ -1,0 +1,488 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>accml_lib.custom.pyat_simulator.element_proxies &mdash; accml_lib  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            accml_lib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../src/accml_lib.html">accml_lib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">accml_lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">accml_lib.custom.pyat_simulator.element_proxies</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for accml_lib.custom.pyat_simulator.element_proxies</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">at</span><span class="w"> </span><span class="kn">import</span> <span class="n">shift_elem</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.interfaces.simulator.element</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElementInterface</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;accml&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="estimate_shift">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.estimate_shift">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">estimate_shift</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Todo: get it upstreamed into pyat</span>
+<span class="sd">    todo: currently this is very pyat specific element update</span>
+<span class="sd">    Estimate the shift values for an element.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        element: The element to estimate shift for.</span>
+<span class="sd">        eps: Tolerance value for consistency check.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray: Computed shift values.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        AssertionError: If standard deviation exceeds the tolerance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">down_stream_shift</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">T1</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">down_stream_shift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">6</span><span class="p">],</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">up_stream_shift</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">T2</span>
+    <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+        <span class="n">up_stream_shift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">6</span><span class="p">],</span> <span class="nb">float</span><span class="p">)</span>
+
+    <span class="n">prep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">down_stream_shift</span><span class="p">,</span> <span class="o">-</span><span class="n">up_stream_shift</span><span class="p">])</span>
+    <span class="n">shift</span> <span class="o">=</span> <span class="n">prep</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># shifts can be applied to more than one element, these are now</span>
+    <span class="c1"># expected to have all the same shift.</span>
+    <span class="k">assert</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">prep</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="n">eps</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">shift</span></div>
+
+
+
+<div class="viewcode-block" id="manipulate_kick">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.manipulate_kick">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">manipulate_kick</span><span class="p">(</span>
+    <span class="n">kick_angles</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">kick_x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kick_y</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+    <span class="n">kick_angles</span> <span class="o">=</span> <span class="n">kick_angles</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">kick_x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">kick_angles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">kick_x</span>
+    <span class="k">if</span> <span class="n">kick_y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">kick_angles</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">kick_y</span>
+    <span class="k">return</span> <span class="n">kick_angles</span></div>
+
+
+
+<div class="viewcode-block" id="ElementProxy">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.ElementProxy">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ElementProxy</span><span class="p">(</span><span class="n">ElementInterface</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Proxy class for an accelerator element to handle interactions and updates.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _obj: The underlying accelerator element.</span>
+<span class="sd">        element_id: Identifier for the element.</span>
+<span class="sd">        on_update_finished: Event triggered upon update completion.</span>
+<span class="sd">        on_changed_value: Event triggered upon value change.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">element_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span> <span class="o">=</span> <span class="n">obj</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">element_id</span> <span class="o">=</span> <span class="n">element_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+<div class="viewcode-block" id="ElementProxy.get_name">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.ElementProxy.get_name">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">element_id</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="si">}</span><span class="s2">, element_id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">element_id</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<div class="viewcode-block" id="ElementProxy.update_roll">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.ElementProxy.update_roll">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_roll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">roll</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Todo: implement setting roll</span>
+<span class="sd">        Set the roll of the element</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">set_tilt</span><span class="p">(</span><span class="n">roll</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ElementProxy.update_shift">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.ElementProxy.update_shift">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">update_shift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dy</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the element shift.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dx: Shift in x-direction.</span>
+<span class="sd">            dy: Shift in y-direction.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError: If both dx and dy are None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">dx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">dy</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Either dx or dy must be provided&quot;</span>
+
+        <span class="p">(</span><span class="n">element</span><span class="p">,)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span>
+        <span class="n">shift</span> <span class="o">=</span> <span class="n">estimate_shift</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+        <span class="n">dx</span> <span class="o">=</span> <span class="n">dx</span> <span class="k">if</span> <span class="n">dx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">shift</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="n">dy</span> <span class="k">if</span> <span class="n">dy</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">shift</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># call AT shift element</span>
+        <span class="n">shift_elem</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+
+        <span class="c1"># look what really happened</span>
+        <span class="p">(</span><span class="n">element</span><span class="p">,)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span>
+        <span class="n">dxr</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">dyr</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">estimate_shift</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">pass</span></div>
+
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_delta_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">property_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">object</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Todo:</span>
+<span class="sd">            This implementation is incorrect! Remove me!</span>
+
+<span class="sd">            The delta is relative to some state of object ...</span>
+<span class="sd">            Needs to be reviewed if it should be handled within this</span>
+<span class="sd">            proxy</span>
+
+<span class="sd">            Should that be rather handled at the backend layer?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;delta update should not be handled by simulation backend or mexec!&quot;</span><span class="p">)</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">peek</span><span class="p">(</span><span class="n">property_id</span><span class="p">)</span>
+        <span class="n">t_val</span> <span class="o">=</span> <span class="n">value</span> <span class="o">+</span> <span class="n">ref</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;delta update </span><span class="si">%s</span><span class="s2">.</span><span class="si">%s</span><span class="s2">: ref </span><span class="si">%s</span><span class="s2">, val </span><span class="si">%s</span><span class="s2"> -&gt; </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">element_id</span><span class="p">,</span> <span class="n">property_id</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">t_val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">property_id</span><span class="p">,</span> <span class="n">t_val</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ElementProxy.update">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.ElementProxy.update">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">property_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">object</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update element properties dynamically based on property_id.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            property_id: The property to update.</span>
+<span class="sd">            value: The value to set.</span>
+<span class="sd">            element_data: Element-specific data required for update.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If an unknown property is specified.</span>
+
+<span class="sd">        Todo: is that Liaison management?</span>
+<span class="sd">              the inverse way</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">property_id</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;delta_&quot;</span><span class="p">,</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;properties like </span><span class="si">{</span><span class="n">property_id</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="s2">&quot; starting with delta should not end up here&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="s2">&quot;Value must be finite&quot;</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">(</span><span class="n">property_id</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">property_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">object</span><span class="p">):</span>
+
+        <span class="p">(</span><span class="n">element</span><span class="p">,)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span>
+        <span class="n">method_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;set_</span><span class="si">{</span><span class="n">property_id</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">if</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s2">&quot;set_x&quot;</span><span class="p">:</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_shift</span><span class="p">(</span><span class="n">dx</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s2">&quot;set_y&quot;</span><span class="p">:</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_shift</span><span class="p">(</span><span class="n">dy</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s2">&quot;set_roll&quot;</span><span class="p">:</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_roll</span><span class="p">(</span><span class="n">roll</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s2">&quot;set_im&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;should not end up here&quot;</span><span class="p">)</span>
+            <span class="c1"># val = value * element_data.hw2phys</span>
+            <span class="c1"># element_type = str(element).split(&#39;\n&#39;)[0]</span>
+        <span class="k">elif</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s2">&quot;set_main_strength&quot;</span><span class="p">:</span>
+            <span class="n">element_type</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="k">if</span> <span class="s2">&quot;Sextupole&quot;</span> <span class="ow">in</span> <span class="n">element_type</span><span class="p">:</span>
+                <span class="n">element</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">H</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="s2">&quot;Quadrupole&quot;</span> <span class="ow">in</span> <span class="n">element_type</span><span class="p">:</span>
+                <span class="n">element</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">K</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Don&#39;t know how to set main strength for element </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s2">&quot;set_freq&quot;</span><span class="p">:</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Frequency</span><span class="o">=</span><span class="n">value</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method_name</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;set_rdbk&quot;</span><span class="p">,</span> <span class="s2">&quot;set_K&quot;</span><span class="p">]:</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s2">&quot;set_x_kick&quot;</span><span class="p">:</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">KickAngle</span><span class="o">=</span><span class="n">manipulate_kick</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">KickAngle</span><span class="p">,</span> <span class="n">kick_x</span><span class="o">=</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s2">&quot;set_y_kick&quot;</span><span class="p">:</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">KickAngle</span><span class="o">=</span><span class="n">manipulate_kick</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">KickAngle</span><span class="p">,</span> <span class="n">kick_y</span><span class="o">=</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">method_name</span> <span class="o">==</span> <span class="s2">&quot;set_frequency&quot;</span><span class="p">:</span>
+            <span class="c1"># should be ok for AT</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Frequency</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+            <span class="c1"># raise AssertionError(&quot;Cavity control not yet declared as functional, have a look to the line below&quot;)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">method</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">method_name</span><span class="p">)</span>
+            <span class="k">await</span> <span class="n">method</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ElementProxy.peek">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.ElementProxy.peek">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">property_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">property_id</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;delta_&quot;</span><span class="p">,</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;properties like </span><span class="si">{</span><span class="n">property_id</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="s2">&quot; starting with delta should not end up here&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">property_id</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="s2">&quot;main_strength&quot;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">peek_main_strength</span><span class="p">(</span><span class="n">property_id</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">property_id</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;x_kick&quot;</span><span class="p">,</span> <span class="s2">&quot;y_kick&quot;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">peek_kick</span><span class="p">(</span><span class="n">property_id</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">property_id</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;frequency&quot;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">peek_frequency</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;handling property </span><span class="si">{</span><span class="n">property_id</span><span class="si">}</span><span class="s2"> not (yet) implemented&quot;</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ElementProxy.peek_frequency">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.ElementProxy.peek_frequency">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">peek_frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="p">(</span><span class="n">element</span><span class="p">,)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span>
+        <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">Frequency</span></div>
+
+
+<div class="viewcode-block" id="ElementProxy.peek_main_strength">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.ElementProxy.peek_main_strength">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">peek_main_strength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">property_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="p">(</span><span class="n">element</span><span class="p">,)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span>
+        <span class="n">element_type</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">if</span> <span class="n">element_type</span> <span class="o">==</span> <span class="s2">&quot;Quadrupole&quot;</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">property_id</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;main_strength&quot;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">K</span>
+        <span class="k">elif</span> <span class="n">element_type</span> <span class="o">==</span> <span class="s2">&quot;Sextupole&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">property_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="s2">&quot;main_strength&quot;</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Not handling </span><span class="si">{</span><span class="n">property_id</span><span class="si">}</span><span class="s2"> for element </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">H</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;main strength not implemented for element </span><span class="si">{</span><span class="n">element_type</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ElementProxy.peek_kick">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.ElementProxy.peek_kick">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">peek_kick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">property_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="p">(</span><span class="n">element</span><span class="p">,)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span>
+        <span class="n">lut</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x_kick</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_kick</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">lut</span><span class="p">[</span><span class="n">property_id</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">ke</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Did not expect kick </span><span class="si">{</span><span class="n">property_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">KickAngle</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span></div>
+</div>
+
+
+
+
+<div class="viewcode-block" id="AddOnElementProxy">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.AddOnElementProxy">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AddOnElementProxy</span><span class="p">(</span><span class="n">ElementProxy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Proxy for an element whose updates are relayed to another element.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        host_element_id: ID of the host element.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">element_id</span><span class="p">,</span> <span class="n">host_element_id</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">element_id</span><span class="o">=</span><span class="n">element_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">host_element_id</span> <span class="o">=</span> <span class="n">host_element_id</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="si">}</span><span class="s2">, element_id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">element_id</span><span class="si">}</span><span class="s2">, host_element_id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">host_element_id</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<div class="viewcode-block" id="AddOnElementProxy.update">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.AddOnElementProxy.update">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">property_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">element_data</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Needs to be implemented for specific case&quot;</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="KickAngleCorrectorProxy">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.KickAngleCorrectorProxy">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">KickAngleCorrectorProxy</span><span class="p">(</span><span class="n">AddOnElementProxy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Proxy for handling kick angle corrections in a specific plane.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        correction_plane: Specifies whether correction is horizontal or vertical.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">correction_plane</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">correction_plane</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="s2">&quot;horizontal&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;vertical&quot;</span><span class="p">,</span>
+        <span class="p">],</span> <span class="s2">&quot;Invalid correction plane&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">correction_planes</span> <span class="o">=</span> <span class="n">correction_plane</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="KickAngleCorrectorProxy.update_kick">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.KickAngleCorrectorProxy.update_kick">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">update_kick</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">kick_x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kick_y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">element_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update kick angles for the corrector element.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            kick_x: Horizontal kick angle.</span>
+<span class="sd">            kick_y: Vertical kick angle.</span>
+<span class="sd">            element_data: Element-specific conversion data.</span>
+
+<span class="sd">        Todo: review if this code is still neede</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">(</span><span class="n">element</span><span class="p">,)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span>
+        <span class="k">if</span> <span class="n">kick_x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kick_x</span> <span class="o">=</span> <span class="n">kick_x</span> <span class="o">*</span> <span class="n">element_data</span><span class="o">.</span><span class="n">hw2phys</span>
+        <span class="k">if</span> <span class="n">kick_y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kick_y</span> <span class="o">=</span> <span class="n">kick_y</span> <span class="o">*</span> <span class="n">element_data</span><span class="o">.</span><span class="n">hw2phys</span>
+        <span class="n">element</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">KickAngle</span><span class="o">=</span><span class="n">manipulate_kick</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">KickAngle</span><span class="p">,</span> <span class="n">kick_x</span><span class="o">=</span><span class="n">kick_x</span><span class="p">,</span> <span class="n">kick_y</span><span class="o">=</span><span class="n">kick_y</span><span class="p">)</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="KickAngleCorrectorProxy.update">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.KickAngleCorrectorProxy.update">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">property_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">element_data</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle updates for the corrector element.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            property_id: The property to update (should be &#39;im&#39;).</span>
+<span class="sd">            value: The value to set.</span>
+<span class="sd">            element_data: Element-specific conversion data.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If an unknown property is specified.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">property_id</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;delta_&quot;</span><span class="p">,</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;properties like </span><span class="si">{</span><span class="n">property_id</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="s2">&quot; starting with delta should not end up here&quot;</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">property_id</span> <span class="o">!=</span> <span class="s2">&quot;im&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected property </span><span class="si">{</span><span class="n">property_id</span><span class="si">}</span><span class="s2"> for kick corrector&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">correction_plane</span> <span class="o">==</span> <span class="s2">&quot;horizontal&quot;</span><span class="p">:</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_kick</span><span class="p">(</span><span class="n">kick_x</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">element_data</span><span class="o">=</span><span class="n">element_data</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">correction_plane</span> <span class="o">==</span> <span class="s2">&quot;vertical&quot;</span><span class="p">:</span>
+            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_kick</span><span class="p">(</span><span class="n">kick_y</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">element_data</span><span class="o">=</span><span class="n">element_data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="KickAngleCorrectorProxy.peek">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.element_proxies.KickAngleCorrectorProxy.peek">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">property_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">property_id</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;delta_&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;properties like </span><span class="si">{</span><span class="n">property_id</span><span class="si">}</span><span class="s2"> starting with delta should not end up here&quot;</span>
+
+        <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">correction_planes</span> <span class="o">==</span> <span class="s2">&quot;horizontal&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">KickAngle</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">correction_planes</span> <span class="o">==</span> <span class="s2">&quot;vertical&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">KickAngle</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown plane </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">correction_planes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Helmholtz Zentrum Berlin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

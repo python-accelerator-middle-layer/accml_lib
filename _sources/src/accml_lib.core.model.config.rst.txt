@@ -1,0 +1,29 @@
+accml\_lib.core.model.config package
+====================================
+
+Submodules
+----------
+
+accml\_lib.core.model.config.magnet module
+------------------------------------------
+
+.. automodule:: accml_lib.core.model.config.magnet
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+accml\_lib.core.model.config.power\_converter module
+----------------------------------------------------
+
+.. automodule:: accml_lib.core.model.config.power_converter
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: accml_lib.core.model.config
+   :members:
+   :show-inheritance:
+   :undoc-members:

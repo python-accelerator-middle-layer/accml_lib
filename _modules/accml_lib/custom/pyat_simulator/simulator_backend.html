@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>accml_lib.custom.pyat_simulator.simulator_backend &mdash; accml_lib  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            accml_lib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../src/accml_lib.html">accml_lib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">accml_lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">accml_lib.custom.pyat_simulator.simulator_backend</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for accml_lib.custom.pyat_simulator.simulator_backend</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">transitions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Machine</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.interfaces.backend.backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">BackendRW</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.interfaces.simulator.accelerator_simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">AcceleratorSimulatorInterface</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.interfaces.simulator.result_element</span><span class="w"> </span><span class="kn">import</span> <span class="n">ResultElement</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.model.output.tune</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tune</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.model.calculation_states</span><span class="w"> </span><span class="kn">import</span> <span class="n">CalculationStates</span> <span class="k">as</span> <span class="n">States</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+
+<span class="c1"># class OrbitElement</span>
+<span class="c1"># needs to be implemented</span>
+<span class="c1">#    pass</span>
+
+<span class="c1"># class TwissElement(ResultElement):</span>
+<span class="c1">#     def __init__(self, backend):</span>
+<span class="c1">#        self.backend = backend</span>
+<span class="c1">#</span>
+<span class="c1">#    def get(self, prop_id: str) -&gt; Tune:</span>
+
+
+<div class="viewcode-block" id="TuneElement">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.simulator_backend.TuneElement">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TuneElement</span><span class="p">(</span><span class="n">ResultElement</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backend</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">=</span> <span class="n">backend</span>
+
+<div class="viewcode-block" id="TuneElement.get">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.simulator_backend.TuneElement.get">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prop_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tune</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">prop_id</span> <span class="o">==</span> <span class="s2">&quot;transversal&quot;</span><span class="p">,</span> <span class="s2">&quot;Only prepared to handle transveral tune&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">get_tune</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SimulationStateModel">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.simulator_backend.SimulationStateModel">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SimulationStateModel</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;all methods added by class::`transitions.Machine`</span>
+
+<span class="sd">    transititions used as bluesky seems not to use</span>
+<span class="sd">    superstate machine any more</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="SimulatorBackend">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.simulator_backend.SimulatorBackend">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SimulatorBackend</span><span class="p">(</span><span class="n">BackendRW</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simulation backend based on pyAT</span>
+
+<span class="sd">    I assume today that the calculation engine works the following way:</span>
+
+<span class="sd">    1. set to a state</span>
+<span class="sd">    2. then calculations are triggered</span>
+
+<span class="sd">    So the calculations shall only happen after the state was</span>
+<span class="sd">    set (completely).This is not (and can not) directly observed</span>
+<span class="sd">    here. Here the calculation is only conducted when its results</span>
+<span class="sd">    are requested. Calculation, setting, and  reading back</span>
+<span class="sd">    calculation results are protected by a lock, so no more sets</span>
+<span class="sd">    are made while calculation is running nor calculation results</span>
+<span class="sd">    are delivered ahead of time.</span>
+
+<span class="sd">    Todo:</span>
+<span class="sd">        where to break async / sync or threaded approach?</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">acc</span><span class="p">:</span> <span class="n">AcceleratorSimulatorInterface</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">acc</span> <span class="o">=</span> <span class="n">acc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tune</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># While calculation is running</span>
+        <span class="c1"># * don&#39;t allow setting data</span>
+        <span class="c1"># * don&#39;t provide calculation results:  Twiss, tune, orbit</span>
+        <span class="c1">#</span>
+        <span class="c1"># Todo: should reads also be protected (by a Read / Write Lock)</span>
+        <span class="c1">#       should the lock be an asyncio lock?</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">calculation_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">SimulationStateModel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">Machine</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+            <span class="c1"># fmt:off</span>
+            <span class="n">transitions</span><span class="o">=</span><span class="p">[</span>
+                <span class="nb">dict</span><span class="p">(</span> <span class="n">trigger</span> <span class="o">=</span> <span class="s2">&quot;calculate&quot;</span> <span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="n">States</span><span class="o">.</span><span class="n">pending</span>   <span class="p">,</span> <span class="n">dest</span> <span class="o">=</span> <span class="n">States</span><span class="o">.</span><span class="n">executing</span> <span class="p">,</span> <span class="n">before</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_clear_stored_results</span> <span class="p">),</span>
+                <span class="nb">dict</span><span class="p">(</span> <span class="n">trigger</span> <span class="o">=</span> <span class="s2">&quot;finished&quot;</span>  <span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="n">States</span><span class="o">.</span><span class="n">executing</span> <span class="p">,</span> <span class="n">dest</span> <span class="o">=</span> <span class="n">States</span><span class="o">.</span><span class="n">finished</span>                                      <span class="p">),</span>
+                <span class="nb">dict</span><span class="p">(</span> <span class="n">trigger</span> <span class="o">=</span> <span class="s2">&quot;changed&quot;</span>   <span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="n">States</span><span class="o">.</span><span class="n">finished</span>  <span class="p">,</span> <span class="n">dest</span> <span class="o">=</span> <span class="n">States</span><span class="o">.</span><span class="n">pending</span>   <span class="p">,</span> <span class="n">after</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_clear_stored_results</span>  <span class="p">),</span>
+                <span class="nb">dict</span><span class="p">(</span> <span class="n">trigger</span> <span class="o">=</span> <span class="s2">&quot;changed&quot;</span>   <span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="n">States</span><span class="o">.</span><span class="n">pending</span>   <span class="p">,</span> <span class="n">dest</span> <span class="o">=</span> <span class="n">States</span><span class="o">.</span><span class="n">pending</span>   <span class="p">,</span> <span class="n">after</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_clear_stored_results</span>  <span class="p">),</span>
+                <span class="nb">dict</span><span class="p">(</span> <span class="n">trigger</span> <span class="o">=</span> <span class="s2">&quot;clear&quot;</span>     <span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="n">States</span><span class="o">.</span><span class="n">error</span>     <span class="p">,</span> <span class="n">dest</span> <span class="o">=</span> <span class="n">States</span><span class="o">.</span><span class="n">pending</span>                                       <span class="p">),</span>
+                <span class="nb">dict</span><span class="p">(</span> <span class="n">trigger</span> <span class="o">=</span> <span class="s2">&quot;error&quot;</span>     <span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span>              <span class="p">,</span> <span class="n">dest</span> <span class="o">=</span> <span class="n">States</span><span class="o">.</span><span class="n">error</span>                                         <span class="p">),</span>
+            <span class="p">],</span>
+            <span class="c1"># fmt:on</span>
+            <span class="n">states</span><span class="o">=</span><span class="p">[</span><span class="n">st</span> <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">States</span><span class="p">],</span>
+            <span class="n">initial</span><span class="o">=</span><span class="n">States</span><span class="o">.</span><span class="n">pending</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">result_elements</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="c1"># twiss=TwissElement(backend=self),</span>
+            <span class="n">tune</span><span class="o">=</span><span class="n">TuneElement</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_clear_stored_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tune</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="SimulatorBackend.get_natural_view_name">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.simulator_backend.SimulatorBackend.get_natural_view_name">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_natural_view_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;design&quot;</span></div>
+
+
+<div class="viewcode-block" id="SimulatorBackend.trigger">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.simulator_backend.SimulatorBackend.trigger">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prop_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">(name=</span><span class="si">%s</span><span class="s2">) no trigger needed&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SimulatorBackend.read">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.simulator_backend.SimulatorBackend.read">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prop_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">object</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Todo:</span>
+<span class="sd">            acquire lock for read too? So that no inconsistent</span>
+<span class="sd">            state will be read?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result_elements</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result_element</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">result_element</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">prop_id</span><span class="p">)</span>
+
+        <span class="n">elem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">elem</span><span class="o">.</span><span class="n">peek</span><span class="p">(</span><span class="n">prop_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SimulatorBackend.set">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.simulator_backend.SimulatorBackend.set">[docs]</a>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dev_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">prop_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="c1"># set state to changed</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculation_lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">changed</span><span class="p">()</span>
+            <span class="n">elem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acc</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dev_id</span><span class="p">)</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="k">await</span> <span class="n">elem</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">property_id</span><span class="o">=</span><span class="n">prop_id</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, acc=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">acc</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<div class="viewcode-block" id="SimulatorBackend.get_tune">
+<a class="viewcode-back" href="../../../../src/accml_lib.custom.pyat_simulator.html#accml_lib.custom.pyat_simulator.simulator_backend.SimulatorBackend.get_tune">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tune</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_tune_if_required</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;expected some tune stored, but only found None&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_calculate_tune_if_required</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculation_lock</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">is_pending</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_tune</span><span class="p">()</span>
+            <span class="k">assert</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">is_finished</span><span class="p">()</span>
+            <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;expected to be in finished state, but I am in </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_calculate_tune</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method is only  a helper method for _calculate_tune_if_required,</span>
+<span class="sd">        It is not to be called when already running</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Calculating tune&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">is_pending</span><span class="p">()</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;expected to be in pending state, but I am in </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">state</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">calculate</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tune</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">acc</span><span class="o">.</span><span class="n">get_tune</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">finished</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">error</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="n">exc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tune</span> <span class="o">=</span> <span class="n">tune</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Calculated tune to x=</span><span class="si">%.4f</span><span class="s2"> y=</span><span class="si">%.4f</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tune</span><span class="o">.</span><span class="n">y</span><span class="p">)</span></div>
+
+
+
+<span class="n">_all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SimulationBackend&quot;</span><span class="p">]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Helmholtz Zentrum Berlin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
