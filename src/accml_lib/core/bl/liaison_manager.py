@@ -2,7 +2,10 @@ import logging
 from typing import Mapping, Sequence
 
 from accml_lib.core.interfaces.utils.liaison_manager import LiaisonManagerBase
-from accml_lib.core.model.utils.identifiers import LatticeElementPropertyID, DevicePropertyID
+from accml_lib.core.model.utils.identifiers import (
+    LatticeElementPropertyID,
+    DevicePropertyID,
+)
 
 logger = logging.getLogger("accml")
 
@@ -45,3 +48,6 @@ class LiaisonManager(LiaisonManagerBase):
                 f"{self.__class__.__name__} id {id_} not found in lookup table: {ke}"
             )
             raise ke
+
+
+__all__ = ["LiaisonManager"]

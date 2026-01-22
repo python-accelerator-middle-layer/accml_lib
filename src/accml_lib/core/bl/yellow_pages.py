@@ -12,9 +12,9 @@ class FamilyName(Enum):
 
 class YellowPages(YellowPagesBase):
     """
-        or use:
-        get(family_name: str)
-        separate yellow pages for lattice elements and devices
+    or use:
+    get(family_name: str)
+    separate yellow pages for lattice elements and devices
     """
 
     def __init__(self, d: dict):
@@ -30,3 +30,6 @@ class YellowPages(YellowPagesBase):
 
     def tune_correction_quadrupole_names(self) -> Sequence[str]:
         return self.get("tune_correction_quadrupoles")
+
+
+__all__ = ["FamilyName", "YellowPages"]
