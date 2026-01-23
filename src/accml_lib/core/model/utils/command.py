@@ -42,11 +42,11 @@ class Command:
             behaviour_on_error=d["behaviour_on_error"],
         )
 
-    def to_jsons(self):
+    def to_jsons(self, **kwargs):
         d = dict(
             id=self.id,
             property=self.property,
-            value=serialize_value(self.value),
+            value=serialize_value(self.value, **kwargs),
             behaviour_on_error=self.behaviour_on_error,
         )
         return d
@@ -88,7 +88,7 @@ def register_serializer_for_command(t_fork):
     import jsons
 
     def conv(ins: Command, **kwargs):
-        return ins.to_jsons()
+        return ins.to_jsons(**kwargs)
 
     jsons.set_serializer(conv, Command, high_prio=True, fork_inst=t_fork)
 

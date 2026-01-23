@@ -37,7 +37,7 @@ class SingleReading:
         return dict(
             name=self.name,
             cmd=jsons.dump(self.cmd, **kwargs),
-            payload=serialize_value(self.payload),
+            payload=serialize_value(self.payload, **kwargs),
         )
 
 

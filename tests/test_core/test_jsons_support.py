@@ -7,6 +7,7 @@ import pytest
 
 from accml_lib.core.model import jsons_support
 from accml_lib.core.model.output.result import ReadTogether, SingleReading
+from accml_lib.core.model.output.tune import Tune
 from accml_lib.core.model.utils.command import Command, BehaviourOnError, ReadCommand
 
 jsons_fork = jsons.fork()
@@ -54,7 +55,7 @@ def test_serialize_command_with_float_value():
     assert cmd == ncmd
 
 
-def test_serialize_command_with_float_value_quircky():
+def test_serialize_command_with_float_with_decimal_digits():
     import math
 
     cmd = Command(
@@ -100,6 +101,21 @@ def test_single_reading():
 
     nsr = jsons.load(d, SingleReading, fork_inst=jsons_fork)
     assert nsr == sr
+
+
+def test_single_reading_payload_tune():
+    t = Tune(x=1060.1, y=907.00)
+    sr = SingleReading(
+        cmd=ReadCommand(id="tune", property="transveral"), name="test", payload=t
+    )
+    d = jsons.dump(sr, fork_inst=jsons_fork)
+    payload = d["payload"]
+    assert payload["type"] == "dict"
+    assert payload["value"]["x"] == pytest.approx(t.x, rel=1e-6, abs=1e-3)
+    assert payload["value"]["y"] == pytest.approx(t.y, rel=1e-6, abs=1e-3)
+    nsr = jsons.load(sr, SingleReading)
+    assert nsr.payload.x == pytest.approx(t.x, rel=1e-6, abs=1e-3)
+    assert nsr.payload.y == pytest.approx(t.y, rel=1e-6, abs=1e-3)
 
 
 def test_read_together():
