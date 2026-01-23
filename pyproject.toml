@@ -60,8 +60,18 @@ transitions =  {version ="*", optional = true}
 # for testing
 pytest-asyncio = {version = "*", optional = true}
 
+# for documentation
+sphinx = {version = ">=5", optional = true}
+sphinx-rtd-theme = {version = "*", optional = true}
+sphinx-autodoc-typehints = {version = "*", optional = true}
+sphinxcontrib-napoleon = {version = "*", optional = true}
+sphinxcontrib-bibtex = {version = "*", optional = true}
+
+
 [tool.poetry.extras]
 bluesky-epics = ["ophyd-async", "aioca", "p4p", "epics", "bluesky", "databroker"]
 bluesky-tango = ["ophyd-async", "pytango", "bluesky", "databroker"]
 pyat-simulator = ["accelerator-toolbox", "transitions"]
 testing = ["pytest-asyncio", "accelerator-toolbox", "transitions"]
+
+docs = ["sphinx", "sphinx-rtd-theme", "sphinx-autodoc-typehints", "sphinxcontrib-napoleon", "sphinxcontrib-bibtex"]

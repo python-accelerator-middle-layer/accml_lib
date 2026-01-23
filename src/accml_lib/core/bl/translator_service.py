@@ -41,3 +41,6 @@ class TranslatorService(TranslatorServiceBase):
             for key, to in self.lut.items()
             if id_.device_property_id.device_name == key.device_property_id.device_name
         }
+
+
+__all__ = ["TranslatorService"]

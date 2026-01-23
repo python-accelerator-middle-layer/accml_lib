@@ -2,9 +2,6 @@
 
 Please note:
     here we have to map (lattice_name, property) -> (device_name, property)
-
-Todo:
-   Split up content in different modules
 """
 
 from typing import Sequence
@@ -14,7 +11,11 @@ from ...core.interfaces.utils.command_rewritter import CommandRewriterBase
 from ...core.interfaces.utils.liaison_manager import LiaisonManagerBase
 from ...core.interfaces.utils.translator_service import TranslatorServiceBase
 from ...core.model.utils.command import Command
-from ...core.model.utils.identifiers import DevicePropertyID, LatticeElementPropertyID, ConversionID
+from ...core.model.utils.identifiers import (
+    DevicePropertyID,
+    LatticeElementPropertyID,
+    ConversionID,
+)
 
 
 class CommandRewriter(CommandRewriterBase):
@@ -28,7 +29,11 @@ class CommandRewriter(CommandRewriterBase):
     to convert the command values between representations.
     """
 
-    def __init__(self, liaison_manager: LiaisonManagerBase, translation_service: TranslatorServiceBase):
+    def __init__(
+        self,
+        liaison_manager: LiaisonManagerBase,
+        translation_service: TranslatorServiceBase,
+    ):
         """
         Initialize the CommandRewriter with the required services.
 
@@ -49,17 +54,24 @@ class CommandRewriter(CommandRewriterBase):
         Returns:
             A sequence of commands corresponding to the inverse translations.
         """
-        dev_prop_id = DevicePropertyID(
-            device_name=cmd.id, property=cmd.property
-        )
+        dev_prop_id = DevicePropertyID(device_name=cmd.id, property=cmd.property)
         rcmd = self.inverse_read_command(cmd)
-        lat_prop_ids = [LatticeElementPropertyID(element_name=r.id, property=r.property) for r in rcmd]
+        lat_prop_ids = [
+            LatticeElementPropertyID(element_name=r.id, property=r.property)
+            for r in rcmd
+        ]
 
-        return [self.inverse_translate_one(cmd, dev_prop_id, lat_prop_id) for lat_prop_id in lat_prop_ids]
+        return [
+            self.inverse_translate_one(cmd, dev_prop_id, lat_prop_id)
+            for lat_prop_id in lat_prop_ids
+        ]
 
-    def inverse_translate_one(self, cmd: Command, dev_prop_id: DevicePropertyID,
-                              lat_prop_id: LatticeElementPropertyID
-                              ) -> Command:
+    def inverse_translate_one(
+        self,
+        cmd: Command,
+        dev_prop_id: DevicePropertyID,
+        lat_prop_id: LatticeElementPropertyID,
+    ) -> Command:
         """
         Perform a single inverse translation.
 
@@ -72,11 +84,15 @@ class CommandRewriter(CommandRewriterBase):
             A new Command with the value converted to the lattice state.
         """
         translation_object = self.translator_service.get(
-            ConversionID(lattice_property_id=lat_prop_id, device_property_id=dev_prop_id)
+            ConversionID(
+                lattice_property_id=lat_prop_id, device_property_id=dev_prop_id
+            )
         )
 
         if dev_prop_id.device_name is None:
-            raise ValueError("Device name cannot be None in device property identifier.")
+            raise ValueError(
+                "Device name cannot be None in device property identifier."
+            )
 
         ncmd = Command(
             id=lat_prop_id.element_name,
@@ -94,7 +110,9 @@ class CommandRewriter(CommandRewriterBase):
         dev_prop_id = DevicePropertyID(device_name=rcmd.id, property=rcmd.property)
 
         translation_object = self.translator_service.get(
-            ConversionID(lattice_property_id=lat_prop_id, device_property_id=dev_prop_id)
+            ConversionID(
+                lattice_property_id=lat_prop_id, device_property_id=dev_prop_id
+            )
         )
         ncmd = Command(
             id=dev_prop_id.device_name,
@@ -116,4 +134,9 @@ class CommandRewriter(CommandRewriterBase):
             device_name=command.id, property=command.property
         )
         lat_prop_ids = self.liaison_manager.inverse(dev_prop_id)
-        return [ReadCommand(id=lp.element_name, property=lp.property) for lp in lat_prop_ids]
+        return [
+            ReadCommand(id=lp.element_name, property=lp.property) for lp in lat_prop_ids
+        ]
+
+
+__all__ = ["CommandRewriter"]

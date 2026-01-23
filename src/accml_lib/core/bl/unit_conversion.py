@@ -66,3 +66,6 @@ class LinearUnitConversion(StateConversion):
             state,
         )
         return (state - self.intercept) / self.slope
+
+
+__all__ = ["EnergyDependentLinearUnitConversion", "LinearUnitConversion"]
