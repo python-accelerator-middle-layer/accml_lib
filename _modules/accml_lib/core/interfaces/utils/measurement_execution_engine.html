@@ -81,7 +81,7 @@
 <div class="viewcode-block" id="MeasurementExecutionEngine.execute">
 <a class="viewcode-back" href="../../../../../src/accml_lib.core.interfaces.utils.html#accml_lib.core.interfaces.utils.measurement_execution_engine.MeasurementExecutionEngine.execute">[docs]</a>
     <span class="nd">@abstractmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span>
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">commands_collection</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">TransactionCommand</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
