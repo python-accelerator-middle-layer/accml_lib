@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from enum import IntEnum
-from typing import Sequence
+from typing import Sequence, Any, Union, Dict
+
+from accml_lib.core.model.conv import deserialse_value, serialize_value
 
 
 class BehaviourOnError(IntEnum):
@@ -22,8 +24,32 @@ class Command:
     #: can be the identifier of a lattice element or a device
     id: str
     property: str
-    value: object
+    #: the object can not be deserialized need to be more precise here
+    value: Union[int, float]
     behaviour_on_error: BehaviourOnError
+
+    @classmethod
+    def from_jsons(cls, d: dict, **kwargs):
+        """
+        Todo:
+            check if kwargs needs to be passed to some argument
+        """
+        v = deserialse_value(d["value"])
+        return cls(
+            id=d["id"],
+            property=d["property"],
+            value=v,
+            behaviour_on_error=d["behaviour_on_error"],
+        )
+
+    def to_jsons(self):
+        d = dict(
+            id=self.id,
+            property=self.property,
+            value=serialize_value(self.value),
+            behaviour_on_error=self.behaviour_on_error,
+        )
+        return d
 
 
 @dataclass
@@ -44,4 +70,33 @@ class CommandSequence:
     commands: Sequence[TransactionCommand]
 
 
-__all__ = ["BehaviourOnError", "Command", "CommandSequence", "ReadCommand", "TransactionCommand"]
+def command_deserializer(obj: dict, cls: Command, **kwargs):
+    assert cls == Command, "only prepared to handle single reading"
+    r = cls.from_jsons(obj, **kwargs)
+    return r
+
+
+def register_deserializer_for_command(t_fork):
+    import jsons
+
+    jsons.set_deserializer(
+        command_deserializer, Command, high_prio=True, fork_inst=t_fork
+    )
+
+
+def register_serializer_for_command(t_fork):
+    import jsons
+
+    def conv(ins: Command, **kwargs):
+        return ins.to_jsons()
+
+    jsons.set_serializer(conv, Command, high_prio=True, fork_inst=t_fork)
+
+
+__all__ = [
+    "BehaviourOnError",
+    "Command",
+    "CommandSequence",
+    "ReadCommand",
+    "TransactionCommand",
+]
