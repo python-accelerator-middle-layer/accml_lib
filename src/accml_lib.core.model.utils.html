@@ -122,7 +122,7 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
 <li><p><strong>property</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>)</p></li>
-<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><em>object</em></a>)</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
 <li><p><strong>behaviour_on_error</strong> (<a class="reference internal" href="#accml_lib.core.model.utils.command.BehaviourOnError" title="accml_lib.core.model.utils.command.BehaviourOnError"><em>BehaviourOnError</em></a>)</p></li>
 </ul>
 </dd>
@@ -131,6 +131,20 @@
 <dt class="sig sig-object py" id="accml_lib.core.model.utils.command.Command.behaviour_on_error">
 <span class="sig-name descname"><span class="pre">behaviour_on_error</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#accml_lib.core.model.utils.command.BehaviourOnError" title="accml_lib.core.model.utils.command.BehaviourOnError"><span class="pre">BehaviourOnError</span></a></span><a class="headerlink" href="#accml_lib.core.model.utils.command.Command.behaviour_on_error" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.model.utils.command.Command.from_jsons">
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_jsons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/utils/command.html#Command.from_jsons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.utils.command.Command.from_jsons" title="Link to this definition"></a></dt>
+<dd><div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>check if kwargs needs to be passed to some argument</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>d</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="accml_lib.core.model.utils.command.Command.id">
@@ -143,10 +157,16 @@
 <span class="sig-name descname"><span class="pre">property</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#accml_lib.core.model.utils.command.Command.property" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.model.utils.command.Command.to_jsons">
+<span class="sig-name descname"><span class="pre">to_jsons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/utils/command.html#Command.to_jsons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.utils.command.Command.to_jsons" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="accml_lib.core.model.utils.command.Command.value">
-<span class="sig-name descname"><span class="pre">value</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><span class="pre">object</span></a></span><a class="headerlink" href="#accml_lib.core.model.utils.command.Command.value" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">value</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#accml_lib.core.model.utils.command.Command.value" title="Link to this definition"></a></dt>
+<dd><p>the object can not be deserialized need to be more precise here</p>
+</dd></dl>
 
 </dd></dl>
 

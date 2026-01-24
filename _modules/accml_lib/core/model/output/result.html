@@ -69,18 +69,22 @@
              
   <h1>Source code for accml_lib.core.model.output.result</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">asdict</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.command</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReadCommand</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jsons</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..conv</span><span class="w"> </span><span class="kn">import</span> <span class="n">deserialse_value</span><span class="p">,</span> <span class="n">serialize_value</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..utils.command</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReadCommand</span><span class="p">,</span> <span class="n">Command</span>
 
 
 <div class="viewcode-block" id="SingleFloat">
 <a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.SingleFloat">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">SingleFloat</span><span class="p">:</span>
-    <span class="n">value</span> <span class="p">:</span> <span class="nb">float</span></div>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">float</span></div>
 
 
 
@@ -92,6 +96,7 @@
 
 <span class="sd">    e.g. reading from one device or tune of the machine</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">payload</span><span class="p">:</span> <span class="nb">object</span>
     <span class="n">cmd</span><span class="p">:</span> <span class="n">ReadCommand</span>
@@ -99,11 +104,21 @@
 <div class="viewcode-block" id="SingleReading.from_jsons">
 <a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.SingleReading.from_jsons">[docs]</a>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">from_jsons</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
-        <span class="n">payload</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s2">&quot;payload&quot;</span><span class="p">]</span>
-        <span class="n">cmd</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s2">&quot;cmd&quot;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">cmd</span><span class="o">=</span><span class="n">cmd</span><span class="p">)</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_jsons</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">jsons</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;cmd&quot;</span><span class="p">],</span> <span class="n">ReadCommand</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span> <span class="n">cmd</span><span class="o">=</span><span class="n">cmd</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="n">deserialse_value</span><span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s2">&quot;payload&quot;</span><span class="p">]))</span></div>
+
+
+<div class="viewcode-block" id="SingleReading.to_jsons">
+<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.SingleReading.to_jsons">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_jsons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">jsons</span>
+
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">cmd</span><span class="o">=</span><span class="n">jsons</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">payload</span><span class="o">=</span><span class="n">serialize_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">payload</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+        <span class="p">)</span></div>
 </div>
 
 
@@ -115,23 +130,44 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    data taken together</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data</span> <span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">SingleReading</span><span class="p">]</span>
+
+    <span class="n">data</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">SingleReading</span><span class="p">]</span>
+    <span class="n">start</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span>
+    <span class="n">end</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span>
 
 <div class="viewcode-block" id="ReadTogether.get">
 <a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.ReadTogether.get">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
 
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-          <span class="k">return</span> <span class="p">{</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="p">:</span> <span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">}</span>
 
 <div class="viewcode-block" id="ReadTogether.to_jsons">
 <a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.ReadTogether.to_jsons">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">to_jsons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_jsons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">jsons</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">conv</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">jsons</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">r</span>
+
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="n">start</span><span class="o">=</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="n">conv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end</span><span class="p">))</span></div>
 </div>
+
+
+
+<div class="viewcode-block" id="ResultOfExecutionStep">
+<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.ResultOfExecutionStep">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ResultOfExecutionStep</span><span class="p">:</span>
+    <span class="c1">#: the relevant commands reflecting state changes</span>
+    <span class="c1">#: the idea is that with data one can reconstruct</span>
+    <span class="c1">#: in which state the machine or accelerator was</span>
+    <span class="n">cmds</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Command</span><span class="p">]</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ReadTogether</span><span class="p">]</span></div>
 
 
 
@@ -139,48 +175,51 @@
 <a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.Result">[docs]</a>
 <span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">Result</span><span class="p">:</span>
-    <span class="n">start</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span>
-    <span class="n">end</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span>
     <span class="c1">#: in the expected view / context of the caller</span>
-    <span class="n">data</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ReadTogether</span><span class="p">]</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ResultOfExecutionStep</span><span class="p">]</span>
     <span class="c1">#: in the expected view / context as produced by the backend</span>
-    <span class="n">orig_data</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ReadTogether</span><span class="p">]</span></div>
+    <span class="n">orig_data</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ResultOfExecutionStep</span><span class="p">]</span></div>
 
 
 
-
-<div class="viewcode-block" id="single_reading_deserializer">
-<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.single_reading_deserializer">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">single_reading_deserializer</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="k">assert</span> <span class="bp">cls</span> <span class="o">==</span> <span class="n">SingleReading</span><span class="p">,</span> <span class="s2">&quot;only prepared to handle single reading&quot;</span>
-    <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_jsons</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
-
-
-
-<div class="viewcode-block" id="dataclass_delegate_to_jsons_method">
-<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.dataclass_delegate_to_jsons_method">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">dataclass_delegate_to_jsons_method</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="register_deserializer_for_single_reading">
+<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.register_deserializer_for_single_reading">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_deserializer_for_single_reading</span><span class="p">(</span><span class="n">t_fork</span><span class="p">):</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">jsons</span>
-    <span class="n">r</span> <span class="o">=</span>  <span class="n">jsons</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">to_jsons</span><span class="p">(),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">r</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="n">SingleReading</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">cls</span> <span class="o">==</span> <span class="n">SingleReading</span><span class="p">,</span> <span class="s2">&quot;only prepared for SingleReading here&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_jsons</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">jsons</span><span class="o">.</span><span class="n">set_deserializer</span><span class="p">(</span><span class="n">convert</span><span class="p">,</span> <span class="n">SingleReading</span><span class="p">,</span> <span class="n">high_prio</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fork_inst</span><span class="o">=</span><span class="n">t_fork</span><span class="p">)</span></div>
 
 
 
-<div class="viewcode-block" id="register_deserializers_to_json_fork">
-<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.register_deserializers_to_json_fork">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">register_deserializers_to_json_fork</span><span class="p">(</span><span class="n">t_fork</span><span class="p">):</span>
+<div class="viewcode-block" id="register_serializer_for_single_reading">
+<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.register_serializer_for_single_reading">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_serializer_for_single_reading</span><span class="p">(</span><span class="n">t_fork</span><span class="p">):</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">jsons</span>
-    <span class="n">jsons</span><span class="o">.</span><span class="n">set_deserializer</span><span class="p">(</span><span class="n">single_reading_deserializer</span><span class="p">,</span> <span class="n">SingleReading</span><span class="p">,</span> <span class="n">high_prio</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fork_inst</span><span class="o">=</span><span class="n">t_fork</span><span class="p">)</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="n">SingleReading</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="bp">cls</span> <span class="o">==</span> <span class="n">SingleReading</span><span class="p">,</span> <span class="s2">&quot;only prepared to handle single reading&quot;</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">to_jsons</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">jsons</span><span class="o">.</span><span class="n">set_serializer</span><span class="p">(</span><span class="n">convert</span><span class="p">,</span> <span class="n">SingleReading</span><span class="p">,</span> <span class="n">high_prio</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fork_inst</span><span class="o">=</span><span class="n">t_fork</span><span class="p">)</span></div>
 
 
 
-<div class="viewcode-block" id="register_serializers_to_json_fork">
-<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.register_serializers_to_json_fork">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">register_serializers_to_json_fork</span><span class="p">(</span><span class="n">t_fork</span><span class="p">):</span>
+<div class="viewcode-block" id="register_serializer_for_read_together">
+<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.output.html#accml_lib.core.model.output.result.register_serializer_for_read_together">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_serializer_for_read_together</span><span class="p">(</span><span class="n">t_fork</span><span class="p">):</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">jsons</span>
-    <span class="n">jsons</span><span class="o">.</span><span class="n">set_serializer</span><span class="p">(</span><span class="n">dataclass_delegate_to_jsons_method</span><span class="p">,</span> <span class="n">ReadTogether</span><span class="p">,</span> <span class="n">high_prio</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fork_inst</span><span class="o">=</span><span class="n">t_fork</span><span class="p">)</span></div>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">convert</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="n">ReadTogether</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="bp">cls</span> <span class="o">==</span> <span class="n">ReadTogether</span><span class="p">,</span> <span class="s2">&quot;only prepared to handle read to gether&quot;</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">to_jsons</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
+    <span class="n">jsons</span><span class="o">.</span><span class="n">set_serializer</span><span class="p">(</span><span class="n">convert</span><span class="p">,</span> <span class="n">ReadTogether</span><span class="p">,</span> <span class="n">high_prio</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fork_inst</span><span class="o">=</span><span class="n">t_fork</span><span class="p">)</span></div>
 
 </pre></div>
 

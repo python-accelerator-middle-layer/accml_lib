@@ -94,12 +94,16 @@
 <span id="accml-lib-core-model-output-result-module"></span><h2>accml_lib.core.model.output.result module<a class="headerlink" href="#module-accml_lib.core.model.output.result" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="accml_lib.core.model.output.result.ReadTogether">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.result.</span></span><span class="sig-name descname"><span class="pre">ReadTogether</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#ReadTogether"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.ReadTogether" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.result.</span></span><span class="sig-name descname"><span class="pre">ReadTogether</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#ReadTogether"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.ReadTogether" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>data taken together</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><em>Sequence</em></a><em>[</em><a class="reference internal" href="#accml_lib.core.model.output.result.SingleReading" title="accml_lib.core.model.output.result.SingleReading"><em>SingleReading</em></a><em>]</em>)</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><em>Sequence</em></a><em>[</em><a class="reference internal" href="#accml_lib.core.model.output.result.SingleReading" title="accml_lib.core.model.output.result.SingleReading"><em>SingleReading</em></a><em>]</em>)</p></li>
+<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.14)"><em>datetime</em></a>)</p></li>
+<li><p><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.14)"><em>datetime</em></a>)</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -107,52 +111,77 @@
 <span class="sig-name descname"><span class="pre">data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#accml_lib.core.model.output.result.SingleReading" title="accml_lib.core.model.output.result.SingleReading"><span class="pre">SingleReading</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#accml_lib.core.model.output.result.ReadTogether.data" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.result.ReadTogether.end">
+<span class="sig-name descname"><span class="pre">end</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.14)"><span class="pre">datetime</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.result.ReadTogether.end" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="accml_lib.core.model.output.result.ReadTogether.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#ReadTogether.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.ReadTogether.get" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.result.ReadTogether.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.14)"><span class="pre">datetime</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.result.ReadTogether.start" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="accml_lib.core.model.output.result.ReadTogether.to_jsons">
-<span class="sig-name descname"><span class="pre">to_jsons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#ReadTogether.to_jsons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.ReadTogether.to_jsons" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">to_jsons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#ReadTogether.to_jsons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.ReadTogether.to_jsons" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="accml_lib.core.model.output.result.Result">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.result.</span></span><span class="sig-name descname"><span class="pre">Result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orig_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#Result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.Result" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.result.</span></span><span class="sig-name descname"><span class="pre">Result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orig_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#Result"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.Result" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.14)"><em>datetime</em></a>)</p></li>
-<li><p><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.14)"><em>datetime</em></a>)</p></li>
-<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><em>Sequence</em></a><em>[</em><a class="reference internal" href="#accml_lib.core.model.output.result.ReadTogether" title="accml_lib.core.model.output.result.ReadTogether"><em>ReadTogether</em></a><em>]</em>)</p></li>
-<li><p><strong>orig_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><em>Sequence</em></a><em>[</em><a class="reference internal" href="#accml_lib.core.model.output.result.ReadTogether" title="accml_lib.core.model.output.result.ReadTogether"><em>ReadTogether</em></a><em>]</em>)</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><em>Sequence</em></a><em>[</em><a class="reference internal" href="#accml_lib.core.model.output.result.ResultOfExecutionStep" title="accml_lib.core.model.output.result.ResultOfExecutionStep"><em>ResultOfExecutionStep</em></a><em>]</em>)</p></li>
+<li><p><strong>orig_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><em>Sequence</em></a><em>[</em><a class="reference internal" href="#accml_lib.core.model.output.result.ResultOfExecutionStep" title="accml_lib.core.model.output.result.ResultOfExecutionStep"><em>ResultOfExecutionStep</em></a><em>]</em>)</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="accml_lib.core.model.output.result.Result.data">
-<span class="sig-name descname"><span class="pre">data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#accml_lib.core.model.output.result.ReadTogether" title="accml_lib.core.model.output.result.ReadTogether"><span class="pre">ReadTogether</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#accml_lib.core.model.output.result.Result.data" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#accml_lib.core.model.output.result.ResultOfExecutionStep" title="accml_lib.core.model.output.result.ResultOfExecutionStep"><span class="pre">ResultOfExecutionStep</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#accml_lib.core.model.output.result.Result.data" title="Link to this definition"></a></dt>
 <dd><p>in the expected view / context of the caller</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="accml_lib.core.model.output.result.Result.end">
-<span class="sig-name descname"><span class="pre">end</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.14)"><span class="pre">datetime</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.result.Result.end" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="accml_lib.core.model.output.result.Result.orig_data">
-<span class="sig-name descname"><span class="pre">orig_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#accml_lib.core.model.output.result.ReadTogether" title="accml_lib.core.model.output.result.ReadTogether"><span class="pre">ReadTogether</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#accml_lib.core.model.output.result.Result.orig_data" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">orig_data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#accml_lib.core.model.output.result.ResultOfExecutionStep" title="accml_lib.core.model.output.result.ResultOfExecutionStep"><span class="pre">ResultOfExecutionStep</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#accml_lib.core.model.output.result.Result.orig_data" title="Link to this definition"></a></dt>
 <dd><p>in the expected view / context as produced by the backend</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.result.ResultOfExecutionStep">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.result.</span></span><span class="sig-name descname"><span class="pre">ResultOfExecutionStep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#ResultOfExecutionStep"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.ResultOfExecutionStep" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmds</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><em>Sequence</em></a><em>[</em><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command" title="accml_lib.core.model.utils.command.Command"><em>Command</em></a><em>]</em>)</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><em>Sequence</em></a><em>[</em><a class="reference internal" href="#accml_lib.core.model.output.result.ReadTogether" title="accml_lib.core.model.output.result.ReadTogether"><em>ReadTogether</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="accml_lib.core.model.output.result.Result.start">
-<span class="sig-name descname"><span class="pre">start</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.14)"><span class="pre">datetime</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.result.Result.start" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="accml_lib.core.model.output.result.ResultOfExecutionStep.cmds">
+<span class="sig-name descname"><span class="pre">cmds</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command" title="accml_lib.core.model.utils.command.Command"><span class="pre">Command</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#accml_lib.core.model.output.result.ResultOfExecutionStep.cmds" title="Link to this definition"></a></dt>
+<dd><p>the relevant commands reflecting state changes
+the idea is that with data one can reconstruct
+in which state the machine or accelerator was</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.result.ResultOfExecutionStep.data">
+<span class="sig-name descname"><span class="pre">data</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#accml_lib.core.model.output.result.ReadTogether" title="accml_lib.core.model.output.result.ReadTogether"><span class="pre">ReadTogether</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#accml_lib.core.model.output.result.ResultOfExecutionStep.data" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -194,7 +223,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="accml_lib.core.model.output.result.SingleReading.from_jsons">
-<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_jsons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#SingleReading.from_jsons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.SingleReading.from_jsons" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">from_jsons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#SingleReading.from_jsons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.SingleReading.from_jsons" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -207,32 +236,27 @@
 <span class="sig-name descname"><span class="pre">payload</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><span class="pre">object</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.result.SingleReading.payload" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.result.SingleReading.to_jsons">
+<span class="sig-name descname"><span class="pre">to_jsons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#SingleReading.to_jsons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.SingleReading.to_jsons" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="accml_lib.core.model.output.result.dataclass_delegate_to_jsons_method">
-<span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.result.</span></span><span class="sig-name descname"><span class="pre">dataclass_delegate_to_jsons_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#dataclass_delegate_to_jsons_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.dataclass_delegate_to_jsons_method" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="accml_lib.core.model.output.result.register_deserializer_for_single_reading">
+<span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.result.</span></span><span class="sig-name descname"><span class="pre">register_deserializer_for_single_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_fork</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#register_deserializer_for_single_reading"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.register_deserializer_for_single_reading" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="accml_lib.core.model.output.result.register_deserializers_to_json_fork">
-<span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.result.</span></span><span class="sig-name descname"><span class="pre">register_deserializers_to_json_fork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_fork</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#register_deserializers_to_json_fork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.register_deserializers_to_json_fork" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="accml_lib.core.model.output.result.register_serializer_for_read_together">
+<span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.result.</span></span><span class="sig-name descname"><span class="pre">register_serializer_for_read_together</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_fork</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#register_serializer_for_read_together"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.register_serializer_for_read_together" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="accml_lib.core.model.output.result.register_serializers_to_json_fork">
-<span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.result.</span></span><span class="sig-name descname"><span class="pre">register_serializers_to_json_fork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_fork</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#register_serializers_to_json_fork"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.register_serializers_to_json_fork" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="accml_lib.core.model.output.result.register_serializer_for_single_reading">
+<span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.result.</span></span><span class="sig-name descname"><span class="pre">register_serializer_for_single_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_fork</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#register_serializer_for_single_reading"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.register_serializer_for_single_reading" title="Link to this definition"></a></dt>
 <dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="accml_lib.core.model.output.result.single_reading_deserializer">
-<span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.result.</span></span><span class="sig-name descname"><span class="pre">single_reading_deserializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/result.html#single_reading_deserializer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.result.single_reading_deserializer" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>obj</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>)</p>
-</dd>
-</dl>
-</dd></dl>
 
 </section>
 <section id="module-accml_lib.core.model.output.tune">

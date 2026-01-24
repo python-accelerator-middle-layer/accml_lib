@@ -11,6 +11,25 @@ Subpackages
    accml_lib.core.model.output
    accml_lib.core.model.utils
 
+Submodules
+----------
+
+accml\_lib.core.model.conv module
+---------------------------------
+
+.. automodule:: accml_lib.core.model.conv
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+accml\_lib.core.model.jsons\_support module
+-------------------------------------------
+
+.. automodule:: accml_lib.core.model.jsons_support
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 Module contents
 ---------------
 

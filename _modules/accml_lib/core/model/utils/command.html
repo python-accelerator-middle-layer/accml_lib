@@ -70,7 +70,9 @@
   <h1>Source code for accml_lib.core.model.utils.command</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntEnum</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">accml_lib.core.model.conv</span><span class="w"> </span><span class="kn">import</span> <span class="n">deserialse_value</span><span class="p">,</span> <span class="n">serialize_value</span>
 
 
 <div class="viewcode-block" id="BehaviourOnError">
@@ -100,8 +102,38 @@
     <span class="c1">#: can be the identifier of a lattice element or a device</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="nb">property</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">value</span><span class="p">:</span> <span class="nb">object</span>
-    <span class="n">behaviour_on_error</span><span class="p">:</span> <span class="n">BehaviourOnError</span></div>
+    <span class="c1">#: the object can not be deserialized need to be more precise here</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+    <span class="n">behaviour_on_error</span><span class="p">:</span> <span class="n">BehaviourOnError</span>
+
+<div class="viewcode-block" id="Command.from_jsons">
+<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command.from_jsons">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_jsons</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Todo:</span>
+<span class="sd">            check if kwargs needs to be passed to some argument</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">deserialse_value</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+            <span class="nb">property</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;property&quot;</span><span class="p">],</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">v</span><span class="p">,</span>
+            <span class="n">behaviour_on_error</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;behaviour_on_error&quot;</span><span class="p">],</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Command.to_jsons">
+<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.utils.html#accml_lib.core.model.utils.command.Command.to_jsons">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_jsons</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="nb">property</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">serialize_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">behaviour_on_error</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">behaviour_on_error</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span></div>
+</div>
 
 
 
@@ -129,7 +161,36 @@
 
 
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BehaviourOnError&quot;</span><span class="p">,</span> <span class="s2">&quot;Command&quot;</span><span class="p">,</span> <span class="s2">&quot;CommandSequence&quot;</span><span class="p">,</span> <span class="s2">&quot;ReadCommand&quot;</span><span class="p">,</span> <span class="s2">&quot;TransactionCommand&quot;</span><span class="p">]</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">command_deserializer</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span> <span class="n">Command</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="bp">cls</span> <span class="o">==</span> <span class="n">Command</span><span class="p">,</span> <span class="s2">&quot;only prepared to handle single reading&quot;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_jsons</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">register_deserializer_for_command</span><span class="p">(</span><span class="n">t_fork</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">jsons</span>
+
+    <span class="n">jsons</span><span class="o">.</span><span class="n">set_deserializer</span><span class="p">(</span>
+        <span class="n">command_deserializer</span><span class="p">,</span> <span class="n">Command</span><span class="p">,</span> <span class="n">high_prio</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fork_inst</span><span class="o">=</span><span class="n">t_fork</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">register_serializer_for_command</span><span class="p">(</span><span class="n">t_fork</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">jsons</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">conv</span><span class="p">(</span><span class="n">ins</span><span class="p">:</span> <span class="n">Command</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ins</span><span class="o">.</span><span class="n">to_jsons</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">jsons</span><span class="o">.</span><span class="n">set_serializer</span><span class="p">(</span><span class="n">conv</span><span class="p">,</span> <span class="n">Command</span><span class="p">,</span> <span class="n">high_prio</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fork_inst</span><span class="o">=</span><span class="n">t_fork</span><span class="p">)</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;BehaviourOnError&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Command&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CommandSequence&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ReadCommand&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TransactionCommand&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 </pre></div>
 
            </div>
