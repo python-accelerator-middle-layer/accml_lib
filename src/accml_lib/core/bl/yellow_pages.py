@@ -26,9 +26,17 @@ class YellowPages(YellowPagesBase):
         return self._d[family_name]
 
     def quadrupole_names(self) -> Sequence[str]:
+        """
+        Todo:
+            remove me: favour to only provide the .get interface
+        """
         return self.get("quadrupoles")
 
     def tune_correction_quadrupole_names(self) -> Sequence[str]:
+        """
+        Todo:
+            remove me: favour to only provide the .get interface
+        """
         return self.get("tune_correction_quadrupoles")
 
 
