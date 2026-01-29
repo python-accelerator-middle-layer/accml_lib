@@ -47,8 +47,8 @@ ophyd-async = {version = "*", optional = true}
 # epics transport protocols
 aioca = {version = "*", optional = true}
 p4p = {version = "*", optional = true}
-# trango interface
-pytango = {version = "*", optional = true}
+# tango interface ... version 10.1 seems to crash in certain aspects
+pytango = {version = "<10.1", optional = true}
 
 # for simulation engine backend ... currently only using pyat
 accelerator_toolbox = {version = "*", optional = true}
