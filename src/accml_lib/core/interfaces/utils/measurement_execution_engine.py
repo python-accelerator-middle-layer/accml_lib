@@ -7,7 +7,7 @@ from ...model.output.result import SingleReading, ReadTogether
 
 class MeasurementExecutionEngine(metaclass=ABCMeta):
     @abstractmethod
-    def execute(
+    async def execute(
         self, commands_collection: Sequence[TransactionCommand], *args, **kwargs
     ) -> str:
         """
