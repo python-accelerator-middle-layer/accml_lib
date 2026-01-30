@@ -22,6 +22,9 @@ class StateCache:
     def clear(self):
         self.cache = dict()
 
+    def keys(self):
+        return self.cache.keys()
+
     def get(self, id, default=None):
         """
         Todo:
@@ -66,10 +69,9 @@ class DeltaBackendRProxy(BackendR):
         if not flag:
             return await self.backend.read(dev_id=dev_id, prop_id=prop_id)
         r = await self.backend.read(dev_id=dev_id, prop_id=orig_prop_id)
-        rcmd = ReadCommand(id=dev_id, property=prop_id)
+        rcmd = ReadCommand(id=dev_id, property=orig_prop_id)
         ref = self.cache.get(rcmd, None)
         if ref is None:
-            rcmd = ReadCommand(id=dev_id, property=prop_id)
             self.cache.set(rcmd, r)
         # to get some zero of proper type
         return self._calculate_delta_read(rcmd, r)
@@ -95,7 +97,7 @@ class DeltaBackendRWProxy(DeltaBackendRProxy, BackendRW):
         if not flag:
             return await self.backend.set(dev_id=dev_id, prop_id=prop_id, value=value)
 
-        rcmd = ReadCommand(id=dev_id, property=prop_id)
+        rcmd = ReadCommand(id=dev_id, property=orig_prop_id)
         ref = self.cache.get(rcmd, None)
         if not ref:
             r = await self.backend.read(dev_id=dev_id, prop_id=orig_prop_id)
