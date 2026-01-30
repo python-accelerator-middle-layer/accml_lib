@@ -112,5 +112,5 @@ class DeltaBackendRWProxy(DeltaBackendRProxy, BackendRW):
         For overloading in derived classes e.g. for processing ophyd-async data
         """
         ref = self.cache.get(rcmd, None)
-        assert ref is not None
+        assert ref is not None, f"No reference stored for {rcmd}"
         return value + ref
