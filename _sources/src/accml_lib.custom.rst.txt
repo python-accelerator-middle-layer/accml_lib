@@ -10,6 +10,7 @@ Subpackages
    accml_lib.custom.bessyii
    accml_lib.custom.bessyii_on_tango
    accml_lib.custom.pyat_simulator
+   accml_lib.custom.soleil
 
 Module contents
 ---------------

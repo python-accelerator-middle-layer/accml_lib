@@ -1,0 +1,29 @@
+accml\_lib.custom.soleil package
+================================
+
+Submodules
+----------
+
+accml\_lib.custom.soleil.manager\_setup module
+----------------------------------------------
+
+.. automodule:: accml_lib.custom.soleil.manager_setup
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+accml\_lib.custom.soleil.setup module
+-------------------------------------
+
+.. automodule:: accml_lib.custom.soleil.setup
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: accml_lib.custom.soleil
+   :members:
+   :show-inheritance:
+   :undoc-members:
