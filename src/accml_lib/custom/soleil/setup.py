@@ -56,7 +56,7 @@ def setup() -> DevicesFacade:
     )
 
     # master_clock = MasterClock(f'{prefix}{special_pvs["master_clock"]}', name="mc")
-    tune = Tunes(f"PHYSICS/SOLEIL/TUNE", name="tune")
+    tune = Tunes(f"simulator/ringsimulator/ringsimulator", name="tune")
 
     #: todo: what to do if names can not be made to match easily
     d = {
