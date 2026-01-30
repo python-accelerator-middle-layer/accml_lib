@@ -97,6 +97,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span></div>
 
 
+<div class="viewcode-block" id="StateCache.keys">
+<a class="viewcode-back" href="../../../../src/accml_lib.core.bl.html#accml_lib.core.bl.delta_backend.StateCache.keys">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+
+
 <div class="viewcode-block" id="StateCache.get">
 <a class="viewcode-back" href="../../../../src/accml_lib.core.bl.html#accml_lib.core.bl.delta_backend.StateCache.get">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -161,10 +167,9 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">flag</span><span class="p">:</span>
             <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">dev_id</span><span class="o">=</span><span class="n">dev_id</span><span class="p">,</span> <span class="n">prop_id</span><span class="o">=</span><span class="n">prop_id</span><span class="p">)</span>
         <span class="n">r</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">dev_id</span><span class="o">=</span><span class="n">dev_id</span><span class="p">,</span> <span class="n">prop_id</span><span class="o">=</span><span class="n">orig_prop_id</span><span class="p">)</span>
-        <span class="n">rcmd</span> <span class="o">=</span> <span class="n">ReadCommand</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">dev_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">prop_id</span><span class="p">)</span>
+        <span class="n">rcmd</span> <span class="o">=</span> <span class="n">ReadCommand</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">dev_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">orig_prop_id</span><span class="p">)</span>
         <span class="n">ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rcmd</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ref</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">rcmd</span> <span class="o">=</span> <span class="n">ReadCommand</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">dev_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">prop_id</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rcmd</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
         <span class="c1"># to get some zero of proper type</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_delta_read</span><span class="p">(</span><span class="n">rcmd</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span></div>
@@ -196,7 +201,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">flag</span><span class="p">:</span>
             <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">dev_id</span><span class="o">=</span><span class="n">dev_id</span><span class="p">,</span> <span class="n">prop_id</span><span class="o">=</span><span class="n">prop_id</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
 
-        <span class="n">rcmd</span> <span class="o">=</span> <span class="n">ReadCommand</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">dev_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">prop_id</span><span class="p">)</span>
+        <span class="n">rcmd</span> <span class="o">=</span> <span class="n">ReadCommand</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">dev_id</span><span class="p">,</span> <span class="nb">property</span><span class="o">=</span><span class="n">orig_prop_id</span><span class="p">)</span>
         <span class="n">ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rcmd</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ref</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">dev_id</span><span class="o">=</span><span class="n">dev_id</span><span class="p">,</span> <span class="n">prop_id</span><span class="o">=</span><span class="n">orig_prop_id</span><span class="p">)</span>
@@ -214,7 +219,7 @@
 <span class="sd">        For overloading in derived classes e.g. for processing ophyd-async data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rcmd</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">ref</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="k">assert</span> <span class="n">ref</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;No reference stored for </span><span class="si">{</span><span class="n">rcmd</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">return</span> <span class="n">value</span> <span class="o">+</span> <span class="n">ref</span></div>
 
 </pre></div>
