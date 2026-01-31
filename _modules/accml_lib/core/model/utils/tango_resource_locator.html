@@ -1,0 +1,237 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>accml_lib.core.model.utils.tango_resource_locator &mdash; accml_lib  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            accml_lib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../src/accml_lib.html">accml_lib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">accml_lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">accml_lib.core.model.utils.tango_resource_locator</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for accml_lib.core.model.utils.tango_resource_locator</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Support of Tango Resource Locator</span>
+
+<span class="sd">Tango resource locators seem to need a bit extra treatment</span>
+<span class="sd">e.g. Bluesky expects them to be compatible with json names</span>
+
+<span class="sd">accml needs a bit further investigation to fully support</span>
+<span class="sd">TRL with all available tools without treating TRL specially</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+
+<div class="viewcode-block" id="TangoResourceLocator">
+<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.utils.html#accml_lib.core.model.utils.tango_resource_locator.TangoResourceLocator">[docs]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TangoResourceLocator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Lightweight Tango Resource Locator (TRL) for device names only.</span>
+
+<span class="sd">    This class intentionally represents *only* the core Tango device name</span>
+<span class="sd">    consisting of exactly three components:</span>
+
+<span class="sd">        domain / family / member</span>
+
+<span class="sd">    Todo:</span>
+<span class="sd">       review whole stack to find where trl can not be used as</span>
+<span class="sd">       string</span>
+
+<span class="sd">       or to say differently that TRL can be used as strings.</span>
+<span class="sd">       These are only made json compatible where imposed by</span>
+<span class="sd">       (external) modules</span>
+
+<span class="sd">    Limitations and design choices</span>
+<span class="sd">    -------------------------------</span>
+<span class="sd">    * Only the device name part of a TRL is supported.</span>
+<span class="sd">      Full TRL features such as protocol (tango://), host:port,</span>
+<span class="sd">      attributes, properties (-&gt;), database selectors (#dbase),</span>
+<span class="sd">      or wildcards are deliberately NOT handled here.</span>
+
+<span class="sd">    * The class is designed to be a small, explicit value object and</span>
+<span class="sd">      not a full TRL parser.</span>
+
+<span class="sd">    * Input tokens are assumed to be already valid Tango name tokens.</span>
+<span class="sd">      No automatic escaping, sanitization, or normalization is performed</span>
+<span class="sd">      except where explicitly documented.</span>
+
+<span class="sd">    * Users are responsible for providing JSON-compatible tokens</span>
+<span class="sd">      when serialization is required. The helper method</span>
+<span class="sd">      `json_compatible()` exists for this purpose but is not lossless.</span>
+
+<span class="sd">    * Tango device names are case-insensitive. Equality comparisons</span>
+<span class="sd">      are therefore performed in a case-insensitive manner.</span>
+
+<span class="sd">    Rationale</span>
+<span class="sd">    ---------</span>
+<span class="sd">    This restricted scope avoids implicit behavior, keeps the object</span>
+<span class="sd">    predictable, and makes failures explicit. Any logic related to full</span>
+<span class="sd">    TRL parsing or environment-specific resolution should live at a</span>
+<span class="sd">    higher level in the application stack.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">family</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">member</span><span class="p">:</span> <span class="nb">str</span>
+
+<div class="viewcode-block" id="TangoResourceLocator.from_trl">
+<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.utils.html#accml_lib.core.model.utils.tango_resource_locator.TangoResourceLocator.from_trl">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_trl</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">trl</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">trl</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span>
+                <span class="s2">&quot;Only simple device TRLs of the form &#39;domain/family/member&#39;&quot;</span>
+                <span class="sa">f</span><span class="s1">&#39; are supported. I received &quot;</span><span class="si">{</span><span class="n">trl</span><span class="si">}</span><span class="s1">&quot; which does not split in three&#39;</span>
+            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">cnt</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tmp</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="n">token</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;trl &quot;</span><span class="si">{</span><span class="n">trl</span><span class="si">}</span><span class="s1">&quot; split in &quot;</span><span class="si">{</span><span class="n">tmp</span><span class="si">}</span><span class="s1">&quot;, but token </span><span class="si">{</span><span class="n">cnt</span><span class="si">}</span><span class="s1"> is empty&#39;</span>
+        <span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="p">,</span> <span class="n">member</span> <span class="o">=</span> <span class="n">tmp</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> <span class="n">family</span><span class="o">=</span><span class="n">family</span><span class="p">,</span> <span class="n">member</span><span class="o">=</span><span class="n">member</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TangoResourceLocator.as_trl">
+<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.utils.html#accml_lib.core.model.utils.tango_resource_locator.TangoResourceLocator.as_trl">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">as_trl</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">family</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">member</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="TangoResourceLocator.json_compatible">
+<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.utils.html#accml_lib.core.model.utils.tango_resource_locator.TangoResourceLocator.json_compatible">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">json_compatible</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;__&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">clear_token</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">family</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">member</span><span class="p">]))</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_trl</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">TangoResourceLocator</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">family</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">member</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+        <span class="p">)</span> <span class="o">==</span> <span class="p">(</span>
+            <span class="n">other</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+            <span class="n">other</span><span class="o">.</span><span class="n">family</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+            <span class="n">other</span><span class="o">.</span><span class="n">member</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">((</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">family</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">member</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span>
+        <span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="clear_token">
+<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.utils.html#accml_lib.core.model.utils.tango_resource_locator.clear_token">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">clear_token</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Todo:</span>
+<span class="sd">        jsons complains on this name</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">token</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="name_from_trl">
+<a class="viewcode-back" href="../../../../../src/accml_lib.core.model.utils.html#accml_lib.core.model.utils.tango_resource_locator.name_from_trl">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">name_from_trl</span><span class="p">(</span><span class="n">trl</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Todo:</span>
+<span class="sd">        not used ... remove me</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prefix</span><span class="p">,</span> <span class="n">middle</span><span class="p">,</span> <span class="n">suffix</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">clear_token</span><span class="p">,</span> <span class="n">trl</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="s2">&quot;__&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">prefix</span><span class="p">,</span> <span class="n">middle</span><span class="p">,</span> <span class="n">suffix</span><span class="p">])</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Helmholtz Zentrum Berlin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -20,6 +20,14 @@ accml\_lib.core.model.utils.identifiers module
    :show-inheritance:
    :undoc-members:
 
+accml\_lib.core.model.utils.tango\_resource\_locator module
+-----------------------------------------------------------
+
+.. automodule:: accml_lib.core.model.utils.tango_resource_locator
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 Module contents
 ---------------
 
