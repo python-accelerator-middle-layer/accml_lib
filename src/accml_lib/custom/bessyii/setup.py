@@ -1,6 +1,13 @@
+"""
+
+Todo:
+    resolve dependency: orbit depends on custom epics
+    Should be a separate package
+"""
 import logging
 import os
 
+from accml.custom.epics.devices.orbit import Orbit
 from .liasion_translator_setup import load_managers
 from accml_lib.core.interfaces.utils.devices_facade import DevicesFacade as DevicesFacadeInterface
 from accml.core.utils.ophyd_async.multiplexer_for_settable_devices import (
@@ -13,7 +20,7 @@ from accml.custom.epics.devices.tunes import Tunes
 from .facility_specific_constants import special_pvs
 
 # Todo: clarify with markus if this code will be contributed
-from bact_bessyii_mls_ophyd.devices.pp.orbit import PPOrbit as Orbit
+
 
 logger = logging.getLogger("accml_lib")
 
