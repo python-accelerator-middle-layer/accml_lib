@@ -72,7 +72,7 @@ async def test_quad_main_strength(simulator_backend):
     dk = await sim.read("Q1M1D1R", "delta_main_strength")
     assert dk == pytest.approx(0.0, abs=1e-8)
 
-    k = sim.cache.get(ReadCommand(id="Q1M1D1R", property="delta_main_strength"))
+    k = sim.cache.get(ReadCommand(id="Q1M1D1R", property="main_strength"))
     assert k == pytest.approx(2.436, abs=0.02)
 
 
@@ -84,5 +84,5 @@ async def test_quad_delta_main_strength(simulator_backend):
     dk = await sim.read("Q1M1D1R", "delta_main_strength")
     assert dk == pytest.approx(5e-3, abs=1e-8)
 
-    k = sim.cache.get(ReadCommand(id="Q1M1D1R", property="delta_main_strength"))
+    k = sim.cache.get(ReadCommand(id="Q1M1D1R", property="main_strength"))
     assert k == pytest.approx(2.436, abs=0.001)

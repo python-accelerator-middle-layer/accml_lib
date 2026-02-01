@@ -1,6 +1,7 @@
 import logging
 
 from ..interfaces.backend.backend import BackendRW, BackendR
+from ..interfaces.backend.filter import FilterInterface
 from ..model.utils.command import ReadCommand
 
 logger = logging.getLogger("accml")
@@ -45,12 +46,18 @@ def delta_property(prop_id: str) -> (bool, str):
     return False, prop_id
 
 
+class NOOPFilter(FilterInterface):
+    def process(self, input):
+        return input
+
+
 class DeltaBackendRProxy(BackendR):
     """handle delta properties"""
 
-    def __init__(self, *, backend: BackendR, cache: StateCache):
+    def __init__(self, *, backend: BackendR, cache: StateCache, filter:FilterInterface=NOOPFilter()):
         self.backend = backend
         self.cache = cache
+        self.filter = filter
 
     def __repr__(self):
         return f"{self.__class__.__name__}(backend={self.backend}, cache={self.cache})"
@@ -80,16 +87,20 @@ class DeltaBackendRProxy(BackendR):
         """
         For overloading in derived classes e.g. for processing ophyd-async data
         """
-        ref = self.cache.get(rcmd, None)
-        assert ref is not None
-        return value - ref
+        ref_cached = self.cache.get(rcmd, None)
+        assert ref_cached is not None
+        # Todo: check that both have the same name if so (for ophyd async e.g)
+        ref = self.filter.process(ref_cached)
+        v = self.filter.process(value)
+        r =  v - ref
+        return r
 
 
 class DeltaBackendRWProxy(DeltaBackendRProxy, BackendRW):
     """handle delta properties"""
 
-    def __init__(self, backend: BackendRW, cache: StateCache):
-        super().__init__(backend=backend, cache=cache)
+    def __init__(self, backend: BackendRW, cache: StateCache, filter: FilterInterface=NOOPFilter()):
+        super().__init__(backend=backend, cache=cache, filter=filter)
         self.backend = backend
 
     async def set(self, dev_id: str, prop_id: str, value: object):
@@ -113,6 +124,6 @@ class DeltaBackendRWProxy(DeltaBackendRProxy, BackendRW):
         """
         For overloading in derived classes e.g. for processing ophyd-async data
         """
-        ref = self.cache.get(rcmd, None)
+        ref = self.filter.process(self.cache.get(rcmd, None))
         assert ref is not None, f"No reference stored for {rcmd}"
         return value + ref
