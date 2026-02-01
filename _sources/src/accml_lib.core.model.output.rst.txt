@@ -4,6 +4,14 @@ accml\_lib.core.model.output package
 Submodules
 ----------
 
+accml\_lib.core.model.output.orbit module
+-----------------------------------------
+
+.. automodule:: accml_lib.core.model.output.orbit
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 accml\_lib.core.model.output.result module
 ------------------------------------------
 

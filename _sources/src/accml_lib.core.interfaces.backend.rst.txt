@@ -12,6 +12,14 @@ accml\_lib.core.interfaces.backend.backend module
    :show-inheritance:
    :undoc-members:
 
+accml\_lib.core.interfaces.backend.filter module
+------------------------------------------------
+
+.. automodule:: accml_lib.core.interfaces.backend.filter
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 Module contents
 ---------------
 

@@ -90,6 +90,169 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
+<section id="module-accml_lib.core.model.output.orbit">
+<span id="accml-lib-core-model-output-orbit-module"></span><h2>accml_lib.core.model.output.orbit module<a class="headerlink" href="#module-accml_lib.core.model.output.orbit" title="Link to this heading"></a></h2>
+<p>Orbit model as used at BESSY II</p>
+<p>Based on 4 button bpms. Button data made available next to
+x and y</p>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>can that be the start for a more general orbit
+model</p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.BPMButtons">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.orbit.</span></span><span class="sig-name descname"><span class="pre">BPMButtons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/orbit.html#BPMButtons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.orbit.BPMButtons" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>consider renaming bpm buttons to give them more meaning</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>b</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>d</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.BPMButtons.a">
+<span class="sig-name descname"><span class="pre">a</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.orbit.BPMButtons.a" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.BPMButtons.b">
+<span class="sig-name descname"><span class="pre">b</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.orbit.BPMButtons.b" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.BPMButtons.c">
+<span class="sig-name descname"><span class="pre">c</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.orbit.BPMButtons.c" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.BPMButtons.d">
+<span class="sig-name descname"><span class="pre">d</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.orbit.BPMButtons.d" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.BPMPosition">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.orbit.</span></span><span class="sig-name descname"><span class="pre">BPMPosition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/orbit.html#BPMPosition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.orbit.BPMPosition" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>transversal position as read by a single bpm</p>
+<p>If not available marked as nan. 64 bits provide
+enough data to store 32 bit int without conversion
+loss.</p>
+<p>Note bpm data are in nm</p>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>naming that’s more universal than x and y
+e.g. hor(izontal) and vert(ical)</p>
+<p>Will be an interesting concept e.g. at
+Novosibirsk’s recovery linac. Then these
+should be rather dispersion_plan /
+non dispersion plane</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+<li><p><strong>y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.BPMPosition.x">
+<span class="sig-name descname"><span class="pre">x</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.orbit.BPMPosition.x" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.BPMPosition.y">
+<span class="sig-name descname"><span class="pre">y</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><span class="pre">float</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.orbit.BPMPosition.y" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.BPMReading">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.orbit.</span></span><span class="sig-name descname"><span class="pre">BPMReading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">btns</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/orbit.html#BPMReading"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.orbit.BPMReading" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Hashable" title="(in Python v3.14)"><em>Hashable</em></a>)</p></li>
+<li><p><strong>pos</strong> (<a class="reference internal" href="#accml_lib.core.model.output.orbit.BPMPosition" title="accml_lib.core.model.output.orbit.BPMPosition"><em>BPMPosition</em></a>)</p></li>
+<li><p><strong>btns</strong> (<a class="reference internal" href="#accml_lib.core.model.output.orbit.BPMButtons" title="accml_lib.core.model.output.orbit.BPMButtons"><em>BPMButtons</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.BPMReading.btns">
+<span class="sig-name descname"><span class="pre">btns</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#accml_lib.core.model.output.orbit.BPMButtons" title="accml_lib.core.model.output.orbit.BPMButtons"><span class="pre">BPMButtons</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.orbit.BPMReading.btns" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.BPMReading.name">
+<span class="sig-name descname"><span class="pre">name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Hashable" title="(in Python v3.14)"><span class="pre">Hashable</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.orbit.BPMReading.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.BPMReading.pos">
+<span class="sig-name descname"><span class="pre">pos</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#accml_lib.core.model.output.orbit.BPMPosition" title="accml_lib.core.model.output.orbit.BPMPosition"><span class="pre">BPMPosition</span></a></span><a class="headerlink" href="#accml_lib.core.model.output.orbit.BPMReading.pos" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.Orbit">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.orbit.</span></span><span class="sig-name descname"><span class="pre">Orbit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orbit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/orbit.html#Orbit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.orbit.Orbit" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>orbit</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><em>Sequence</em></a><em>[</em><a class="reference internal" href="#accml_lib.core.model.output.orbit.BPMReading" title="accml_lib.core.model.output.orbit.BPMReading"><em>BPMReading</em></a><em>]</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.Orbit.get_element">
+<span class="sig-name descname"><span class="pre">get_element</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/orbit.html#Orbit.get_element"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.orbit.Orbit.get_element" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#accml_lib.core.model.output.orbit.BPMReading" title="accml_lib.core.model.output.orbit.BPMReading"><code class="xref py py-class docutils literal notranslate"><span class="pre">BPMReading</span></code></a></span></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>id_</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Hashable" title="(in Python v3.14)"><em>Hashable</em></a>)</p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<p>consider to return a more descriptive Exception if
+identifier is not found</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.Orbit.identifiers">
+<span class="sig-name descname"><span class="pre">identifiers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/orbit.html#Orbit.identifiers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.orbit.Orbit.identifiers" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Hashable" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Hashable</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="accml_lib.core.model.output.orbit.Orbit.orbit">
+<span class="sig-name descname"><span class="pre">orbit</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#accml_lib.core.model.output.orbit.BPMReading" title="accml_lib.core.model.output.orbit.BPMReading"><span class="pre">BPMReading</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#accml_lib.core.model.output.orbit.Orbit.orbit" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-accml_lib.core.model.output.result">
 <span id="accml-lib-core-model-output-result-module"></span><h2>accml_lib.core.model.output.result module<a class="headerlink" href="#module-accml_lib.core.model.output.result" title="Link to this heading"></a></h2>
 <dl class="py class">
@@ -301,7 +464,7 @@ in which state the machine or accelerator was</p>
 <dt class="sig sig-object py" id="accml_lib.core.model.output.tune.Tune">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.model.output.tune.</span></span><span class="sig-name descname"><span class="pre">Tune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/model/output/tune.html#Tune"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.model.output.tune.Tune" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<div class="admonition-todo admonition" id="id1">
+<div class="admonition-todo admonition" id="id5">
 <p class="admonition-title">Todo</p>
 <dl class="simple">
 <dt>merge</dt><dd><p>it with accml.app.tune.model.MeasuredTuneResponseItem?</p>

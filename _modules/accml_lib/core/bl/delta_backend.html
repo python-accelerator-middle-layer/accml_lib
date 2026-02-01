@@ -71,6 +71,7 @@
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">..interfaces.backend.backend</span><span class="w"> </span><span class="kn">import</span> <span class="n">BackendRW</span><span class="p">,</span> <span class="n">BackendR</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..interfaces.backend.filter</span><span class="w"> </span><span class="kn">import</span> <span class="n">FilterInterface</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..model.utils.command</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReadCommand</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;accml&quot;</span><span class="p">)</span>
@@ -133,14 +134,26 @@
 
 
 
+<div class="viewcode-block" id="NOOPFilter">
+<a class="viewcode-back" href="../../../../src/accml_lib.core.bl.html#accml_lib.core.bl.delta_backend.NOOPFilter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">NOOPFilter</span><span class="p">(</span><span class="n">FilterInterface</span><span class="p">):</span>
+<div class="viewcode-block" id="NOOPFilter.process">
+<a class="viewcode-back" href="../../../../src/accml_lib.core.bl.html#accml_lib.core.bl.delta_backend.NOOPFilter.process">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">input</span></div>
+</div>
+
+
+
 <div class="viewcode-block" id="DeltaBackendRProxy">
 <a class="viewcode-back" href="../../../../src/accml_lib.core.bl.html#accml_lib.core.bl.delta_backend.DeltaBackendRProxy">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DeltaBackendRProxy</span><span class="p">(</span><span class="n">BackendR</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;handle delta properties&quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">backend</span><span class="p">:</span> <span class="n">BackendR</span><span class="p">,</span> <span class="n">cache</span><span class="p">:</span> <span class="n">StateCache</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">backend</span><span class="p">:</span> <span class="n">BackendR</span><span class="p">,</span> <span class="n">cache</span><span class="p">:</span> <span class="n">StateCache</span><span class="p">,</span> <span class="nb">filter</span><span class="p">:</span><span class="n">FilterInterface</span><span class="o">=</span><span class="n">NOOPFilter</span><span class="p">()):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">=</span> <span class="n">backend</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="n">cache</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter</span> <span class="o">=</span> <span class="nb">filter</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(backend=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="si">}</span><span class="s2">, cache=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="si">}</span><span class="s2">)&quot;</span>
@@ -179,9 +192,13 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        For overloading in derived classes e.g. for processing ophyd-async data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rcmd</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">ref</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="n">value</span> <span class="o">-</span> <span class="n">ref</span></div>
+        <span class="n">ref_cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rcmd</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">ref_cached</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="c1"># Todo: check that both have the same name if so (for ophyd async e.g)</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">ref_cached</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span>  <span class="n">v</span> <span class="o">-</span> <span class="n">ref</span>
+        <span class="k">return</span> <span class="n">r</span></div>
 
 
 
@@ -190,8 +207,8 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">DeltaBackendRWProxy</span><span class="p">(</span><span class="n">DeltaBackendRProxy</span><span class="p">,</span> <span class="n">BackendRW</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;handle delta properties&quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backend</span><span class="p">:</span> <span class="n">BackendRW</span><span class="p">,</span> <span class="n">cache</span><span class="p">:</span> <span class="n">StateCache</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backend</span><span class="p">:</span> <span class="n">BackendRW</span><span class="p">,</span> <span class="n">cache</span><span class="p">:</span> <span class="n">StateCache</span><span class="p">,</span> <span class="nb">filter</span><span class="p">:</span> <span class="n">FilterInterface</span><span class="o">=</span><span class="n">NOOPFilter</span><span class="p">()):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="nb">filter</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">=</span> <span class="n">backend</span>
 
 <div class="viewcode-block" id="DeltaBackendRWProxy.set">
@@ -218,7 +235,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        For overloading in derived classes e.g. for processing ophyd-async data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rcmd</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">rcmd</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
         <span class="k">assert</span> <span class="n">ref</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;No reference stored for </span><span class="si">{</span><span class="n">rcmd</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">return</span> <span class="n">value</span> <span class="o">+</span> <span class="n">ref</span></div>
 

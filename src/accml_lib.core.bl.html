@@ -204,7 +204,7 @@ to convert the command values between representations.</p>
 <span id="accml-lib-core-bl-delta-backend-module"></span><h2>accml_lib.core.bl.delta_backend module<a class="headerlink" href="#module-accml_lib.core.bl.delta_backend" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.DeltaBackendRProxy">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.delta_backend.</span></span><span class="sig-name descname"><span class="pre">DeltaBackendRProxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#DeltaBackendRProxy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.DeltaBackendRProxy" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.delta_backend.</span></span><span class="sig-name descname"><span class="pre">DeltaBackendRProxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;accml_lib.core.bl.delta_backend.NOOPFilter</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#DeltaBackendRProxy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.DeltaBackendRProxy" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="accml_lib.core.interfaces.backend.html#accml_lib.core.interfaces.backend.backend.BackendR" title="accml_lib.core.interfaces.backend.backend.BackendR"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackendR</span></code></a></p>
 <p>handle delta properties</p>
 <dl class="field-list simple">
@@ -212,6 +212,7 @@ to convert the command values between representations.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>backend</strong> (<a class="reference internal" href="accml_lib.core.interfaces.backend.html#accml_lib.core.interfaces.backend.backend.BackendR" title="accml_lib.core.interfaces.backend.backend.BackendR"><em>BackendR</em></a>)</p></li>
 <li><p><strong>cache</strong> (<a class="reference internal" href="#accml_lib.core.bl.delta_backend.StateCache" title="accml_lib.core.bl.delta_backend.StateCache"><em>StateCache</em></a>)</p></li>
+<li><p><strong>filter</strong> (<a class="reference internal" href="accml_lib.core.interfaces.backend.html#accml_lib.core.interfaces.backend.filter.FilterInterface" title="accml_lib.core.interfaces.backend.filter.FilterInterface"><em>FilterInterface</em></a>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -253,7 +254,7 @@ to convert the command values between representations.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.DeltaBackendRWProxy">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.delta_backend.</span></span><span class="sig-name descname"><span class="pre">DeltaBackendRWProxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#DeltaBackendRWProxy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.DeltaBackendRWProxy" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.delta_backend.</span></span><span class="sig-name descname"><span class="pre">DeltaBackendRWProxy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backend</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;accml_lib.core.bl.delta_backend.NOOPFilter</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#DeltaBackendRWProxy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.DeltaBackendRWProxy" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#accml_lib.core.bl.delta_backend.DeltaBackendRProxy" title="accml_lib.core.bl.delta_backend.DeltaBackendRProxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">DeltaBackendRProxy</span></code></a>, <a class="reference internal" href="accml_lib.core.interfaces.backend.html#accml_lib.core.interfaces.backend.backend.BackendRW" title="accml_lib.core.interfaces.backend.backend.BackendRW"><code class="xref py py-class docutils literal notranslate"><span class="pre">BackendRW</span></code></a></p>
 <p>handle delta properties</p>
 <dl class="field-list simple">
@@ -261,6 +262,7 @@ to convert the command values between representations.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>backend</strong> (<a class="reference internal" href="accml_lib.core.interfaces.backend.html#accml_lib.core.interfaces.backend.backend.BackendRW" title="accml_lib.core.interfaces.backend.backend.BackendRW"><em>BackendRW</em></a>)</p></li>
 <li><p><strong>cache</strong> (<a class="reference internal" href="#accml_lib.core.bl.delta_backend.StateCache" title="accml_lib.core.bl.delta_backend.StateCache"><em>StateCache</em></a>)</p></li>
+<li><p><strong>filter</strong> (<a class="reference internal" href="accml_lib.core.interfaces.backend.html#accml_lib.core.interfaces.backend.filter.FilterInterface" title="accml_lib.core.interfaces.backend.filter.FilterInterface"><em>FilterInterface</em></a>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -277,6 +279,17 @@ to convert the command values between representations.</p>
 </dd>
 </dl>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.NOOPFilter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">accml_lib.core.bl.delta_backend.</span></span><span class="sig-name descname"><span class="pre">NOOPFilter</span></span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#NOOPFilter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.NOOPFilter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="accml_lib.core.interfaces.backend.html#accml_lib.core.interfaces.backend.filter.FilterInterface" title="accml_lib.core.interfaces.backend.filter.FilterInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">FilterInterface</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="accml_lib.core.bl.delta_backend.NOOPFilter.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/accml_lib/core/bl/delta_backend.html#NOOPFilter.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#accml_lib.core.bl.delta_backend.NOOPFilter.process" title="Link to this definition"></a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
