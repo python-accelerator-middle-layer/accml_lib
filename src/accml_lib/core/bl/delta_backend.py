@@ -109,7 +109,7 @@ class DeltaBackendRWProxy(DeltaBackendRProxy, BackendRW):
             return await self.backend.set(dev_id=dev_id, prop_id=prop_id, value=value)
 
         rcmd = ReadCommand(id=dev_id, property=orig_prop_id)
-        ref = self.filter.process(self.cache.get(rcmd, None))
+        ref = self.cache.get(rcmd, None)
         if not ref:
             r = await self.backend.read(dev_id=dev_id, prop_id=orig_prop_id)
             # Todo: refactor the classes here so this does not need
